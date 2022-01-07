@@ -38,9 +38,9 @@ Route::post('/register', [AuthController::class, 'register_confirm'])->name('reg
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 Route::post('/forgot', [AuthController::class, 'forgot'])->name('forgot_password');
 
-Route::get('/accounts', [AccountController::class, 'index'])->name('accounts');
-Route::get('/accounts/update/{account}', [AccountController::class, 'update'])->name('accounts.update');
-Route::delete('/accounts/{account}', [AccountController::class, 'destroy'])->name('accounts.destroy');
+Route::get('/admin/accounts', [AccountController::class, 'index'])->name('accounts');
+Route::get('/admin/accounts/update/{account}', [AccountController::class, 'update'])->name('accounts.update');
+Route::delete('/admin/accounts/{account}', [AccountController::class, 'destroy'])->name('accounts.destroy');
 
 Route::get('/graph/class_grades_example', [ChartController::class, 'class_grades_example'])->name('graph.class_grades_example');
 Route::post('/graph/class_grades/{class}', [ChartController::class, 'class_grades'])->name('graph.class_grades');

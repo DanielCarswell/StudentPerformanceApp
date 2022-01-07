@@ -14,9 +14,9 @@ class CreateUserClassModelsTable extends Migration
     public function up()
     {
         Schema::create('user_class_models', function (Blueprint $table) {
-            $table->primary(["user_id", "class_models_id"]);
+            $table->primary(["user_id", "class_id"]);
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('class_models_id')->constrained('class_models')->onDelete('cascade');
+            $table->foreignId('class_id')->constrained('classes')->onDelete('cascade');
             $table->double('grade');
             $table->double('attendance');
             $table->timestamps();

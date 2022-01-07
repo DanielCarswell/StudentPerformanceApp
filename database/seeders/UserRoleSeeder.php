@@ -24,7 +24,7 @@ class UserRoleSeeder extends Seeder
         foreach($user_ids as $user_id)
             DB::table('user_role')->insert([
                 'user_id' => $user_id,
-                'role_id' => 2
+                'role_id' => 6
             ]);  
     }
 }
