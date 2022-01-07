@@ -87,7 +87,7 @@ class ClassModelController extends Controller
             ->paginate(8);
 
         return view('classes.class_records', [
-            'data' => $lists,
+            'dataLists' => $lists,
             'class' => $class
         ]);
     }
