@@ -14,8 +14,8 @@
             </tr>
             </thead>
             <tbody class="bg-white">
-                @if ($dataLists->count())
-                    @foreach ($dataList as $data)
+                @if ($lists->count())
+                    @foreach ($lists as $data)
                         <tr class="text-gray-700">
                             <td class="px-4 py-3 border">
                                 <div class="flex items-center text-sm">
@@ -62,7 +62,7 @@
                             @endif
                         </tr>
                     @endforeach
-                    {{ $data->links() }}
+                    {{ $lists->links() }}
                     @else
                         <p>There is no data</p>
                 @endif

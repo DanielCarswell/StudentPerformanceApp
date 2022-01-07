@@ -24,8 +24,6 @@ class ClassModelController extends Controller
             ->groupBy('user_class_models.class_models_id')
             ->get();
 
-            //dd($average_grade);
-
             if($average_grade->count() == 0)
                 $class->average_grade = 'No Grades Yet';
             else
@@ -87,7 +85,7 @@ class ClassModelController extends Controller
             ->paginate(8);
 
         return view('classes.class_records', [
-            'dataLists' => $lists,
+            'lists' => $lists,
             'class' => $class
         ]);
     }

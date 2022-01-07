@@ -15,7 +15,7 @@
             </thead>
             <tbody class="bg-white">
                 @if ($lists->count())
-                    @foreach ($lists as $list)
+                    @foreach ($lists as $data)
                         <tr class="text-gray-700">
                             <td class="px-4 py-3 border">
                                 <div class="flex items-center text-sm">

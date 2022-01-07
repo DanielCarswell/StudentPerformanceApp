@@ -8,7 +8,7 @@
                     @csrf
                     <div class="mb-4">
                         <label for="firstname" class="sr-only">First Name</label>
-                        <input type="text" name="firstname" id="firstname" placeholder="Your First Name" class="p-3 w-full text-black text-bold bg-gray-200 border-2 @error('firstname') border-red-500 @enderror rounded-lg" value="{{ old('email') }}">
+                        <input type="text" name="firstname" id="firstname" placeholder="Your First Name" class="p-3 w-full text-black text-bold bg-gray-200 border-2 @error('firstname') border-red-500 @enderror rounded-lg" value="{{ old('firstname') }}">
                         @error('firstname')
                             <div class="text-red-500 mt-2 text-sm">
                                 {{ $message }}
@@ -17,7 +17,7 @@
                     </div>
                     <div class="mb-4">
                         <label for="lastname" class="sr-only">Last Name</label>
-                        <input type="text" name="lastname" id="lastname" placeholder="Your Last Name" class="p-3 w-full text-black text-bold bg-gray-200 border-2 @error('lastname') border-red-500 @enderror rounded-lg" value="{{ old('email') }}">
+                        <input type="text" name="lastname" id="lastname" placeholder="Your Last Name" class="p-3 w-full text-black text-bold bg-gray-200 border-2 @error('lastname') border-red-500 @enderror rounded-lg" value="{{ old('lastname') }}">
                         @error('lastname')
                             <div class="text-red-500 mt-2 text-sm">
                                 {{ $message }}
@@ -45,7 +45,7 @@
                     </div>
                     <div class="mb-6">
                         <label for="confirmpassword" class="sr-only">Confirm Password</label>
-                        <input type="confirmpassword" name="confirmpassword" id="confirmpassword" placeholder="Confirm password" class="p-3 w-full text-black text-bold bg-gray-200 border-2 @error('confirmpassword') border-red-500 @enderror rounded-lg" value="">
+                        <input type="password" name="confirmpassword" id="confirmpassword" placeholder="Confirm password" class="p-3 w-full text-black text-bold bg-gray-200 border-2 @error('confirmpassword') border-red-500 @enderror rounded-lg" value="">
 
                         @error('confirmpassword')
                             <div class="text-red-500 mt-2 text-sm">

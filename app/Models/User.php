@@ -50,16 +50,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(ClassModel::class, 'user_class_models', 'user_id', 'class_models_id')->withPivot('grade', 'attendance');
     }
-
-    /**
-     * Defining User has many Permissions relationship.
-     */
-    public function permissions(){
-
-        return $this->belongsToMany(Permission::class, 'user_permission', 'user_id', 'permission_id');
-
-    }
-
+    
     /**
      * Defining User has many Roles relationship.
      */

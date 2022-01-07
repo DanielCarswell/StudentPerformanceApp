@@ -31,7 +31,6 @@ Route::get('/', function () {
 Route::get('/admin', [AdminController::class, 'index'])->name('admin')->middleware('auth');
 Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users')->middleware('auth');
 
-
 Route::get('/login', [AuthController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [AuthController::class, 'login_confirm'])->name('login_confirm');
 Route::get('/register', [AuthController::class, 'register'])->name('register')->middleware('guest');
