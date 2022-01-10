@@ -23,9 +23,11 @@ class ClassSeeder extends Seeder
         ];
 
         foreach($names as $name) {
-            DB::table('class_models')->insert([
+            DB::table('classes')->insert([
                 'name' => $name,
-                'year' => 1
+                'year' => 1,
+                'credits' => 10,
+                'course_id' => 1
             ]);  
         }
 
@@ -38,9 +40,11 @@ class ClassSeeder extends Seeder
         ];
 
         foreach($names as $name) {
-            DB::table('class_models')->insert([
+            DB::table('classes')->insert([
                 'name' => $name,
-                'year' => 2
+                'year' => 2,
+                'credits' => 20,
+                'course_id' => 1
             ]);  
         }
 
@@ -53,9 +57,11 @@ class ClassSeeder extends Seeder
         ];
 
         foreach($names as $name) {
-            DB::table('class_models')->insert([
+            DB::table('classes')->insert([
                 'name' => $name,
-                'year' => 3
+                'year' => 3,
+                'credits' => 20,
+                'course_id' => 1
             ]);  
         }
 
@@ -68,9 +74,11 @@ class ClassSeeder extends Seeder
         ];
 
         foreach($names as $name) {
-            DB::table('class_models')->insert([
+            DB::table('classes')->insert([
                 'name' => $name,
-                'year' => 4
+                'year' => 4,
+                'credits' => 20,
+                'course_id' => 1
             ]);  
         }
     }

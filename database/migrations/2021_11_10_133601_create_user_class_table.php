@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserClassModelsTable extends Migration
+class CreateUserClassTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateUserClassModelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_class_models', function (Blueprint $table) {
+        Schema::create('user_class', function (Blueprint $table) {
             $table->primary(["user_id", "class_id"]);
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('class_id')->constrained('classes')->onDelete('cascade');
@@ -30,6 +30,6 @@ class CreateUserClassModelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_class_models');
+        Schema::dropIfExists('user_class');
     }
 }

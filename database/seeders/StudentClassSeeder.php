@@ -26,36 +26,36 @@ class StudentClassSeeder extends Seeder
 
         foreach($user_ids1 as $user_id)
             foreach($class_models_ids1 as $class_models_id)
-                DB::table('user_class_models')->insert([
+                DB::table('user_class')->insert([
                     'user_id' => $user_id,
-                    'class_models_id' => $class_models_id,
+                    'class_id' => $class_models_id,
                     'grade' => rand(0,100),
                     'attendance' => rand(0,100)
                 ]);  
 
         foreach($user_ids2 as $user_id)
             foreach($class_models_ids2 as $class_models_id)
-                DB::table('user_class_models')->insert([
+                DB::table('user_class')->insert([
                     'user_id' => $user_id,
-                    'class_models_id' => $class_models_id,
+                    'class_id' => $class_models_id,
                     'grade' => rand(0,100),
                     'attendance' => rand(0,100)
                 ]);  
 
         foreach($user_ids3 as $user_id)
             foreach($class_models_ids3 as $class_models_id)
-                DB::table('user_class_models')->insert([
+                DB::table('user_class')->insert([
                     'user_id' => $user_id,
-                    'class_models_id' => $class_models_id,
+                    'class_id' => $class_models_id,
                     'grade' => rand(0,100),
                     'attendance' => rand(0,100)
                 ]);  
 
         foreach($user_ids4 as $user_id)
             foreach($class_models_ids4 as $class_models_id)
-                DB::table('user_class_models')->insert([
+                DB::table('user_class')->insert([
                     'user_id' => $user_id,
-                    'class_models_id' => $class_models_id,
+                    'class_id' => $class_models_id,
                     'grade' => rand(0,100),
                     'attendance' => rand(0,100)
                 ]);  
