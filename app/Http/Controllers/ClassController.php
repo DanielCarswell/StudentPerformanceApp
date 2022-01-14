@@ -5,23 +5,23 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-use App\Models\ClassModel;
+use App\Models\Classe;
 use App\Models\User;
 
-class ClassModelController extends Controller
+class ClassController extends Controller
 {
     public function index()
     {
-        $classes1 = ClassModel::with(['students'])
+        $classes1 = Classe::with(['students'])
         ->where('year', '=', '1')
         ->paginate(8);
 
         foreach($classes1 as $class) {
-            $average_grade = DB::table('user_class_models')
-            ->select(\DB::raw('round(AVG(CAST(user_class_models.grade as numeric)), 1) as average_grade'))
-            ->from('user_class_models')
-            ->where('user_class_models.class_models_id', '=', $class->id)
-            ->groupBy('user_class_models.class_models_id')
+            $average_grade = DB::table('user_class')
+            ->select(\DB::raw('round(AVG(CAST(user_class.grade as numeric)), 1) as average_grade'))
+            ->from('user_class')
+            ->where('user_class.class_id', '=', $class->id)
+            ->groupBy('user_class.class_id')
             ->get();
 
             if($average_grade->count() == 0)
@@ -32,15 +32,15 @@ class ClassModelController extends Controller
 
         //dd($classes1);
 
-        $classes2 = ClassModel::with(['students'])
+        $classes2 = Classe::with(['students'])
         ->where('year', '=', '2')
         ->get();
 
-        $classes3 = ClassModel::with(['students'])
+        $classes3 = Classe::with(['students'])
         ->where('year', '=', '3')
         ->get();
 
-        $classes4 = ClassModel::with(['students'])
+        $classes4 = Classe::with(['students'])
         ->where('year', '=', '4')
         ->get();
 
@@ -55,9 +55,9 @@ class ClassModelController extends Controller
     public function student_records(User $student)
     {
         $lists = DB::table('users')
-            ->join('user_class_models', 'users.id', '=', 'user_class_models.user_id')
-            ->join('class_models', 'class_models.id', '=', 'user_class_models.class_models_id')
-            ->from('class_models', 'users', 'user_class_models')
+            ->join('user_class', 'users.id', '=', 'user_class.user_id')
+            ->join('classes', 'classes.id', '=', 'user_class.class_id')
+            ->from('classes', 'users', 'user_class')
             ->where('users.id', $student->id)
             ->paginate(8);
 
@@ -70,18 +70,18 @@ class ClassModelController extends Controller
         ]);
     }
 
-    public function class_records(ClassModel $class)
+    public function class_records(Classe $class)
     {
-        $lists = DB::table('class_models')
-            ->select('users.fullname', 'user_class_models.grade', 'user_class_models.attendance')
-            ->from('class_models')
-            ->join('user_class_models', 'user_class_models.class_models_id', '=', 'class_models.id')
-            ->join('users', 'users.id', '=', 'user_class_models.user_id')
+        $lists = DB::table('classes')
+            ->select('users.fullname', 'user_class.grade', 'user_class.attendance')
+            ->from('classes')
+            ->join('user_class', 'user_class.class_id', '=', 'classes.id')
+            ->join('users', 'users.id', '=', 'user_class.user_id')
             ->join('user_role', 'user_role.user_id', '=', 'users.id')
             ->join('roles', 'roles.id', '=', 'user_role.role_id')
-            ->where('class_models.id', $class->id)
+            ->where('classes.id', $class->id)
             ->where('roles.name', '=', 'Student')
-            ->groupBy('users.fullname', 'user_class_models.grade', 'user_class_models.attendance')
+            ->groupBy('users.fullname', 'user_class.grade', 'user_class.attendance')
             ->paginate(8);
 
         return view('classes.class_records', [

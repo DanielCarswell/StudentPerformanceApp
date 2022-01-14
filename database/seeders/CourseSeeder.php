@@ -15,7 +15,7 @@ class CourseSeeder extends Seeder
     public function run()
     {
         DB::table('courses')->insert([
-            'title' => 'Computing Science',
+            'name' => 'Computing Science',
             'total_years' => 4,
             'required_credits' => 360
         ]);  

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 <section class="container mx-auto p-6 font-mono mt-12">

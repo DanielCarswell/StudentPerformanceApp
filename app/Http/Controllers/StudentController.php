@@ -16,10 +16,10 @@ class StudentController extends Controller
         ->paginate(8);
 
         foreach($students1 as $student) {
-            $student->average_grade = (\DB::table('user_class_models')
-            ->select(\DB::raw('round(AVG(CAST(user_class_models.grade as numeric)), 1) as average_grade'))
-            ->where('user_class_models.user_id', '=', $student->id)
-            ->groupBy('user_class_models.user_id')
+            $student->average_grade = (\DB::table('user_class')
+            ->select(\DB::raw('round(AVG(CAST(user_class.grade as numeric)), 1) as average_grade'))
+            ->where('user_class.user_id', '=', $student->id)
+            ->groupBy('user_class.user_id')
             ->get()[0]->average_grade);
         }
 

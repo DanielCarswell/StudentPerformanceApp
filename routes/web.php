@@ -7,7 +7,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\ChartController;
-use App\Http\Controllers\ClassModelController;
+use App\Http\Controllers\ClassController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,13 +45,13 @@ Route::delete('/admin/accounts/{account}', [AccountController::class, 'destroy']
 Route::get('/graph/class_grades_example', [ChartController::class, 'class_grades_example'])->name('graph.class_grades_example');
 Route::post('/graph/class_grades/{class}', [ChartController::class, 'class_grades'])->name('graph.class_grades');
 
-Route::get('/classes', [ClassModelController::class, 'index'])->name('classes')->middleware('auth');
+Route::get('/classes', [ClassController::class, 'index'])->name('classes')->middleware('auth');
 
-Route::get('/classes/class_records/{class}', [ClassModelController::class, 'class_records'])->middleware('auth');
-Route::post('/classes/class_records/{class}', [ClassModelController::class, 'class_records'])->name('classes.class_records')->middleware('auth');
+Route::get('/classes/class_records/{class}', [ClassController::class, 'class_records'])->middleware('auth');
+Route::post('/classes/class_records/{class}', [ClassController::class, 'class_records'])->name('classes.class_records')->middleware('auth');
 
-Route::get('/classes/student_records/{student}', [ClassModelController::class, 'student_records'])->middleware('auth');
-Route::post('/classes/student_records/{student}', [ClassModelController::class, 'student_records'])->name('classes.student_records')->middleware('auth');
+Route::get('/classes/student_records/{student}', [ClassController::class, 'student_records'])->middleware('auth');
+Route::post('/classes/student_records/{student}', [ClassController::class, 'student_records'])->name('classes.student_records')->middleware('auth');
 
 Route::get('/students', [StudentController::class, 'index'])->name('students')->middleware('auth');
 
