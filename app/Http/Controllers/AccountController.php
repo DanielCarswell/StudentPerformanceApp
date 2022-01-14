@@ -31,7 +31,7 @@ class AccountController extends Controller
             $account->acc = User::find($account->id);
         }
 
-        Mail::to(auth()->user())->send(new LowGradeNotification(auth()->user(), 'CS103'));
+        //Mail::to(auth()->user())->send(new LowGradeNotification(auth()->user(), 'CS103'));
 
         return view('accounts.index', [
             'accounts' => $accounts
