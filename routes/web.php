@@ -46,6 +46,8 @@ Route::get('/graph/class_grades_example', [ChartController::class, 'class_grades
 Route::post('/graph/class_grades/{class}', [ChartController::class, 'class_grades'])->name('graph.class_grades');
 
 Route::get('/classes', [ClassController::class, 'index'])->name('classes')->middleware('auth');
+Route::get('/admin/classes', [ClassController::class, 'admin_index'])->name('admin_classes')->middleware('auth'); 
+Route::get('/admin/create_class', [ClassController::class, 'create'])->name('create_class')->middleware('auth'); 
 
 Route::get('/classes/class_records/{class}', [ClassController::class, 'class_records'])->middleware('auth');
 Route::post('/classes/class_records/{class}', [ClassController::class, 'class_records'])->name('classes.class_records')->middleware('auth');

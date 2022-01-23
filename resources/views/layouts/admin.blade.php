@@ -20,7 +20,7 @@
             <a href="{{  route('accounts')  }}">Users</a>
         </li>
         <li class="flex space-x-2 mt-4 px-6 py-4 text-white hover:bg-white hover:text-blue-800 font-bold hover:rounded-br-3xl transition duration-100 cursor-pointer">
-            <a href="">Classes</a>
+            <a href="{{  route('admin_classes')  }}">Classes</a>
         </li>
         <li class="flex space-x-2 mt-4 px-6 py-4 text-white hover:bg-white hover:text-blue-800 font-bold hover:rounded-br-3xl transition duration-100 cursor-pointer">
             <a href="">Roles/Permissions</a>
@@ -30,7 +30,7 @@
         </li>
         </ul>
     </aside>
-    <main class="flex-col bg-indigo-50 w-full ml-4 pr-6">
+    <main class="flex-col bg-gray-300 w-full ml-4 pr-6">
         <div class="mt-6">
             @yield('content')
         </div>

@@ -52,6 +52,20 @@ class ClassController extends Controller
         ]);
     }
 
+    public function admin_index()
+    {
+        $classes = Classe::with(['students'])
+        ->paginate(8);
+
+        return view('admin.classes.index', [
+            'classes' => $classes
+        ]);
+    }
+
+    public function create(Request $request) {
+        return view('admin.classes.create_class');
+    }
+
     public function student_records(User $student)
     {
         $lists = DB::table('users')
