@@ -48,6 +48,7 @@ Route::post('/graph/class_grades/{class}', [ChartController::class, 'class_grade
 Route::get('/classes', [ClassController::class, 'index'])->name('classes')->middleware('auth');
 Route::get('/admin/classes', [ClassController::class, 'admin_index'])->name('admin_classes')->middleware('auth'); 
 Route::get('/admin/create_class', [ClassController::class, 'create'])->name('create_class')->middleware('auth'); 
+Route::post('/admin/search_classes', [ClassController::class, 'search_classes'])->name('search_classes')->middleware('auth'); 
 
 Route::get('/classes/class_records/{class}', [ClassController::class, 'class_records'])->middleware('auth');
 Route::post('/classes/class_records/{class}', [ClassController::class, 'class_records'])->name('classes.class_records')->middleware('auth');
@@ -56,4 +57,3 @@ Route::get('/classes/student_records/{student}', [ClassController::class, 'stude
 Route::post('/classes/student_records/{student}', [ClassController::class, 'student_records'])->name('classes.student_records')->middleware('auth');
 
 Route::get('/students', [StudentController::class, 'index'])->name('students')->middleware('auth');
-

@@ -31,7 +31,7 @@
         </ul>
     </aside>
     <main class="flex-col bg-gray-300 w-full ml-4 pr-6">
-        <div class="mt-6">
+        <div class="mt-6 mb-12">
             @yield('content')
         </div>
     </main>

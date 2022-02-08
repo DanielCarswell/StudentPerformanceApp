@@ -16,7 +16,6 @@ class CreateAssignmentsTable extends Migration
         Schema::create('assignments', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('year');
             $table->integer('class_worth');
             $table->boolean('is_exam');
             $table->foreignId('class_id')->constrained('classes')->onDelete('cascade');

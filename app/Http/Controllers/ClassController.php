@@ -66,6 +66,15 @@ class ClassController extends Controller
         return view('admin.classes.create_class');
     }
 
+    public function search_classes(Request $request) {
+        $q = $request->q;
+        $classes = Classe::where ( 'name', 'LIKE', '%' . $q . '%' )->orWhere ( 'class_code', 'LIKE', '%' . $q . '%' )->paginate(8);
+        
+        return view('admin.classes.index', [
+            'classes' => $classes
+        ]);
+    }
+
     public function student_records(User $student)
     {
         $lists = DB::table('users')
