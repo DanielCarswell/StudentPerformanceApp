@@ -21,7 +21,7 @@
     </div>
     <div class="mb-6">
     <form action="{{  route('search_classes')  }}" method="post" role="search">
-      {{ csrf_field() }}
+      @csrf
       <div class="input-group">
         <label class="text-xl">Search Classes: </label>
           <input type="text" class="form-control pt-4 pb-4 pr-12 pl-2 ml-2 text-xl" name="q" placeholder="Search classes">
@@ -58,10 +58,10 @@
                     <span class="text-center ml-2 font-semibold flex justify-center">{{  $class->name  }}</span>
                 </td>
                 <td class="px-16 py-2 flex justify-center">
-                    <form action="{{ route('assignments.class_assignments', $class)  }}" method="post">
+                    <form action="{{ route('class_assignments', $class->id)  }}" method="post">
                         @csrf
                         <span class="flex justify-center">
-                            <button type="submit" style="background-color:#f97316;" class="bg-blue-400 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+                            <button type="submit" class="bg-blue-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
                               <i class="fas fa-clipboard-list"></i>&nbsp;&nbsp;View Assignments
                             </button>
                         </span>
@@ -69,12 +69,12 @@
                     <form action="{{ route('classes.class_records', $class)  }}" method="post">
                         @csrf
                         <span class="flex justify-center">
-                            <button type="submit" style="background-color:#f97316;" class="bg-orange-400 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+                            <button type="submit" style="background-color:#f97316;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
                               <i class="fas fa-pencil-alt"></i>&nbsp;&nbsp;Edit Class Details
                             </button>
                         </span>
                     </form>
-                    <form action="{{ route('graph.class_grades', $class)  }}" method="post">
+                    <form action="{{ route('delete_class', $class)  }}" method="post">
                         @csrf
                         <span class="flex justify-center">
                             <button type="submit" style="background-color:#7b3294;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 text-black hover:text-black">

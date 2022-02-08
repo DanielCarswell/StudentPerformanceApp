@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\ClassController;
@@ -48,12 +49,16 @@ Route::post('/graph/class_grades/{class}', [ChartController::class, 'class_grade
 Route::get('/classes', [ClassController::class, 'index'])->name('classes')->middleware('auth');
 Route::get('/admin/classes', [ClassController::class, 'admin_index'])->name('admin_classes')->middleware('auth'); 
 Route::get('/admin/create_class', [ClassController::class, 'create'])->name('create_class')->middleware('auth'); 
+Route::post('/admin/delete_class/{class}', [ClassController::class, 'delete'])->name('delete_class')->middleware('auth'); 
 Route::post('/admin/search_classes', [ClassController::class, 'search_classes'])->name('search_classes')->middleware('auth'); 
 
 Route::get('/classes/class_records/{class}', [ClassController::class, 'class_records'])->middleware('auth');
 Route::post('/classes/class_records/{class}', [ClassController::class, 'class_records'])->name('classes.class_records')->middleware('auth');
-
 Route::get('/classes/student_records/{student}', [ClassController::class, 'student_records'])->middleware('auth');
 Route::post('/classes/student_records/{student}', [ClassController::class, 'student_records'])->name('classes.student_records')->middleware('auth');
+
+Route::get('/admin/assignments/add_assignment/{class_id}', [AssignmentController::class, 'create'])->name('add_assignment')->middleware('auth');
+Route::post('/admin/assignments/index/{class_id}', [AssignmentController::class, 'class_assignments'])->name('class_assignments')->middleware('auth');
+Route::post('/admin/search_assignments', [AssignmentController::class, 'search_assignments'])->name('search_assignments')->middleware('auth');
 
 Route::get('/students', [StudentController::class, 'index'])->name('students')->middleware('auth');

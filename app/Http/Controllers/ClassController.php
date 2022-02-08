@@ -66,6 +66,12 @@ class ClassController extends Controller
         return view('admin.classes.create_class');
     }
 
+    public function delete(Classe $class) {
+        return view('admin.classes.delete', [
+            'class' => $class
+        ]);
+    }
+
     public function search_classes(Request $request) {
         $q = $request->q;
         $classes = Classe::where ( 'name', 'LIKE', '%' . $q . '%' )->orWhere ( 'class_code', 'LIKE', '%' . $q . '%' )->paginate(8);
