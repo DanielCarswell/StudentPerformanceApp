@@ -3,26 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PermissionController extends Controller
 {
-    public function index()
-    {
-        //
-    }
+    public function role_permissions(Role $role) {
+        $permissions = DB::table('permissions')
+        ->select('permissions.name', 'permissions.slug')
+        ->from('permissions')
+        ->join('roles', 'roles.id', '=', 'permissions.id')
+        ->where('roles.id', '=', $role->id)
+        ->paginate(20);
 
-    public function show()
-    {
-        //
-    }
-
-    public function update()
-    {
-        //
-    }
-
-    public function destroy()
-    {
-        //
+        return view('admin.permissions.role_permissions', [
+            'permissions' => $permissions,
+            'role' => $role
+        ]);
     }
 }

@@ -72,6 +72,19 @@ class ClassController extends Controller
         ]);
     }
 
+    public function destroy(Classe $class)
+    {
+        $this->authorize('delete_class', auth()->user());   
+        $class->delete();
+        
+        $classes = Classe::with(['students'])
+        ->paginate(8);
+
+        return view('admin.classes.index', [
+            'classes' => $classes
+        ]);
+    }
+
     public function search_classes(Request $request) {
         $q = $request->q;
         $classes = Classe::where ( 'name', 'LIKE', '%' . $q . '%' )->orWhere ( 'class_code', 'LIKE', '%' . $q . '%' )->paginate(8);

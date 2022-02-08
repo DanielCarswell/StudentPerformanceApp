@@ -23,7 +23,7 @@
             <a href="{{  route('admin_classes')  }}">Classes</a>
         </li>
         <li class="flex space-x-2 mt-4 px-6 py-4 text-white hover:bg-white hover:text-blue-800 font-bold hover:rounded-br-3xl transition duration-100 cursor-pointer">
-            <a href="">Roles/Permissions</a>
+            <a href="{{  route('roles_index')  }}">Roles/Permissions</a>
         </li>
         <li class="flex space-x-2 mt-4 px-6 py-4 text-white hover:bg-white hover:text-blue-800 font-bold hover:rounded-br-3xl transition duration-100 cursor-pointer">
             <a href="{{ route('homepage') }}">Return to App</a>

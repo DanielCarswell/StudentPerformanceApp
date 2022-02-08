@@ -9,6 +9,8 @@ use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\ClassController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,5 +62,13 @@ Route::post('/classes/student_records/{student}', [ClassController::class, 'stud
 Route::get('/admin/assignments/add_assignment/{class_id}', [AssignmentController::class, 'create'])->name('add_assignment')->middleware('auth');
 Route::post('/admin/assignments/index/{class_id}', [AssignmentController::class, 'class_assignments'])->name('class_assignments')->middleware('auth');
 Route::post('/admin/search_assignments', [AssignmentController::class, 'search_assignments'])->name('search_assignments')->middleware('auth');
+
+Route::get('/admin/roles/add_role', [RoleController::class, 'create'])->name('add_role')->middleware('auth');
+Route::get('/admin/roles/edit_role/{role}', [RoleController::class, 'edit'])->name('edit_role')->middleware('auth');
+Route::get('/admin/roles/index', [RoleController::class, 'index'])->name('roles_index')->middleware('auth');
+Route::post('/admin/search_roles', [RoleController::class, 'search_roles'])->name('search_roles')->middleware('auth');
+Route::post('/admin/delete_role/{role}', [RoleController::class, 'delete'])->name('delete_role')->middleware('auth'); 
+
+Route::post('/admin/permissions/role_permissions/{role}', [PermissionController::class, 'role_permissions'])->name('role_permissions')->middleware('auth');
 
 Route::get('/students', [StudentController::class, 'index'])->name('students')->middleware('auth');

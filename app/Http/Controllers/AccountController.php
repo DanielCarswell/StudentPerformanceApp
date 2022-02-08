@@ -52,11 +52,8 @@ class AccountController extends Controller
 
     public function destroy(User $account)
     {
-        
-        $this->authorize('delete', auth()->user());
-        
+        $this->authorize('delete', auth()->user());   
         $account->delete();
-
         return back();
     }
 }
