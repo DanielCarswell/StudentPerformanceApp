@@ -50,11 +50,10 @@ class RoleController extends Controller
         ]);
     }
 
-    public function search_roles(Role $role) {
-        $query = $request->query;
+    public function search_roles(Request $request) {
+        $query = $request->q;
 
-        $roles = DB::table('roles')
-        ->where('name', 'LIKE', '%' . $query . '%')
+        $roles = Role::where('name', 'LIKE', '%' . $query . '%')
         ->paginate(5);
 
         return view('admin.roles.index', [

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use App\Models\Role;
+use App\Models\Permission;
+
 class PermissionController extends Controller
 {
     public function role_permissions(Role $role) {

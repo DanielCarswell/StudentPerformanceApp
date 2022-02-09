@@ -11,14 +11,13 @@
                 </button>
             </span>
         </a>
-        <form action="{{  route('roles_index')  }}" method="post" >
-            @csrf
+        <a href="{{  route('roles_index')  }}" >
             <span class="flex justify-center">
                 <button type="submit" style="background-color:#a6611a;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
                     <i class="fas fa-circle-notch"></i>&nbsp;&nbsp;Reset Search
                 </button>
             </span>
-        </form>
+        </a>
     </div>
     <div class="mb-6">
     <form action="{{  route('search_roles')  }}" method="post" role="search">
@@ -56,7 +55,7 @@
                     <form action="{{ route('role_permissions', $role)  }}" method="post">
                         @csrf
                         <span class="flex justify-center">
-                            <button type="submit" class="bg-blue-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+                            <button type="submit" class="bg-blue-500 text-white px-4 py-2 border rounded-md hover:border-indigo-500 hover:text-black">
                               <i class="fas fa-clipboard-list"></i>&nbsp;&nbsp;View Role Permissions
                             </button>
                         </span>
