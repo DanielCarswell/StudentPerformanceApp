@@ -20,7 +20,6 @@ class CreateClassesTable extends Migration
             $table->integer('year');
             $table->integer('credits');
             $table->foreignId('course_id')->constrained('courses')->onDelete('cascade');
-            $table->timestamps();
         });
     }
 

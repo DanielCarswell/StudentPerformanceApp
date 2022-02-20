@@ -15,8 +15,10 @@ class AdvisorNotesTable extends Migration
     {
         Schema::create('student_advisor_notes', function (Blueprint $table) {
             $table->primary(["student_id", "advisor_id"]);
-            $table->foreignId('student_id')->constrained('student_advisor')->onDelete('cascade');
-            $table->foreignId('advisor_id')->constrained('student_advisor')->onDelete('cascade');
+            $table->foreignId('student_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('advisor_id')->constrained('users')->onDelete('cascade');
+            $table->string('topic');
+            $table->string('note');
         });
     }
 

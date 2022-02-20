@@ -18,7 +18,6 @@ class CreateCircumstancesTable extends Migration
             $table->foreignId('student_id')->constrained('users')->onDelete('cascade');
             $table->string('name');
             $table->string('information');
-            $table->timestamps();
         });
     }
 

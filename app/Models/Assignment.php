@@ -15,10 +15,9 @@ class Assignment extends Model
      * @var string[]
      */
     protected $fillable = [
-        'fullname',
-        'username',
-        'email',
-        'password'
+        'name',
+        'class_worth',
+        'is_exam'
     ];
 
     public function class()

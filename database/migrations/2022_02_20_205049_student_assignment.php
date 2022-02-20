@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserClassTable extends Migration
+class CreateStudentAssignmentTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,15 @@ class CreateUserClassTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_class', function (Blueprint $table) {
-            $table->primary(["user_id", "class_id"]);
+        Schema::create('student_assignment', function (Blueprint $table) {
+            $table->primary(["user_id", "assignment_id", "class_id"]);
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('assignment_id')->constrained('assignments')->onDelete('cascade');
             $table->foreignId('class_id')->constrained('classes')->onDelete('cascade');
-            $table->double('grade');
-            $table->double('attendance');
+            $table->string('name');
+            $table->integer('class_worth');
+            $table->boolean('is_exam');
+            $table->double('score');
         });
     }
 
@@ -29,6 +32,6 @@ class CreateUserClassTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_class');
+        Schema::dropIfExists('student_assignment');
     }
 }

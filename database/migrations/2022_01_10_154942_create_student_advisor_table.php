@@ -14,8 +14,8 @@ class CreateStudentAdvisorTable extends Migration
     public function up()
     {
         Schema::create('student_advisor', function (Blueprint $table) {
-            $table->primary(["user_id", "advisor_id"]);
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->primary(["student_id", "advisor_id"]);
+            $table->foreignId('student_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('advisor_id')->constrained('users')->onDelete('cascade');
         });
     }

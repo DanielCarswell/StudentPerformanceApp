@@ -13,14 +13,12 @@ class CreateAssignmentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('student_class_assignments', function (Blueprint $table) {
-            $table->primary(["user_id", "class_id"]);
-            $table->foreignId('user_id')->constrained('user_class')->onDelete('cascade');
-            $table->foreignId('class_id')->constrained('user_class')->onDelete('cascade');
+        Schema::create('assignments', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
             $table->integer('class_worth');
             $table->boolean('is_exam');
-            $table->timestamps();
+            $table->foreignId('class_id')->constrained('classes')->onDelete('cascade');
         });
     }
 

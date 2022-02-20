@@ -18,7 +18,6 @@ class CreateCoursesTable extends Migration
             $table->string('name')->unique();
             $table->integer('total_years');
             $table->integer('required_credits');
-            $table->timestamps();
         });
     }
 
