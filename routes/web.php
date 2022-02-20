@@ -69,6 +69,7 @@ Route::get('/admin/roles/index', [RoleController::class, 'index'])->name('roles_
 Route::post('/admin/search_roles', [RoleController::class, 'search_roles'])->name('search_roles')->middleware('auth');
 Route::post('/admin/delete_role/{role}', [RoleController::class, 'delete'])->name('delete_role')->middleware('auth'); 
 
+Route::get('/admin/permissions/index', [PermissionController::class, 'index'])->name('permission_index')->middleware('auth');
 Route::post('/admin/permissions/role_permissions/{role}', [PermissionController::class, 'role_permissions'])->name('role_permissions')->middleware('auth');
 
 Route::get('/students', [StudentController::class, 'index'])->name('students')->middleware('auth');

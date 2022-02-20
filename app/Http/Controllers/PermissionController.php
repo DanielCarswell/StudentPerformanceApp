@@ -10,6 +10,14 @@ use App\Models\Permission;
 
 class PermissionController extends Controller
 {
+    public function index() {
+        $permissions = DB::table('permissions')->paginate(20);
+
+        return view('admin.permissions.index', [
+            'permissions' => $permissions
+        ]);
+    }
+
     public function role_permissions(Role $role) {
         $permissions = DB::table('permissions')
         ->select('permissions.name', 'permissions.slug')
