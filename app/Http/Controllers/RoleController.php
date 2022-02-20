@@ -18,6 +18,12 @@ class RoleController extends Controller
         ]);
     }
 
+    public function add_role_permission(Role $role) {
+        return view('admin.roles.add_role_permission', [
+            'role' => $role
+        ]);
+    }
+
     public function create() {
         
     }

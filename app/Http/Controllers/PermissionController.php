@@ -18,11 +18,17 @@ class PermissionController extends Controller
         ]);
     }
 
+    public function add_role_permission(Request $request) {
+        /*return view('admin.permissions.role_permissions', [
+            'permissions' => $permissions,
+            'role' => $role
+        ]);*/
+    }
+
     public function role_permissions(Role $role) {
-        $permissions = DB::table('permissions')
-        ->select('permissions.name', 'permissions.slug')
-        ->from('permissions')
-        ->join('roles', 'roles.id', '=', 'permissions.id')
+        $permissions = Permission::
+        join('role_permission', 'role_permission.permission_id', '=', 'permissions.id')
+        ->join('roles', 'role_permission.role_id', '=', 'roles.id')
         ->where('roles.id', '=', $role->id)
         ->paginate(20);
 
@@ -30,5 +36,9 @@ class PermissionController extends Controller
             'permissions' => $permissions,
             'role' => $role
         ]);
+    }
+
+    public function delete(int $role_id, int $permission_id) {
+        
     }
 }
