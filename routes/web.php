@@ -65,9 +65,12 @@ Route::get('/classes/student_records/{student}', [ClassController::class, 'stude
 Route::post('/classes/student_records/{student}', [ClassController::class, 'student_records'])->name('classes.student_records')->middleware('auth');
 
 
-Route::get('/admin/assignments/add_assignment/{class_id}', [AssignmentController::class, 'create'])->name('add_assignment')->middleware('auth');
+Route::get('/admin/assignments/add_assignment/{class_id}', [AssignmentController::class, 'create'])->name('create_assignment')->middleware('auth');
+Route::post('/admin/assignments/add_assignment', [AssignmentController::class, 'add'])->name('add_assignment')->middleware('auth');
 Route::post('/admin/assignments/index/{class_id}', [AssignmentController::class, 'class_assignments'])->name('class_assignments')->middleware('auth');
 Route::post('/admin/search_assignments', [AssignmentController::class, 'search_assignments'])->name('search_assignments')->middleware('auth');
+Route::post('/admin/assignments/delete/{class_id}/{assignment_id}', [AssignmentController::class, 'delete'])->name('delete_assignment')->middleware('auth');
+Route::delete('/admin/assignments/destroy/{assignment_id}', [AccountController::class, 'destroy'])->name('destroy_assignment')->middleware('auth');
 
 
 Route::get('/admin/roles/add_role', [RoleController::class, 'create'])->name('add_role')->middleware('auth');

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Role;
+use App\Models\Permission;
 
 class RoleController extends Controller
 {
@@ -19,7 +20,9 @@ class RoleController extends Controller
     }
 
     public function add_role_permission(Role $role) {
+        $permissions = Permission::all();
         return view('admin.roles.add_role_permission', [
+            'permissions' => $permissions,
             'role' => $role
         ]);
     }

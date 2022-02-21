@@ -4,7 +4,7 @@
   <div class="ml-12 mr-12">
     <p class="text-2xl font-extrabold flex justify-center mb-6">{{  $class->name  }} Assignments</p>
     <div class="px-16 py-2 flex justify-center">
-        <a href="{{ route('add_assignment', $class->id)  }}">
+        <a href="{{ route('create_assignment', $class->id)  }}">
             <span class="flex justify-center">
                 <button type="submit" style="background-color:#4dac26;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
                     <i class="fas fa-plus"></i>&nbsp;&nbsp;Add Assignment
@@ -34,6 +34,9 @@
             </span>
         </div>
     </form>
+    </div>
+    <div>
+      <h2>(Please be careful that total does not exceed 100% class worth)</h2>
     </div>
     <table class="min-w-full table-auto rounded-lg">
       <thead class="justify-between">
@@ -68,7 +71,7 @@
                             </button>
                         </span>
                     </form>
-                    <form action="{{ route('graph.class_grades', $class)  }}" method="post">
+                    <form action="{{ route('delete_assignment', [$class->id, $assignment->id])  }}" method="post">
                         @csrf
                         <span class="flex justify-center">
                             <button type="submit" style="background-color:#7b3294;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 text-black hover:text-black">
