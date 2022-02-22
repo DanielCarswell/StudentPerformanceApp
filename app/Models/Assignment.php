@@ -17,7 +17,8 @@ class Assignment extends Model
     protected $fillable = [
         'name',
         'class_worth',
-        'is_exam'
+        'is_exam',
+        'class_id'
     ];
 
     public function class()

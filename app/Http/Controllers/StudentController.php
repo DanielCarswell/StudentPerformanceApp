@@ -16,10 +16,10 @@ class StudentController extends Controller
         ->paginate(8);
 
         foreach($students1 as $student) {
-            $student->average_grade = (\DB::table('user_class')
-            ->select(\DB::raw('round(AVG(CAST(user_class.grade as numeric)), 1) as average_grade'))
-            ->where('user_class.user_id', '=', $student->id)
-            ->groupBy('user_class.user_id')
+            $student->average_grade = (\DB::table('student_class')
+            ->select(\DB::raw('round(AVG(CAST(student_class.grade as numeric)), 1) as average_grade'))
+            ->where('student_class.student_id', '=', $student->id)
+            ->groupBy('student_class.student_id')
             ->get()[0]->average_grade);
         }
 
@@ -44,5 +44,20 @@ class StudentController extends Controller
             'students3' => $students3,
             'students4' => $students4
         ]);
+    }
+
+    public function add_to_class(User $student, int $class_id){
+        $assignments = Assignment::where('class_id', '=', $class_id)->get();
+
+        DB::table('student_class')->insert([
+            'name' => $request->assignmentname,
+            'class_worth' => $request->classworth,
+            'is_exam' => $request->isexam,
+            'class_id' => $request->class_id
+        ]);
+
+        if($assignments->count()) {
+
+        }
     }
 }

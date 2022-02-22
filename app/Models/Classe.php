@@ -14,9 +14,14 @@ class Classe extends Model
         'credits'
     ];
 
+    public function lecturers()
+    {
+        return $this->belongsToMany(User::class, 'lecturer_class', 'class_id', 'lecturer_id');
+    }
+
     public function students()
     {
-        return $this->belongsToMany(User::class, 'user_class', 'class_id', 'user_id')->withPivot('grade', 'attendance');
+        return $this->belongsToMany(User::class, 'student_class', 'class_id', 'student_id')->withPivot('grade', 'attendance');
     }
 
     public function course()

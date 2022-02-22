@@ -27,8 +27,24 @@ class RoleController extends Controller
         ]);
     }
 
+    public function add(Request $request) {
+        //Checking assignment credentials are valid.
+        $credentials = $request->validate([
+            'rolename' => ['required', 'max:255']
+        ]); 
+
+        //Adding role to database if valid credentials.
+        if ($credentials) {
+            DB::table('roles')->insert([
+                'name' => $request->rolename
+            ]);
+        }
+
+        return $this->index();
+    }
+
     public function create() {
-        
+        return view('admin.roles.create_role');
     }
 
     public function edit(Role $role) {
@@ -37,8 +53,21 @@ class RoleController extends Controller
         ]);
     }
 
-    public function update(Request $request) {
-        
+    public function modify(Request $request) {
+        $credentials = $request->validate([
+            'rolename' => ['required', 'max:255', 'unique:roles']
+        ]); 
+
+        //Adding role to database if valid credentials.
+        if ($credentials) {
+            DB::table('roles')
+            ->where('roles.id', '=', $request->roles_id)
+            ->update([
+                'name' => $request->rolename
+            ]);
+        }
+
+        return $this->index();
     }
 
     public function delete(Role $role) {

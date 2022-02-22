@@ -18,8 +18,8 @@
         </tr>
       </thead>
       <tbody class="bg-gray-200">
-        @if($classes1->count())
-          @foreach($classes1 as $class)
+        @if($classes->count())
+          @foreach($classes as $class)
             <tr class="bg-white border-4 border-gray-200 ">
                 <td>
                     <span class="text-center ml-2 font-semibold flex justify-center">{{  $class->name  }}</span>
@@ -42,7 +42,7 @@
                             </button>
                         </span>
                     </form>
-                    <form action="{{ route('graph.class_grades', $class)  }}" method="post">
+                    <form action="{{ route('graph.class_ratings', $class)  }}" method="post">
                         @csrf
                         <span class="flex justify-center">
                             <button type="submit" class="bg-yellow-400 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 text-black hover:text-black">
@@ -54,7 +54,7 @@
             </tr>
           @endforeach
 
-          {{  $classes1->links()  }}
+          {{  $classes->links()  }}
         @else
           <p>There is no data</p>
         @endif

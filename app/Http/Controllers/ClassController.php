@@ -12,16 +12,16 @@ class ClassController extends Controller
 {
     public function index()
     {
-        $classes1 = Classe::with(['students'])
+        $classes = Classe::with(['students'])
         ->where('year', '=', '1')
         ->paginate(8);
 
-        foreach($classes1 as $class) {
-            $average_grade = DB::table('user_class')
-            ->select(\DB::raw('round(AVG(CAST(user_class.grade as numeric)), 1) as average_grade'))
-            ->from('user_class')
-            ->where('user_class.class_id', '=', $class->id)
-            ->groupBy('user_class.class_id')
+        foreach($classes as $class) {
+            $average_grade = DB::table('student_class')
+            ->select(\DB::raw('round(AVG(CAST(student_class.grade as numeric)), 1) as average_grade'))
+            ->from('student_class')
+            ->where('student_class.class_id', '=', $class->id)
+            ->groupBy('student_class.class_id')
             ->get();
 
             if($average_grade->count() == 0)
@@ -30,25 +30,8 @@ class ClassController extends Controller
                 $class->average_grade = $average_grade[0]->average_grade;
         }
 
-        //dd($classes1);
-
-        $classes2 = Classe::with(['students'])
-        ->where('year', '=', '2')
-        ->get();
-
-        $classes3 = Classe::with(['students'])
-        ->where('year', '=', '3')
-        ->get();
-
-        $classes4 = Classe::with(['students'])
-        ->where('year', '=', '4')
-        ->get();
-
         return view('classes.index', [
-            'classes1' => $classes1,
-            'classes2' => $classes2,
-            'classes3' => $classes3,
-            'classes4' => $classes4
+            'classes' => $classes
         ]);
     }
 
@@ -72,17 +55,11 @@ class ClassController extends Controller
         ]);
     }
 
-    public function destroy(Classe $class)
+    public function destroy(int $class_id)
     {
-        $this->authorize('delete_class', auth()->user());   
+        $class = Classe::find($class_id);   
         $class->delete();
-        
-        $classes = Classe::with(['students'])
-        ->paginate(8);
-
-        return view('admin.classes.index', [
-            'classes' => $classes
-        ]);
+        return $this->index();
     }
 
     public function search_classes(Request $request) {
@@ -97,9 +74,9 @@ class ClassController extends Controller
     public function student_records(User $student)
     {
         $lists = DB::table('users')
-            ->join('user_class', 'users.id', '=', 'user_class.user_id')
-            ->join('classes', 'classes.id', '=', 'user_class.class_id')
-            ->from('classes', 'users', 'user_class')
+            ->join('student_class', 'users.id', '=', 'student_class.student_id')
+            ->join('classes', 'classes.id', '=', 'student_class.class_id')
+            ->from('classes', 'users', 'student_class')
             ->where('users.id', $student->id)
             ->paginate(8);
 
@@ -115,15 +92,15 @@ class ClassController extends Controller
     public function class_records(Classe $class)
     {
         $lists = DB::table('classes')
-            ->select('users.fullname', 'user_class.grade', 'user_class.attendance')
+            ->select('users.fullname', 'student_class.grade', 'student_class.attendance')
             ->from('classes')
-            ->join('user_class', 'user_class.class_id', '=', 'classes.id')
-            ->join('users', 'users.id', '=', 'user_class.user_id')
+            ->join('student_class', 'student_class.class_id', '=', 'classes.id')
+            ->join('users', 'users.id', '=', 'student_class.student_id')
             ->join('user_role', 'user_role.user_id', '=', 'users.id')
             ->join('roles', 'roles.id', '=', 'user_role.role_id')
             ->where('classes.id', $class->id)
             ->where('roles.name', '=', 'Student')
-            ->groupBy('users.fullname', 'user_class.grade', 'user_class.attendance')
+            ->groupBy('users.fullname', 'student_class.grade', 'student_class.attendance')
             ->paginate(8);
 
         return view('classes.class_records', [

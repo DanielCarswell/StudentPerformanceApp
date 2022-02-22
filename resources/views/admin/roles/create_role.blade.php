@@ -19,6 +19,14 @@
                         <button type="submit" class="bg-purple-500 text-white px-4 py-3 rounded font-bold w-full">Create Role</button>
                     </div>
                 </form>
+                <form action="{{ route('roles_index')  }}" method="get">
+                @csrf
+                <span class="flex justify-center items-center">
+                    <button type="submit" style="background-color:#4dac26;" class="text-white mt-2 px-4 py-3 rounded font-bold w-full">
+                        Go Back
+                    </button>
+                </span>
+            </form>
         </div>
     </div>
 @endsection

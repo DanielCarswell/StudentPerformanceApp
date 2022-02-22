@@ -6,6 +6,7 @@
             <h2 class="text-2xl my-4 flex justify-center"><b>Create New Assignment</b></h2>
             <form action="{{ route('add_assignment') }}" method="post">
                 @csrf
+                <input name="class_id" value="{{ $class_id }}" type="hidden">
                 <div class="mb-4">
                     <label for="assignmentname" class="sr-only">Assignment name</label>
                     <input type="text" name="assignmentname" id="assignmentname" placeholder="Enter Assignment Name" class="p-3 w-full text-black text-bold bg-gray-200 border-2 @error('assignmentname') border-red-500 @enderror rounded-lg" value="{{ old('assignmentname') }}">
@@ -37,13 +38,14 @@
                     <button type="submit" class="bg-purple-500 text-white px-4 py-3 rounded font-bold w-full">Add Assignment</button>
                 </div>
             </form>
-            <a href="{{ route('admin_classes')  }}">
+            <form action="{{ route('class_assignments', $class_id)  }}" method="post">
+                @csrf
                 <span class="flex justify-center items-center">
                     <button type="submit" style="background-color:#4dac26;" class="text-white mt-2 px-4 py-3 rounded font-bold w-full">
                         Go Back
                     </button>
                 </span>
-            </a>
+            </form>
         </div>
     </div>
 @endsection
