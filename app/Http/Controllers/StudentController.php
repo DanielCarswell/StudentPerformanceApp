@@ -12,7 +12,7 @@ class StudentController extends Controller
     {
         $students1 = User::with(['classes'])
         ->where('id', '!=', 1)
-        ->whereIn('id', range(2,11))
+        ->whereIn('id', range(3,12))
         ->paginate(8);
 
         foreach($students1 as $student) {

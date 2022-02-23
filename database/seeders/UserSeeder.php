@@ -22,6 +22,13 @@ class UserSeeder extends Seeder
             'password' => Hash::make('admin')
         ]); 
 
-        \App\Models\User::factory(40)->create();
+        DB::table('users')->insert([
+            'fullname' => 'lecturer',
+            'username' => 'lecturer',
+            'email' => 'lecturer@studentperformance.net',
+            'password' => Hash::make('lecturer')
+        ]); 
+
+        \App\Models\User::factory(39)->create();
     }
 }

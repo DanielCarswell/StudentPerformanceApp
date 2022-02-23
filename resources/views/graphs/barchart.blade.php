@@ -37,8 +37,9 @@
     <div class="ml-12 mr-12 mt-9">
         <h2 class="text-2xl font-extrabold flex justify-center mb-6">Class {{  $class->name  }} Grades</h2>
     </div>
-    <div class="container-fluid p-5 ml-9 mr-9">
+    <div class="container-fluid p-5 ml-9 mr-9 flex justify-center">
     <div id="barchart_material" style="width: 1300px; height: 700px;"></div>
+    </div>
     </div>
 </body>
 @endsection

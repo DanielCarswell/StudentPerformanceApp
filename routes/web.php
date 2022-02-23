@@ -50,11 +50,11 @@ Route::delete('/admin/accounts/{account}', [AccountController::class, 'destroy']
 
 
 Route::get('/graph/class_grades_example', [ChartController::class, 'class_grades_example'])->name('graph.class_grades_example');
-Route::post('/graph/barchart/class_grades/{class}', [ChartController::class, 'class_grades'])->name('graph.class_grades');
-Route::post('/graphs/pichart/ratings/{class}', [ChartController::class, 'class_ratings'])->name('graph.class_ratings');
-Route::post('/graphs/student_details/{student}', [ChartController::class, 'student_details'])->name('graph.student_details');
-Route::post('/graphs/student_ratings/{student}', [ChartController::class, 'student_ratings'])->name('graph.student_ratings');
-Route::post('/graphs/select', [ChartController::class, 'select_graph'])->name('graph');
+Route::any('/graph/barchart/class_grades/{class}', [ChartController::class, 'class_grades'])->name('graph.class_grades');
+Route::any('/graphs/pichart/ratings/{class}', [ChartController::class, 'class_ratings'])->name('graph.class_ratings');
+Route::any('/graphs/student_details/{student}', [ChartController::class, 'student_details'])->name('graph.student_details');
+Route::any('/graphs/student_ratings/{student}', [ChartController::class, 'student_ratings'])->name('graph.student_ratings');
+Route::any('/graphs/select', [ChartController::class, 'select_graph'])->name('graph');
 
 
 Route::get('/classes', [ClassController::class, 'index'])->name('classes')->middleware('auth');

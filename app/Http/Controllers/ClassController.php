@@ -20,15 +20,14 @@ class ClassController extends Controller
     {
         //Mail::to(auth()->user())->send(new LowGradeNotification(auth()->user(), 'CS103'));
         //Mail::to(auth()->user())->send(new DepressionCircumstance(auth()->user(), 'Daniel'));
-        /**
-         * $classes = Classe::with(['students'])
+         $classes = Classe::with(['students'])
         ->with(['lecturers'])
         ->join('lecturer_class', 'lecturer_class.class_id', '=', 'classes.id')
         ->where('lecturer_class.lecturer_id', '=', auth()->user()->id)
         ->paginate(8);
-         */
-        $classes = Classe::with(['students'])
-        ->paginate(8);
+         
+        //$classes = Classe::with(['students'])
+        //->paginate(8);
 
         foreach($classes as $class) {
             $average_grade = DB::table('student_class')

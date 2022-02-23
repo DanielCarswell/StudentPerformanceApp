@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
+use App\Models\Classe;
+
 class AssignmentSeeder extends Seeder
 {
     /**
@@ -55,5 +57,49 @@ class AssignmentSeeder extends Seeder
             'is_exam' => true,
             'class_id' => 1
         ]);
+
+        $student_ids = range(3,40);
+
+        foreach($student_ids as $student_id) {
+            DB::table('student_assignment')
+            ->insert([
+                'assignment_id' => 1,
+                'class_id' => 1,
+                'user_id' => $student_id,
+                'percent' => rand(25,100)
+            ]);
+
+            DB::table('student_assignment')
+            ->insert([
+                'assignment_id' => 2,
+                'class_id' => 1,
+                'user_id' => $student_id,
+                'percent' => rand(25,100)
+            ]);
+
+            DB::table('student_assignment')
+            ->insert([
+                'assignment_id' => 3,
+                'class_id' => 1,
+                'user_id' => $student_id,
+                'percent' => rand(25,100)
+            ]);
+
+            DB::table('student_assignment')
+            ->insert([
+                'assignment_id' => 4,
+                'class_id' => 1,
+                'user_id' => $student_id,
+                'percent' => rand(25,100)
+            ]);
+
+            DB::table('student_assignment')
+            ->insert([
+                'assignment_id' => 5,
+                'class_id' => 1,
+                'user_id' => $student_id,
+                'percent' => rand(25,100)
+            ]);
+        }
     }
 }

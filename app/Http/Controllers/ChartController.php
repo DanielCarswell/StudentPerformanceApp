@@ -113,7 +113,7 @@ class ChartController extends Controller
         ->where('id', $class->id)
         ->first();
         
-    	return view('/graphs/class_grades', ['grades_model' => $grades_model, 'class' => $class]);
+    	return view('graphs/barchart', ['grades_model' => $grades_model, 'class' => $class]);
     }
 
     public function class_grades_example()
@@ -132,6 +132,6 @@ class ChartController extends Controller
             ->where('id', '12')
             ->first();
         
-    	return view('/graphs/class_grades', ['grades_model' => $grades_model, 'class' => $class]);
+    	return view('graphs/class_grades', ['grades_model' => $grades_model, 'class' => $class]);
     }
 }
