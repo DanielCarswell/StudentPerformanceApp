@@ -27,6 +27,11 @@
             </form>
         </li>
         <li class="flex space-x-2 mt-4 px-6 py-4 text-white hover:bg-white hover:text-blue-800 font-bold hover:rounded-br-3xl transition duration-100 cursor-pointer">
+            <form action="{{  route('admin_circumstances')  }}" method="get">
+                <button type="submit">Circumstances</button>
+            </form>
+        </li>
+        <li class="flex space-x-2 mt-4 px-6 py-4 text-white hover:bg-white hover:text-blue-800 font-bold hover:rounded-br-3xl transition duration-100 cursor-pointer">
             <form action="{{  route('roles_index')  }}" method="get">
                 <button type="submit">Roles/Permissions</button>
             </form>

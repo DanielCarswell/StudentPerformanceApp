@@ -125,4 +125,31 @@ class AssignmentController extends Controller
             'class' => $class
         ]);
     }
+
+    public function update_mark(Request $request){
+        $credentials = $request->validate([
+            'percent' => ['numeric']
+        ]);
+
+        if($credentials && $request->percent >= 0 && $request->percent <= 100)
+            DB::table('student_assignment')
+            ->where('assignment_id', '=', $request->assignment_id)
+            ->where('class_id', '=', $request->class_id)
+            ->where('user_id', '=', $request->student_id)
+            ->update([
+                'percent' => $request->percent
+            ]);
+
+        $assignment = Assignment::find($request->assignment_id);
+        $class = Classe::find($request->class_id);
+
+        return redirect()->route('assignment_grades', [$assignment, $class]);
+    }
+
+    public function upload(Request $request) {
+        //dd($request);
+        return view('classes.upload_assignment_grades', [
+            'class_id' => $request->class_id
+        ]);
+    }
 }

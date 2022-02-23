@@ -6,5 +6,7 @@ use Illuminate\Http\Request;
 
 class CircumstanceController extends Controller
 {
-    //
+    public function index() {
+        
+    }
 }

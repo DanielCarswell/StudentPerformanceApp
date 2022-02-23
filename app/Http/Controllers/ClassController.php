@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+
+
+use App\Mail\LowGradeNotification;
+use App\Mail\DepressionCircumstance;
 
 use App\Models\Assignment;
 use App\Models\Classe;
@@ -13,6 +18,8 @@ class ClassController extends Controller
 {
     public function index()
     {
+        //Mail::to(auth()->user())->send(new LowGradeNotification(auth()->user(), 'CS103'));
+        //Mail::to(auth()->user())->send(new DepressionCircumstance(auth()->user(), 'Daniel'));
         /**
          * $classes = Classe::with(['students'])
         ->with(['lecturers'])
@@ -87,10 +94,39 @@ class ClassController extends Controller
     }
 
     public function assignment_grades(Assignment $assignment, Classe $class) {
-        $students = DB::table('users')
+        /*$students = User::
+        select('users.id', 'users.fullname', 'student_assignment.percent')
+        ->from('student_assignment', 'users')
         ->join('student_class', 'student_class.student_id', 'users.id')
-        ->where('student_class.class_id', $class->id)
+        ->join('student_assignment', 'student_assignment.user_id', 'users.id')
+        ->join('assignments', 'assignments.id', 'student_assignment.assignment_id')
+        ->where('student_assignment.class_id', $class->id)
+        ->where('assignments.id', $assignment->id)
+        ->paginate(10);*/
+
+        $students = DB::table('users')
+        ->select('users.id', 'users.fullname', 'assignments.name', 'student_assignment.percent')
+        ->join('student_assignment', 'student_assignment.user_id', 'users.id')
+        ->join('assignments', 'assignments.id', 'student_assignment.assignment_id')
+        ->where('student_assignment.class_id', $class->id)
+        ->where('student_assignment.assignment_id', $assignment->id)
         ->paginate(10);
+
+        //$count = 0;
+        /*foreach($students as $student) {
+            $count += 1;
+            $percent = DB::table('student_assignment')
+            ->where('student_assignment.assignment_id', $assignment->id)
+            ->where('student_assignment.user_id', $student->id)
+            ->where('student_assignment.class_id', $class->id)
+            ->first();
+
+            dd($class);
+            if($percent != null)  { $student->percent = $percent->percent;}
+            else $student->percent = 0;
+        }*/
+
+        //dd($count);
 
         return view('classes.assignment_grades', [
             'assignment' => $assignment,
@@ -154,18 +190,48 @@ class ClassController extends Controller
         ]);
     }
 
-    public function add_student(Classe $class, User $student) {
-        DB::table('student_class')
-        ->insert(['class_id' => $class->id, 'student_id' => $student->id]);
+    public function add(Classe $class) {
+        $studentsUnfiltered = User::with(['classes'])->get();
 
-        $assignments = Assignment::where('class_id', $class->id)->get();
+        $student_ids = [];
+
+        foreach($studentsUnfiltered as $student) {
+            $count = 0;
+            $check = $student->classes->count();
+            foreach($student->classes as $classe) {
+                if($class->id == $classe->id)
+                    break;
+                else if($count == $check-1)
+                    array_push($student_ids, $student->id);
+                else
+                    $count += 1;
+            }
+        }
+
+        $students = DB::table('users')
+        ->whereIn('id', $student_ids)
+        ->paginate(10);
+
+        return view('admin.classes.add_student', [
+            'class' => $class,
+            'students' => $students
+        ]);
+    }
+
+    public function add_student(int $class_id, int $student_id) {
+        DB::table('student_class')
+        ->insert(['class_id' => $class_id, 'student_id' => $student_id, 'grade' => 100, 'attendance' => 100]);
+
+        $assignments = Assignment::where('class_id', $class_id)->get();
 
         foreach($assignments as $assignment)
         {
             DB::table('student_assignment')
-            ->insert(['class_id' => $class->id, 'student_id' => $student->id, 'assignment_id' => $assignment->id]);
+            ->insert(['class_id' => $class_id, 'user_id' => $student_id, 'assignment_id' => $assignment->id]);
         }
 
-        return back();
+        $class = Classe::find($class_id);
+
+        return redirect()->route('class.students', $class);
     }
 }
