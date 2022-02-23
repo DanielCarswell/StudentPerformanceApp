@@ -17,16 +17,24 @@
         </div>
         <ul>
         <li class="flex space-x-2 mt-4 px-6 py-4 text-white hover:bg-white hover:text-blue-800 font-bold hover:rounded-br-3xl transition duration-100 cursor-pointer">
-            <a href="{{  route('accounts')  }}">Users</a>
+            <form action="{{  route('accounts')  }}" method="get">
+                <button type="submit">Users</button>
+            </form>
         </li>
         <li class="flex space-x-2 mt-4 px-6 py-4 text-white hover:bg-white hover:text-blue-800 font-bold hover:rounded-br-3xl transition duration-100 cursor-pointer">
-            <a href="{{  route('admin_classes')  }}">Classes</a>
+            <form action="{{  route('admin_classes')  }}" method="get">
+                <button type="submit">Classes</button>
+            </form>
         </li>
         <li class="flex space-x-2 mt-4 px-6 py-4 text-white hover:bg-white hover:text-blue-800 font-bold hover:rounded-br-3xl transition duration-100 cursor-pointer">
-            <a href="{{  route('roles_index')  }}">Roles/Permissions</a>
+            <form action="{{  route('roles_index')  }}" method="get">
+                <button type="submit">Roles/Permissions</button>
+            </form>
         </li>
         <li class="flex space-x-2 mt-4 px-6 py-4 text-white hover:bg-white hover:text-blue-800 font-bold hover:rounded-br-3xl transition duration-100 cursor-pointer">
-            <a href="{{ route('homepage') }}">Return to App</a>
+            <form action="{{ route('homepage') }}" method="get">
+                <button type="submit">Return to App</button>
+            </form>
         </li>
         </ul>
     </aside>

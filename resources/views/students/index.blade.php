@@ -42,12 +42,20 @@
                           </button>
                       </span>
                   </form>
+                  <form action="{{ route('graph.student_ratings', $student)  }}" method="post">
+                        @csrf
+                        <span class="flex justify-center">
+                            <button type="submit" class="bg-yellow-400 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 text-black hover:text-black">
+                                View As Graph <i class="fas fa-star"></i>
+                            </button>
+                        </span>
+                    </form>
               </td>
             </tr>
           @endforeach
           {{  $students1->links()  }}
         @else
-          <p>There is no data</p>
+          <p>You are not assigned as Advisor for any Students</p>
         @endif
       </tbody>
     </table>

@@ -49,16 +49,21 @@ Route::delete('/admin/accounts/{account}', [AccountController::class, 'destroy']
 
 
 Route::get('/graph/class_grades_example', [ChartController::class, 'class_grades_example'])->name('graph.class_grades_example');
-Route::post('/graph/class_grades/{class}', [ChartController::class, 'class_grades'])->name('graph.class_grades');
+Route::post('/graph/barchart/class_grades/{class}', [ChartController::class, 'class_grades'])->name('graph.class_grades');
 Route::post('/graphs/pichart/ratings/{class}', [ChartController::class, 'class_ratings'])->name('graph.class_ratings');
-Route::post('/graphs/select/{class}', [ChartController::class, 'select_graph'])->name('graph');
+Route::post('/graphs/student_details/{student}', [ChartController::class, 'student_details'])->name('graph.student_details');
+Route::post('/graphs/student_ratings/{student}', [ChartController::class, 'student_ratings'])->name('graph.student_ratings');
+Route::post('/graphs/select', [ChartController::class, 'select_graph'])->name('graph');
 
 Route::get('/classes', [ClassController::class, 'index'])->name('classes')->middleware('auth');
 Route::get('/admin/classes', [ClassController::class, 'admin_index'])->name('admin_classes')->middleware('auth'); 
 Route::get('/admin/classes/create', [ClassController::class, 'create'])->name('create_class')->middleware('auth'); 
 Route::post('/admin/classes/delete/{class}', [ClassController::class, 'delete'])->name('delete_class')->middleware('auth'); 
 Route::delete('/admin/classes/destroy/{class_id}', [ClassController::class, 'destroy'])->name('destroy_class')->middleware('auth'); 
-Route::post('/admin/search_classes', [ClassController::class, 'search_classes'])->name('search_classes')->middleware('auth'); 
+Route::post('/admin/search_classes', [ClassController::class, 'search_classes'])->name('search_classes')->middleware('auth');
+Route::post('/admin/class/students/{class}', [ClassController::class, 'students'])->name('class.students')->middleware('auth'); 
+Route::post('/admin/class/assignments/{class}', [ClassController::class, 'assignments'])->name('class.assignments')->middleware('auth');
+Route::post('/admin/classes/assignment_grades/{assignment}/{class}', [ClassController::class, 'assignment_grades'])->name('assignment_grades')->middleware('auth'); 
 
 
 Route::get('/classes/class_records/{class}', [ClassController::class, 'class_records'])->middleware('auth');
@@ -75,10 +80,10 @@ Route::post('/admin/assignments/index/{class_id}', [AssignmentController::class,
 Route::post('/admin/search_assignments', [AssignmentController::class, 'search_assignments'])->name('search_assignments')->middleware('auth');
 Route::post('/admin/assignments/delete/{class_id}/{assignment_id}', [AssignmentController::class, 'delete'])->name('delete_assignment')->middleware('auth');
 Route::delete('/admin/assignments/destroy/{assignment_id}/{class_id}', [AssignmentController::class, 'destroy'])->name('destroy_assignment')->middleware('auth');
-
+Route::get('/assignments/upload_marks', [AssignmentController::class, 'upload'])->name('upload_assignment_marks')->middleware('auth');
 
 Route::get('/admin/roles/create', [RoleController::class, 'create'])->name('add_role')->middleware('auth');
-Route::get('/admin/roles/edit_role/{role}', [RoleController::class, 'edit'])->name('edit_role')->middleware('auth');
+Route::post('/admin/roles/edit_role/{role}', [RoleController::class, 'edit'])->name('edit_role')->middleware('auth');
 Route::post('/admin/roles/edit', [RoleController::class, 'modify'])->name('modify_role')->middleware('auth');
 Route::get('/admin/roles/index', [RoleController::class, 'index'])->name('roles_index')->middleware('auth');
 Route::post('/admin/roles/add_role', [RoleController::class, 'add'])->name('create_role')->middleware('auth');

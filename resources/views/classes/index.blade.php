@@ -50,13 +50,21 @@
                             </button>
                         </span>
                     </form>
+                    <form action="{{ route('class.assignments', $class)  }}" method="post">
+                        @csrf
+                        <span class="flex justify-center">
+                            <button type="submit" class="bg-yellow-400 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 text-black hover:text-black">
+                                Assignments <i class="fas fa-star"></i>
+                            </button>
+                        </span>
+                    </form>
                 </td>
             </tr>
           @endforeach
 
           {{  $classes->links()  }}
         @else
-          <p>There is no data</p>
+          <p>You are not assigned as Lecturer or Student of any Classes</p>
         @endif
       </tbody>
     </table>

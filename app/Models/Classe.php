@@ -24,6 +24,11 @@ class Classe extends Model
         return $this->belongsToMany(User::class, 'student_class', 'class_id', 'student_id')->withPivot('grade', 'attendance');
     }
 
+    public function assignments() 
+    {
+        return $this->belongsToMany(Assignment::class, 'assignments', 'class_id', 'id');
+    }
+
     public function course()
     {
         return $this->belongsTo(Course::class, 'courses', 'course_id', 'course_id');

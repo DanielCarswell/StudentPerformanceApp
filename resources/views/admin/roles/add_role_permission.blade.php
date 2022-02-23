@@ -6,9 +6,9 @@
             <h2 class="text-2xl my-4 flex justify-center"><b>Add Permission to Role: {{  $role->name  }}</b></h2>
             <form action="{{ route('add_permission') }}" method="post">
                 @csrf
+                <input name="role_id" value="{{ $role->id }}" type="hidden">
                 <div class="mb-4 dropdown box-content inline-block relative text-black flex justify-center">
                     <label for="permissionname" class="sr-only">Select Permission: </label>
-                    
                     <select name="permission" id="permission" class="p-3 w-full text-black text-bold bg-gray-200 border-2 @error('permissionname') border-red-500 @enderror rounded-lg" value="{{ old('permissionname') }}">
                         @error('permissionname')
                             <div class="text-red-500 mt-2 text-sm">

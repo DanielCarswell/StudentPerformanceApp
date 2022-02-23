@@ -44,11 +44,19 @@ class User extends Authenticatable
     ];
 
     /**
-     * Defining User belongs to many Classes relationship.
+     * Defining Lecturer belongs to many Classes relationship.
+     */
+    public function teaches()
+    {
+        return $this->belongsToMany(Classe::class, 'lecturer_class', 'user_id', 'class_id');
+    }
+
+    /**
+     * Defining Student belongs to many Classes relationship.
      */
     public function classes()
     {
-        return $this->belongsToMany(Classe::class, 'user_class', 'user_id', 'class_id')->withPivot('grade', 'attendance');
+        return $this->belongsToMany(Classe::class, 'student_class', 'student_id', 'class_id')->withPivot('grade', 'attendance');
     }
     
     /**

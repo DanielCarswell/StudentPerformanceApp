@@ -31,20 +31,20 @@
                             </td>
                             @if($data->grade >= 40)
                                 <td class="px-4 py-3 text-ms border">
-                                    <span class="px-2 py-1 font-semibold leading-tight bg-green-400 rounded-full">{{  $data->grade  }}</span>
+                                    <span class="px-2 py-1 font-semibold leading-tight bg-green-400 rounded-full">{{  $data->grade  }}%</span>
                                 </td>
                             @else
                                 <td class="px-4 py-3 text-ms border">
-                                    <span class="px-2 py-1 font-semibold leading-tight bg-red-400 rounded-full">{{  $data->grade  }}</span>
+                                    <span class="px-2 py-1 font-semibold leading-tight bg-red-400 rounded-full">{{  $data->grade  }}%</span>
                                 </td>
                             @endif
                             @if($data->attendance >= 40)
                                 <td class="px-4 py-3 text-ms border">
-                                    <span class="px-2 py-1 font-semibold leading-tight bg-green-400 rounded-full">{{  $data->attendance  }}</span>
+                                    <span class="px-2 py-1 font-semibold leading-tight bg-green-400 rounded-full">{{  $data->attendance  }}%</span>
                                 </td>
                             @else
                                 <td class="px-4 py-3 text-ms border">
-                                    <span class="px-2 py-1 font-semibold leading-tight bg-red-400 rounded-full">{{  $data->attendance  }}</span>
+                                    <span class="px-2 py-1 font-semibold leading-tight bg-red-400 rounded-full">{{  $data->attendance  }}%</span>
                                 </td>
                             @endif
                             @if($data->attendance < 30 && $data->grade < 30)

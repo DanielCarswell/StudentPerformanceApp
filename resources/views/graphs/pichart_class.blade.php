@@ -16,7 +16,7 @@
         var data = google.visualization.arrayToDataTable([
             ['Rating', 'Count'],
             ['Rating 1 - Excellent', {{$ratingCount1}}],
-            ['Rating 2 - Okay', {{$ratingCount2}}],
+            ['Rating 2 - Good', {{$ratingCount2}}],
             ['Rating 3 - Failing', {{$ratingCount3}}]
         ]);
  
@@ -30,7 +30,7 @@
 </head>
     <body>
         <div class="ml-12 mr-12 mt-9">
-            <h2 class="text-2xl font-extrabold flex justify-center mb-6">CLASS {{  $class->name  }} STUDENT RATINGS</h2>
+            <h2 class="text-2xl font-extrabold flex justify-center mb-6">Class {{  $class->name  }} Student Ratings</h2>
         </div>
         <form action="{{  route('graph', $class)  }}" method="post">
         @csrf
@@ -49,7 +49,7 @@
         </div>
         </form>
         <div  class="flex justify-center">
-            <div id="piechart" style="width: 900px; height: 500px;"></div>
+            <div id="piechart" style="width: 1300px; height: 700px;"></div>
         </div>
   </body>
 @endsection

@@ -18,10 +18,7 @@ class CreateStudentAssignmentsTable extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('assignment_id')->constrained('assignments')->onDelete('cascade');
             $table->foreignId('class_id')->constrained('classes')->onDelete('cascade');
-            $table->string('name');
-            $table->integer('class_worth');
-            $table->boolean('is_exam');
-            $table->double('score');
+            $table->double('percent');
         });
     }
 

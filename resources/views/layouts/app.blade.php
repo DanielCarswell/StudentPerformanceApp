@@ -17,15 +17,15 @@
                 <div class="flex items-center relative cursor-pointer whitespace-nowrap">Home</div>
             </a>
             @auth
-            <a class="inline-block py-2 px-3 hover:bg-blue-400 hover:text-black rounded-full" href="{{  route('students')  }}">
-                <div class="flex items-center relative cursor-pointer whitespace-nowrap">My Students</div>
-            </a>
-            <a class="inline-block py-2 px-3 hover:bg-blue-400 hover:text-black rounded-full" href="{{  route('classes')  }}">
-                <div class="flex items-center relative cursor-pointer whitespace-nowrap">My Classes</div>
-            </a>
-            <a class="inline-block py-2 px-3 hover:bg-blue-400 hover:text-black rounded-full" href="{{  route('graph.class_grades_example')  }}">
-                <div class="flex items-center relative cursor-pointer whitespace-nowrap">Graphs</div>
-            </a>
+                <a class="inline-block py-2 px-3 hover:bg-blue-400 hover:text-black rounded-full" href="{{  route('classes')  }}">
+                    <div class="flex items-center relative cursor-pointer whitespace-nowrap">My Classes</div>
+                </a>
+                <a class="inline-block py-2 px-3 hover:bg-blue-400 hover:text-black rounded-full" href="{{  route('students')  }}">
+                    <div class="flex items-center relative cursor-pointer whitespace-nowrap">My Students</div>
+                </a>
+                <a class="inline-block py-2 px-3 hover:bg-blue-400 hover:text-black rounded-full" href="{{  route('graph.class_grades_example')  }}">
+                    <div class="flex items-center relative cursor-pointer whitespace-nowrap">Graphs</div>
+                </a>
             @endauth
         </div>
 

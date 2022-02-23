@@ -20,18 +20,18 @@
         </a>
     </div>
     <div class="mb-6">
-    <form action="{{  route('search_roles')  }}" method="post" role="search">
-        @csrf
-        <div class="input-group">
-            <label class="text-xl">Search Roles: </label>
-            <input type="text" class="form-control pt-4 pb-4 pr-12 pl-2 ml-2 text-xl" name="q" placeholder="Search Roles">
-                <span class="input-group-btn">
-                <button type="submit" class="btn btn-default">
-                    <span class="glyphicon glyphicon-search"></span>
-                </button>
-            </span>
-        </div>
-    </form>
+      <form action="{{  route('search_roles')  }}" method="post" role="search">
+          @csrf
+          <div class="input-group">
+              <label class="text-xl">Search Roles: </label>
+              <input type="text" class="form-control pt-4 pb-4 pr-12 pl-2 ml-2 text-xl" name="q" placeholder="Search Roles">
+                  <span class="input-group-btn">
+                  <button type="submit" class="btn btn-default">
+                      <span class="glyphicon glyphicon-search"></span>
+                  </button>
+              </span>
+          </div>
+      </form>
     </div>
     <table class="min-w-full table-auto rounded-lg">
       <thead class="justify-between">
@@ -60,27 +60,29 @@
                             </button>
                         </span>
                     </form>
-                    <form action="{{ route('edit_role', $role)  }}" method="post">
-                        @csrf
-                        <span class="flex justify-center">
-                            <button type="submit" style="background-color:#f97316;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 text-black hover:text-black">
-                              <i class="fas fa-pencil-alt"></i>&nbsp;&nbsp;Edit Role
-                            </button>
-                        </span>
-                    </form>
-                    <form action="{{ route('delete_role', $role)  }}" method="post">
-                        @csrf
-                        <span class="flex justify-center">
-                            <button type="submit" style="background-color:#7b3294;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 text-black hover:text-black">
-                              <i class="fas fa-trash"></i>&nbsp;&nbsp;Delete Role
-                            </button>
-                        </span>
-                    </form>
+                    @if($role->id > 7)
+                      <form action="{{ route('edit_role', $role)  }}" method="post">
+                          @csrf
+                          <span class="flex justify-center">
+                              <button type="submit" style="background-color:#f97316;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 text-black hover:text-black">
+                                <i class="fas fa-pencil-alt"></i>&nbsp;&nbsp;Edit Role
+                              </button>
+                          </span>
+                      </form>
+                    @endif
+                    @if($role->id > 7)
+                      <form action="{{ route('delete_role', $role)  }}" method="post">
+                          @csrf
+                          <span class="flex justify-center">
+                              <button type="submit" style="background-color:#7b3294;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 text-black hover:text-black">
+                                <i class="fas fa-trash"></i>&nbsp;&nbsp;Delete Role
+                              </button>
+                          </span>
+                      </form>
+                    @endif
                 </td>
             </tr>
           @endforeach
-
-          {{  $roles->links()  }}
         @else
           <p>There is no data</p>
         @endif

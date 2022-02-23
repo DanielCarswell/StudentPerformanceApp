@@ -12,7 +12,7 @@ class RoleController extends Controller
 {
     public function index() {
         $roles = Role::with(['permissions'])
-        ->paginate(8);
+        ->get();
 
         return view('admin.roles.index', [
             'roles' => $roles
@@ -54,26 +54,33 @@ class RoleController extends Controller
     }
 
     public function modify(Request $request) {
-        $credentials = $request->validate([
-            'rolename' => ['required', 'max:255', 'unique:roles']
-        ]); 
-
-        //Adding role to database if valid credentials.
-        if ($credentials) {
+        if ($request->name != $request->original) {
             DB::table('roles')
-            ->where('roles.id', '=', $request->roles_id)
+            ->where('roles.id', '=', $request->role_id)
             ->update([
-                'name' => $request->rolename
+                'name' => $request->name
             ]);
+
+            return $this->index();
         }
 
-        return $this->index();
+        $role = Role::find($request->role_id);
+        $roles = Role::get();
+        
+        foreach($roles as $role)
+        {
+            if($role->name == $request->name)
+                return view('admin.roles.edit', [
+                'role' => $role
+            ])->withErrors([
+                'name' => 'Role name already exists.'
+            ]);
+        }
     }
 
     public function delete(Role $role) {
-        return view('admin.roles.delete', [
-            'role' => $role
-        ]);
+        $role->delete();
+        return back();
     }
 
     public function destroy(Role $role) {
