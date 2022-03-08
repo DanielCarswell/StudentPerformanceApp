@@ -15,9 +15,8 @@ class CreateCircumstancesTable extends Migration
     {
         Schema::create('circumstances', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->constrained('users')->onDelete('cascade');
-            $table->string('name');
-            $table->string('information');
+            $table->string('name')->unique();
+            $table->string('information', 10000);
         });
     }
 

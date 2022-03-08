@@ -17,6 +17,8 @@ class AddColumnsToUserTable extends Migration
             $table->string('username');
             $table->dropColumn('name');
             $table->string('fullname');
+            $table->string('firstname')->nullable();
+            $table->string('lastname')->nullable();
         });
     }
 

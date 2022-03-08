@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Tables;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-use App\Models\Tables\Circumstance_link;
+use App\Models\Circumstance;
 
-class Circumstance extends Model
+class Circumstance_link extends Model
 {
     use HasFactory;
 
@@ -17,11 +17,10 @@ class Circumstance extends Model
      * @var string[]
      */
     protected $fillable = [
-        'name',
-        'information'
+        'link'
     ];
 
-    public function circumstance_links() {
-        return $this->hasMany(Circumstance_link::class);
+    public function links() {
+        return $this->belongsTo(Circumstance::class);
     }
 }

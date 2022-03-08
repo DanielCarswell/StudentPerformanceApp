@@ -77,8 +77,10 @@ class AuthController extends Controller
         if ($credentials) {
             DB::table('users')->insert([
                 'fullname' => $request->firstname . ' ' . $request->lastname,
-                'username' => $request->firstname . ' ' . $request->lastname . 'Username',
+                'username' => substr($request->firstname, 0) . ' ' . substr($request->lastname, 0) . rand(10000, 99999),
                 'email' => $request->email,
+                'firstname' => $request->firstname,
+                'lastname' => $request->lastname,
                 'remember_token' => Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -94,7 +96,7 @@ class AuthController extends Controller
             //Assign user the 'Unverified' role.
             DB::table('user_role')->insert([
                 'user_id' => $user_id[0]->id,
-                'role_id' => 6
+                'role_id' => 8
             ]);  
             
             //Create login_credentials and attempt to Authenticate created User.

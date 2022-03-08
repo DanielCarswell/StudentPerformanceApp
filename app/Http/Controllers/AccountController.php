@@ -17,14 +17,13 @@ class AccountController extends Controller
 
     public function index()
     {
-        $accounts = \DB::table('user_class')
-        ->select('user_class.user_id AS id', 'users.fullname', 'users.email', 'roles.name AS role_name')
-        ->from('user_class')
-        ->join('users', 'users.id', '=', 'user_class.user_id')
+        $accounts = \DB::table('users')
+        ->select('users.id AS id', 'users.fullname', 'users.email', 'roles.name AS role_name')
+        ->from('users')
         ->join('user_role', 'user_role.user_id', '=', 'users.id')
         ->join('roles', 'roles.id', '=', 'user_role.role_id')
         ->where('users.id', '!=', 1)
-        ->groupBy('user_class.user_id', 'users.fullname', 'users.email', 'role_name')
+        ->groupBy('users.id', 'users.fullname', 'users.email', 'role_name')
         ->paginate(8);
 
         foreach($accounts as $account) {
@@ -45,9 +44,45 @@ class AccountController extends Controller
         ]);
     }
 
-    public function update(User $account)
+    public function edit(User $account) {
+        return view('admin.users.edit', [
+            'account' => $account
+        ]);
+    }
+
+    public function update(Request $request) 
     {
-        //
+        //Checking user credentials are valid.
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'firstname' => ['required'],
+            'lastname' => ['required']
+        ]); 
+
+        $email_acc = \DB::table('users')->where('users.email', '=', $request->email)->first();
+
+        if($email_acc) {
+            if($request->email != $email_acc->email) {}
+            else return back()->withErrors([
+                'email' => 'The email entered is already registered to another user.'
+            ]);
+        }
+
+        //Adding new account details to database if valid credentials.
+        if ($credentials) {
+            \DB::table('users')
+            ->where('users.id', '=', $request->user_id)
+            ->update([
+                'email' => $request->email,
+                'username' => substr($request->firstname, 0) . ' ' . substr($request->lastname, 0) . rand(10000, 99999),
+                'firstname' => $request->firstname,
+                'lastname' => $request->lastname,
+                'fullname' => $request->firstname . ' ' . $request->lastname
+            ]);
+        }
+
+        //return user index
+        return $this->index();
     }
 
     public function destroy(User $account)

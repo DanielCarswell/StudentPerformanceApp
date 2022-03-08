@@ -43,7 +43,7 @@
                                 View Profile <i class="fas fa-plus"></i>
                             </button>
                         </form>
-                        <form>
+                        <form action="{{  route('account.edit', $account->acc)  }}">
                             @csrf
                             <button type="submit" class="bg-yellow-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
                                 Edit Account <i class="fas fa-pencil-alt"></i>

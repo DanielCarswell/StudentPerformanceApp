@@ -20,6 +20,37 @@ class CSVUploadController extends Controller
             $fileSize = $file->getSize(); //Get size of uploaded file in bytes
 
             //Check for file extension and size
+            // /$this->checkUploadedFileProperties($extension, $fileSize);
+
+            //Where uploaded file will be stored on the server 
+            $location = 'Uploads'; //Created an "uploads" folder for that
+
+            // Upload file
+            $file->move($location, $filename);
+
+            // In case the uploaded file path is to be stored in the database 
+            $filepath = public_path($location . "/" . $filename);
+
+            return response()->json([
+                'message' => "$j records successfully uploaded"
+            ]);
+        } else {
+            //no file was uploaded
+            throw new \Exception('No file was uploaded', Response::HTTP_BAD_REQUEST);
+        }
+        return view('csvup.file_upload');
+    }
+    /**
+     * public function index(Request $request) {
+        $file = $request->file('upload');
+
+        if ($file) {
+            $filename = $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension(); //Get extension of uploaded file
+            $tempPath = $file->getRealPath();
+            $fileSize = $file->getSize(); //Get size of uploaded file in bytes
+
+            //Check for file extension and size
             $this->checkUploadedFileProperties($extension, $fileSize);
 
             //Where uploaded file will be stored on the server 
@@ -86,6 +117,7 @@ class CSVUploadController extends Controller
         }
         return view('csvup.file_upload');
     }
+     */
     
     public function uploadClass(Request $request)
     {

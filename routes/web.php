@@ -12,6 +12,7 @@ use App\Http\Controllers\ClassController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\CSVUploadController;
+use App\Http\Controllers\CircumstanceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,7 +46,8 @@ Route::post('/forgot', [AuthController::class, 'forgot'])->name('forgot_password
 
 
 Route::get('/admin/accounts', [AccountController::class, 'index'])->name('accounts');
-Route::get('/admin/accounts/update/{account}', [AccountController::class, 'update'])->name('accounts.update');
+Route::get('/admin/accounts/edit/{account}', [AccountController::class, 'edit'])->name('account.edit');
+Route::post('/admin/accounts/update', [AccountController::class, 'update'])->name('account.update');
 Route::delete('/admin/accounts/{account}', [AccountController::class, 'destroy'])->name('accounts.destroy');
 
 
@@ -58,7 +60,7 @@ Route::any('/graphs/select', [ChartController::class, 'select_graph'])->name('gr
 
 
 Route::get('/classes', [ClassController::class, 'index'])->name('classes')->middleware('auth');
-Route::get('/admin/classes', [ClassController::class, 'admin_index'])->name('admin_classes')->middleware('auth'); 
+Route::get('/admin/classes', [ClassController::class, 'adminindex'])->name('admin_classes')->middleware('auth');
 Route::get('/admin/classes/create', [ClassController::class, 'create'])->name('create_class')->middleware('auth'); 
 Route::post('/admin/classes/delete/{class}', [ClassController::class, 'delete'])->name('delete_class')->middleware('auth'); 
 Route::delete('/admin/classes/destroy/{class_id}', [ClassController::class, 'destroy'])->name('destroy_class')->middleware('auth'); 
@@ -104,10 +106,15 @@ Route::post('/admin/permissions/add_role_permission', [PermissionController::cla
 Route::post('/admin/permissions/delete/{role_id}/{permission_id}', [PermissionController::class, 'delete'])->name('delete_role_permission')->middleware('auth'); 
 
 
-Route::get('/admin/classes', [CircumstanceController::class, 'index'])->name('admin_circumstances')->middleware('auth'); 
+Route::any('/admin/circumstances', [CircumstanceController::class, 'index'])->name('circumstances')->middleware('auth');
+Route::get('/admin/circumstances/add', [CircumstanceController::class, 'add'])->name('circumstance.add')->middleware('auth');
+Route::get('/admin/circumstances/create', [CircumstanceController::class, 'create'])->name('circumstance.create')->middleware('auth');
+Route::post('/admin/circumstances/edit/{circumstance}', [CircumstanceController::class, 'edit'])->name('circumstance.edit')->middleware('auth');
+Route::post('/admin/circumstances/update', [CircumstanceController::class, 'update'])->name('circumstance.update')->middleware('auth');
+Route::post('/admin/circumstances/delete/{circumstance}', [CircumstanceController::class, 'delete'])->name('circumstance.delete')->middleware('auth');
+Route::delete('/admin/circumstances/destroy/{circumstance}', [CircumstanceController::class, 'destroy'])->name('circumstance.destroy')->middleware('auth');
 
 
 Route::get('/students', [StudentController::class, 'index'])->name('students')->middleware('auth');
 
-Route::any('/file_upload', [CSVUploadController::class, 'index'])->name('file_upload');
-Route::post('file_upload', [CSVUploadController::class, 'store'])->name('file.upload');
+Route::any('/file_upload', [CSVUploadController::class, 'index'])->name('file.upload');

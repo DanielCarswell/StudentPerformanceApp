@@ -143,11 +143,50 @@ class AssignmentController extends Controller
         $assignment = Assignment::find($request->assignment_id);
         $class = Classe::find($request->class_id);
 
+        $this->update_student_grades($request->student_id);
+
         return redirect()->route('assignment_grades', [$assignment, $class]);
     }
 
+    public function update_student_grades(int $student_id) {
+        $classes = \DB::table('classes')
+        ->select('classes.name', 'student_class.grade', 'student_class.attendance')
+        ->from('classes')
+        ->join('student_class', 'student_class.class_id', '=', 'classes.id')
+        ->join('users', 'users.id', '=', 'student_class.student_id')
+        ->where('users.id', $student_id)
+        ->get();
+
+        foreach($classes as $class) {
+            $assignments = \DB::table('assignments')
+            ->select('assignments.class_worth', 'student_assignment.percent')
+            ->from('assignments', 'student_assignment')
+            ->join('student_assignment', 'student_assignment.assignment_id', '=', 'assignments.id')
+            ->join('users', 'users.id', '=', 'student_assignment.user_id')
+            ->where('users.id', $student_id)
+            ->where('classes.id', $class->id)
+            ->get();
+
+            $class_grade = 0.0;
+            $total_class_worth = 0.0;
+
+            foreach($assignments as $assignment) {
+                $total_class_worth += $assignment->class_worth;
+                $class_grade += ($assignment->percent * ($assignment->class_worth/100));
+            }
+
+            \DB::table('student_class')
+                ->where('class_id', $class->id)
+                ->where('student_id', $student_id)
+                ->update([
+                    'grade' => (($class_grade / $total_class_worth) * 100)
+                ]);
+        }
+
+        return;
+    }
+
     public function upload(Request $request) {
-        //dd($request);
         return view('classes.upload_assignment_grades', [
             'class_id' => $request->class_id
         ]);
