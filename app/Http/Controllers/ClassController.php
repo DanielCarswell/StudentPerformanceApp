@@ -139,13 +139,13 @@ class ClassController extends Controller
         }
 
         return view('classes.student_records', [
-            'lists' => $lists
+            'lists' => $lists,
+            'student' => $student
         ]);
     }
 
     public function class_records(Classe $class)
     {
-
         $lists = DB::table('classes')
             ->select('users.fullname', 'student_class.grade', 'student_class.attendance')
             ->from('classes')
@@ -173,7 +173,7 @@ class ClassController extends Controller
         ->paginate(10);
 
         foreach($students as $student)
-            $student->class_mark = 0;
+            $student->class_mark = DB::table('student_class')->where('student_id', $student->id)->where('class_id', $class->id)->first()->grade;
 
         return view('admin.classes.students', [
             'class' => $class,
@@ -226,4 +226,23 @@ class ClassController extends Controller
         return redirect()->route('class.students', $class);
     }
 
+    public function delete_student(int $class_id, int $student_id) {
+        DB::table('student_class')
+        ->where('student_id', $student_id)
+        ->where('class_id', $class_id)
+        ->delete();
+
+        DB::table('student_assignment')
+        ->where('user_id', $student_id)
+        ->where('class_id', $class_id)
+        ->delete();
+
+        return back();
+    }
+
+    public function upload_students(Request $request) {
+        return view('admin.classes.upload_class_students', [
+            'class_id' => $request->class_id
+        ]);
+    }
 }

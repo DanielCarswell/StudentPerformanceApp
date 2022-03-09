@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
     <div class="flex justify-center mt-48 mb-48 text-extrabold">
@@ -7,7 +7,6 @@
             <form action="{{ route('student.circumstance.update') }}" method="post">
                 @csrf
                 <input name="student_id" value="{{ $student->id }}" type="hidden">
-                <input name="class_id" value="{{ $class_id }}" type="hidden">
                 <div class="mb-4 dropdown box-content inline-block relative text-black flex justify-center">
                     <label for="circumstance" class="sr-only">Add Circumstance: </label>
                     

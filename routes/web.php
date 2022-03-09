@@ -13,6 +13,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\CSVUploadController;
 use App\Http\Controllers\CircumstanceController;
+use App\Http\Controllers\PDFController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,9 +69,10 @@ Route::post('/admin/search_classes', [ClassController::class, 'search_classes'])
 Route::any('/admin/class/students/{class}', [ClassController::class, 'students'])->name('class.students')->middleware('auth'); 
 Route::any('/admin/class/students/add/{class}', [ClassController::class, 'add'])->name('class.students.add')->middleware('auth'); 
 Route::any('/admin/class/students/add/{class_id}/{student_id}', [ClassController::class, 'add_student'])->name('class.add_student')->middleware('auth'); 
+Route::delete('/admin/class/students/delete/{class_id}/{student_id}', [ClassController::class, 'delete_student'])->name('class.delete_student')->middleware('auth'); 
 Route::post('/admin/class/assignments/{class}', [ClassController::class, 'assignments'])->name('class.assignments')->middleware('auth');
 Route::any('/admin/classes/assignment_grades/{assignment}/{class}', [ClassController::class, 'assignment_grades'])->name('assignment_grades')->middleware('auth'); 
-
+Route::get('/class/upload_students', [ClassController::class, 'upload_students'])->name('upload_students')->middleware('auth');
 
 Route::get('/classes/class_records/{class}', [ClassController::class, 'class_records'])->middleware('auth');
 Route::post('/classes/class_records/{class}', [ClassController::class, 'class_records'])->name('classes.class_records')->middleware('auth');
@@ -119,9 +121,13 @@ Route::delete('/admin/circumstances/destroy/{circumstance}', [CircumstanceContro
 
 
 Route::any('/students', [StudentController::class, 'index'])->name('students')->middleware('auth');
-Route::post('/student/circumstance/add/{student}', [StudentController::class, 'add_circumstance'])->name('student.circumstance.add')->middleware('auth');
+Route::any('/student/circumstance/add/{student}', [StudentController::class, 'add_circumstance'])->name('student.circumstance.add')->middleware('auth');
 Route::post('/student/circumstance/update', [StudentController::class, 'update_circumstance'])->name('student.circumstance.update')->middleware('auth');
 Route::delete('/student/circumstance/remove/{student_id}/{circumstance_id}', [StudentController::class, 'remove_circumstance'])->name('student.circumstance.remove')->middleware('auth');
 Route::any('/student/circumstances/{student}', [StudentController::class, 'student_circumstances'])->name('student.circumstances')->middleware('auth');
 
-Route::any('/file_upload', [CSVUploadController::class, 'index'])->name('file.upload');
+Route::any('/assignment/upload_marks', [CSVUploadController::class, 'assignment_marks'])->name('file.upload.assignment');
+Route::any('/assignment/upload_students', [CSVUploadController::class, 'upload_students'])->name('file.upload.students');
+
+Route::get('/pdf/class_records/{class_id}', [PDFController::class, 'class_records'])->name('pdf.class_records');
+Route::get('/pdf/student_records/{student_id}', [PDFController::class, 'student_records'])->name('pdf.student_records');

@@ -12,7 +12,7 @@
                 <i class="fas fa-plus"></i>&nbsp;&nbsp;Upload Assignment Marks
             </button>
         </span>
-    </form>
+      </form>
     </div>
     <table class="min-w-full table-auto rounded-lg">
       <thead class="justify-between">

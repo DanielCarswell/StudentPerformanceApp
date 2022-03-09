@@ -30,6 +30,25 @@ class StudentController extends Controller
         ]);
     }
 
+    public function add_circumstance(User $student) {
+        $circumstances = DB::table('circumstances')
+        ->get();
+
+        return view('students.add_student_circumstance', [
+            'student' => $student,
+            'circumstances' => $circumstances
+        ]);
+    }
+
+    public function update_circumstance(int $circumstance_id) {
+        
+    }
+
+
+    public function remove_circumstance(int $student_id, int $circumstance_id) {
+
+    }
+
     public function student_circumstances(User $student) {
         $circumstances = DB::table('circumstances')
         ->join('student_circumstance', 'circumstances.id', 'student_circumstance.circumstance_id')

@@ -2,6 +2,18 @@
 
 @section('content')
 <section class="container mx-auto p-6 font-mono mt-12">
+    <div class="ml-12 mr-12">
+        <p class="text-2xl font-extrabold flex justify-center mb-6">Class Performance</p>
+        <div class="px-16 py-2 flex justify-center">
+            <a href="{{ route('pdf.class_records', $class->id)  }}">
+                <span class="flex justify-center">
+                    <button type="submit" class="bg-purple-500 text-white px-4 py-2 border rounded-md hover:border-purple-500 hover:text-black">
+                        <i class="fas fa-plus"></i>&nbsp;&nbsp;Print Basic PDF Of Class Performance
+                    </button>
+                </span>
+            </a>
+        </div>
+    </div>
     <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
         <div class="w-full overflow-x-auto">
         <table class="w-full">
