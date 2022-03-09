@@ -3,7 +3,7 @@
 @section('content')
     <div class="flex justify-center mt-48 mb-48 text-extrabold">
         <div class="w-4/12 bg-gray-700 text-white p-6 rounded-lg">
-            <h2 class="text-2xl my-4 flex justify-center"><b>Create New Assignment</b></h2>
+            <h2 class="text-2xl my-4 flex justify-center"><b>Create New Circumstance</b></h2>
             <form action="{{ route('circumstance.create') }}" method="post">
                 @csrf
                 <div class="mb-4">

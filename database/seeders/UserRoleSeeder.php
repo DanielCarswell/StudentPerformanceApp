@@ -14,7 +14,7 @@ class UserRoleSeeder extends Seeder
      */
     public function run()
     {
-        $user_ids = range(5,44);
+        $user_ids = range(5,43);
 
         DB::table('user_role')->insert([
             'user_id' => 1,

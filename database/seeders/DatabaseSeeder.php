@@ -24,7 +24,8 @@ class DatabaseSeeder extends Seeder
             AssignmentSeeder::class,
             RolePermissionSeeder::class,
             LecturerClassSeeder::class,
-            CircumstanceSeeder::class
+            CircumstanceSeeder::class,
+            StudentAdvisorSeeder::class
         ]);
     }
 }

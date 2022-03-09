@@ -17,6 +17,8 @@ class CreateCircumstanceLinksTable extends Migration
             $table->primary(["circumstance_id", "link"]);
             $table->foreignId('circumstance_id')->constrained('circumstances')->onDelete('cascade');
             $table->string('link');
+            //incase suspicious link is added
+            $table->foreignId('id_of_user_added_by')->nullable()->constrained('users')->onDelete('cascade');
         });
     }
 

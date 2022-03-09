@@ -24,6 +24,9 @@
               <td>
                   <span class="text-center ml-2 font-semibold flex justify-center">{{  $assignment->name  }}</span>
               </td>
+              <td>
+                  <span class="text-center ml-2 font-semibold flex justify-center">{{  $assignment->average  }}</span>
+              </td>
               <td class="px-16 py-2">
                   <form action="{{ route('assignment_grades', [$assignment, $class])  }}" method="post">
                       @csrf

@@ -7,6 +7,7 @@
             <form action="{{ route('file.upload') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <input name="class_id" value="{{ $class_id }}" type="hidden">
+                <input name="assignment_id" value="{{ $assignment_id }}" type="hidden">
                 <input type="file" name="upload" />
                 <div class="flex justify-center items-center">
                     <button type="submit" class="bg-purple-500 text-white px-4 py-3 rounded font-bold w-full">Upload Grades</button>

@@ -20,14 +20,11 @@ class ClassController extends Controller
     {
         //Mail::to(auth()->user())->send(new LowGradeNotification(auth()->user(), 'CS103'));
         //Mail::to(auth()->user())->send(new DepressionCircumstance(auth()->user(), 'Daniel'));
-         $classes = Classe::with(['students'])
+        $classes = Classe::with(['students'])
         ->with(['lecturers'])
         ->join('lecturer_class', 'lecturer_class.class_id', '=', 'classes.id')
         ->where('lecturer_class.lecturer_id', '=', auth()->user()->id)
         ->paginate(8);
-         
-        //$classes = Classe::with(['students'])
-        //->paginate(8);
 
         foreach($classes as $class) {
             $average_grade = DB::table('student_class')
@@ -86,6 +83,22 @@ class ClassController extends Controller
 
     public function assignments(Classe $class) {
         $assignments = Assignment::where('class_id', $class->id)->paginate(10);
+
+
+        foreach($assignments as $assignment) {
+            $average = DB::table('assignments')
+            ->select(\DB::raw('round(AVG(CAST(student_assignment.percent as numeric)), 1) as average'))
+            ->from('assignments')
+            ->join('student_assignment', 'student_assignment.assignment_id', '=', 'assignments.id')
+            ->where('assignments.id', '=', $assignment->id)
+            ->get();
+
+            if ($average[0]->average != null)
+                $assignment->average = $average[0]->average;
+            else
+                $assignment->average = 'No Grades Yet';
+        }
+
         return view('classes.assignments', [
             'class' => $class,
             'assignments' => $assignments
@@ -93,16 +106,6 @@ class ClassController extends Controller
     }
 
     public function assignment_grades(Assignment $assignment, Classe $class) {
-        /*$students = User::
-        select('users.id', 'users.fullname', 'student_assignment.percent')
-        ->from('student_assignment', 'users')
-        ->join('student_class', 'student_class.student_id', 'users.id')
-        ->join('student_assignment', 'student_assignment.user_id', 'users.id')
-        ->join('assignments', 'assignments.id', 'student_assignment.assignment_id')
-        ->where('student_assignment.class_id', $class->id)
-        ->where('assignments.id', $assignment->id)
-        ->paginate(10);*/
-
         $students = DB::table('users')
         ->select('users.id', 'users.fullname', 'assignments.name', 'student_assignment.percent')
         ->join('student_assignment', 'student_assignment.user_id', 'users.id')
@@ -111,21 +114,9 @@ class ClassController extends Controller
         ->where('student_assignment.assignment_id', $assignment->id)
         ->paginate(10);
 
-        //$count = 0;
-        /*foreach($students as $student) {
-            $count += 1;
-            $percent = DB::table('student_assignment')
-            ->where('student_assignment.assignment_id', $assignment->id)
-            ->where('student_assignment.user_id', $student->id)
-            ->where('student_assignment.class_id', $class->id)
-            ->first();
-
-            dd($class);
-            if($percent != null)  { $student->percent = $percent->percent;}
-            else $student->percent = 0;
-        }*/
-
-        //dd($count);
+        foreach($students as $student)
+            if($student->percent == null)
+                $student->percent = 0;
 
         return view('classes.assignment_grades', [
             'assignment' => $assignment,
@@ -154,6 +145,7 @@ class ClassController extends Controller
 
     public function class_records(Classe $class)
     {
+
         $lists = DB::table('classes')
             ->select('users.fullname', 'student_class.grade', 'student_class.attendance')
             ->from('classes')
@@ -161,9 +153,9 @@ class ClassController extends Controller
             ->join('users', 'users.id', '=', 'student_class.student_id')
             ->join('user_role', 'user_role.user_id', '=', 'users.id')
             ->join('roles', 'roles.id', '=', 'user_role.role_id')
-            ->join('lecturer_class', 'lecturer_class.lecturer_id', '=', 'classes.id')
-            ->where('classes.id', $class->id)
-            ->where('roles.name', '=', 'Student')
+            ->join('lecturer_class', 'lecturer_class.class_id', '=', 'classes.id')
+            ->where('classes.id', '=', $class->id)
+            //->where('roles.name', '=', 'Student')
             ->where('lecturer_class.lecturer_id', '=', auth()->user()->id)
             ->groupBy('users.fullname', 'student_class.grade', 'student_class.attendance')
             ->paginate(8);

@@ -17,6 +17,11 @@ class AssignmentController extends Controller
             'classworth' => ['required', 'numeric']
         ]); 
 
+        //Make assignmentname unique for a class ...
+
+        if(!$request->isexam)
+            $request->isexam = false;
+
         //Adding assignment to database if valid credentials.
         if ($credentials) {
             DB::table('assignments')->insert([
@@ -25,6 +30,22 @@ class AssignmentController extends Controller
                 'is_exam' => $request->isexam,
                 'class_id' => $request->class_id
             ]);
+
+            $assignmentid = 0;
+            $assignments = DB::table('assignments')->get();
+
+            foreach($assignments as $assignment) {
+                $assignmentid = $assignment->id;
+            }
+
+            $class = Classe::with(['students'])->find($request->class_id);
+
+            foreach($class->students as $student)
+                DB::table('student_assignment')->insert([
+                    'user_id' => $student->id,
+                    'assignment_id' => $assignmentid,
+                    'class_id' => $request->class_id
+                ]);
         }
 
         return $this->class_assignments($request->class_id);
@@ -150,7 +171,7 @@ class AssignmentController extends Controller
 
     public function update_student_grades(int $student_id) {
         $classes = \DB::table('classes')
-        ->select('classes.name', 'student_class.grade', 'student_class.attendance')
+        ->select('classes.id', 'classes.name', 'student_class.grade', 'student_class.attendance')
         ->from('classes')
         ->join('student_class', 'student_class.class_id', '=', 'classes.id')
         ->join('users', 'users.id', '=', 'student_class.student_id')
@@ -159,10 +180,11 @@ class AssignmentController extends Controller
 
         foreach($classes as $class) {
             $assignments = \DB::table('assignments')
-            ->select('assignments.class_worth', 'student_assignment.percent')
-            ->from('assignments', 'student_assignment')
+            ->select('assignments.id', 'student_assignment.percent', 'assignments.class_worth')
+            ->from('assignments')
             ->join('student_assignment', 'student_assignment.assignment_id', '=', 'assignments.id')
             ->join('users', 'users.id', '=', 'student_assignment.user_id')
+            ->join('classes', 'student_assignment.class_id', '=', 'classes.id')
             ->where('users.id', $student_id)
             ->where('classes.id', $class->id)
             ->get();
@@ -171,16 +193,19 @@ class AssignmentController extends Controller
             $total_class_worth = 0.0;
 
             foreach($assignments as $assignment) {
+                if($assignment->percent == 0)
+                    continue;
                 $total_class_worth += $assignment->class_worth;
                 $class_grade += ($assignment->percent * ($assignment->class_worth/100));
             }
 
-            \DB::table('student_class')
-                ->where('class_id', $class->id)
-                ->where('student_id', $student_id)
-                ->update([
-                    'grade' => (($class_grade / $total_class_worth) * 100)
-                ]);
+            if($total_class_worth != 0)
+                \DB::table('student_class')
+                    ->where('class_id', $class->id)
+                    ->where('student_id', $student_id)
+                    ->update([
+                        'grade' => (($class_grade / $total_class_worth) * 100)
+                    ]);
         }
 
         return;
@@ -188,7 +213,8 @@ class AssignmentController extends Controller
 
     public function upload(Request $request) {
         return view('classes.upload_assignment_grades', [
-            'class_id' => $request->class_id
+            'class_id' => $request->class_id,
+            'assignment_id' => $request->assignment_id
         ]);
     }
 }

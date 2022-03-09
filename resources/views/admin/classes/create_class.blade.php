@@ -9,7 +9,7 @@
                 <div class="mb-4 dropdown box-content inline-block relative text-black flex justify-center">
                     <label for="coursename" class="sr-only">Which course is this Class: </label>
                     
-                    <select name="course" id="course" class="p-3 w-full text-black text-bold bg-gray-200 border-2 @error('classcode') border-red-500 @enderror rounded-lg" value="{{ old('classcode') }}">
+                    <select name="course" id="course" class="p-3 w-full text-black text-bold bg-gray-200 border-2 @error('course') border-red-500 @enderror rounded-lg" value="{{ old('course') }}">
                         @error('course')
                             <div class="text-red-500 mt-2 text-sm">
                                 {{ $message }}

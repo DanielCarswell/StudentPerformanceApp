@@ -58,7 +58,7 @@ class AssignmentSeeder extends Seeder
             'class_id' => 1
         ]);
 
-        $student_ids = range(3,40);
+        $student_ids = range(5,13);
 
         foreach($student_ids as $student_id) {
             DB::table('student_assignment')
@@ -96,6 +96,14 @@ class AssignmentSeeder extends Seeder
             DB::table('student_assignment')
             ->insert([
                 'assignment_id' => 5,
+                'class_id' => 1,
+                'user_id' => $student_id,
+                'percent' => rand(25,100)
+            ]);
+
+            DB::table('student_assignment')
+            ->insert([
+                'assignment_id' => 6,
                 'class_id' => 1,
                 'user_id' => $student_id,
                 'percent' => rand(25,100)
