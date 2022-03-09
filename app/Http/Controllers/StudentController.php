@@ -90,7 +90,67 @@ class StudentController extends Controller
         return back();
     }
 
+    public function add_note(User $student) {
+        $circumstances = DB::table('circumstances')
+        ->get();
+
+        return view('students.add_student_circumstance', [
+            'student' => $student,
+            'circumstances' => $circumstances
+        ]);
+    }
+
+    public function update_note(Request $request) {
+        //Checking circumstance credentials are valid.
+        $credentials = $request->validate([
+            'note' => ['required', 'max:10000']
+        ]); 
+        
+         //Adding circumstance to student if valid credentials.
+         if ($credentials) {
+            DB::table('student_circumstance')->insert([
+                'student_id' => $request->student_id,
+                'circumstance_id' => $circumstance->id
+            ]);
+            $student = User::find($request->student_id);
+        }
+            
+        $student = User::find($request->student_id);
+        return redirect()->route('student.circumstances', $student);
+    }
+
+    public function edit_note() {
+
+    }
+
+    public function modify_note(Request $request) {
+
+    }
+
+    public function remove_note(Request $request) {
+        //add policy check for restriction
+        DB::table('student_circumstance')
+        ->where('student_id', $request->student_id)
+        ->where('circumstance_id', $request->circumstance_id)
+        ->delete();
+
+        return back();
+    }
+
     public function student_circumstances(User $student) {
+        $circumstances = DB::table('circumstances')
+        ->join('student_circumstance', 'circumstances.id', 'student_circumstance.circumstance_id')
+        ->join('users', 'users.id', 'student_circumstance.student_id')
+        ->where('users.id', $student->id)
+        ->paginate(8);
+    
+        return view('students.student_circumstances', [
+            'student' => $student,
+            'circumstances' => $circumstances
+        ]);
+    }
+
+    public function student_notes(User $student) {
         $circumstances = DB::table('circumstances')
         ->join('student_circumstance', 'circumstances.id', 'student_circumstance.circumstance_id')
         ->join('users', 'users.id', 'student_circumstance.student_id')

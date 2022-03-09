@@ -18,7 +18,7 @@ class AdvisorNotesTable extends Migration
             $table->foreignId('student_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('advisor_id')->constrained('users')->onDelete('cascade');
             $table->string('topic');
-            $table->string('note');
+            $table->string('note', 10000);
         });
     }
 

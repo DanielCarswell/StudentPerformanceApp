@@ -125,6 +125,12 @@ Route::any('/student/circumstance/add/{student}', [StudentController::class, 'ad
 Route::any('/student/circumstance/update', [StudentController::class, 'update_circumstance'])->name('student.circumstance.update')->middleware('auth');
 Route::delete('/student/circumstance/remove', [StudentController::class, 'remove_circumstance'])->name('student.circumstance.remove')->middleware('auth');
 Route::any('/student/circumstances/{student}', [StudentController::class, 'student_circumstances'])->name('student.circumstances')->middleware('auth');
+Route::any('/student/note/add/{student}', [StudentController::class, 'add_note'])->name('student.note.add')->middleware('auth');
+Route::any('/student/note/update', [StudentController::class, 'update_note'])->name('student.note.update')->middleware('auth');
+Route::any('/student/note/edit/{student}', [StudentController::class, 'edit_note'])->name('student.note.edit')->middleware('auth');
+Route::any('/student/note/modify', [StudentController::class, 'modify_note'])->name('student.note.modify')->middleware('auth');
+Route::delete('/student/note/remove', [StudentController::class, 'remove_note'])->name('student.note.remove')->middleware('auth');
+Route::any('/student/notes/{student}', [StudentController::class, 'student_notes'])->name('student.notes')->middleware('auth');
 
 Route::any('/assignment/upload_marks', [CSVUploadController::class, 'assignment_marks'])->name('file.upload.assignment');
 Route::any('/assignment/upload_students', [CSVUploadController::class, 'upload_students'])->name('file.upload.students');
