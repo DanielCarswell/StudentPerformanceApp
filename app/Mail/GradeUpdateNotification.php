@@ -9,12 +9,11 @@ use Illuminate\Queue\SerializesModels;
 
 use App\Models\User;
 
-class LowGradeNotification extends Mailable
+class GradeUpdateNotification extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $user;
-    public $message;
     public $score;
 
     /**
@@ -22,10 +21,9 @@ class LowGradeNotification extends Mailable
      *
      * @return void
      */
-    public function __construct(User $user, String $message, String $score)
+    public function __construct(User $user, String $score)
     {
         $this->user = $user;
-        $this->message = $message;
         $this->score = $score;
     }
 
@@ -36,6 +34,6 @@ class LowGradeNotification extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.grades.warning');
+        return $this->markdown('emails.grades.update');
     }
 }

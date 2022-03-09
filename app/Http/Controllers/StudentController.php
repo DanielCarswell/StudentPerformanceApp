@@ -91,47 +91,73 @@ class StudentController extends Controller
     }
 
     public function add_note(User $student) {
-        $circumstances = DB::table('circumstances')
-        ->get();
-
-        return view('students.add_student_circumstance', [
+        return view('students.add_advisor_note', [
             'student' => $student,
-            'circumstances' => $circumstances
+            'advisor' => auth()->user()
         ]);
     }
 
     public function update_note(Request $request) {
-        //Checking circumstance credentials are valid.
+        //Checking note credentials are valid.
         $credentials = $request->validate([
+            'topic' => ['required', 'max:255'],
             'note' => ['required', 'max:10000']
         ]); 
         
-         //Adding circumstance to student if valid credentials.
+         //Adding note to student if valid credentials.
          if ($credentials) {
-            DB::table('student_circumstance')->insert([
+            DB::table('student_advisor_notes')->insert([
                 'student_id' => $request->student_id,
-                'circumstance_id' => $circumstance->id
+                'advisor_id' => $request->advisor_id,
+                'topic' => $request->topic,
+                'note' => $request->note
             ]);
             $student = User::find($request->student_id);
         }
             
         $student = User::find($request->student_id);
-        return redirect()->route('student.circumstances', $student);
+        return redirect()->route('student.notes', $student);
     }
 
-    public function edit_note() {
+    public function edit_note(Request $request) {
+        $student = User::find($request->student_id);
 
+        return view('students.edit_advisor_note', [
+            'note' => $request->note,
+            'student' => $student,
+            'topic' => $request->topic,
+            'advisor' => auth()->user()
+        ]);
     }
 
     public function modify_note(Request $request) {
-
+        //Checking note credentials are valid.
+        $credentials = $request->validate([
+            'topic' => ['required', 'max:255'],
+            'note' => ['required', 'max:10000']
+        ]);
+        if ($credentials) {
+            DB::table('student_advisor_notes')
+            ->where('student_id', $request->student_id)
+            ->where('advisor_id', $request->advisor_id)
+            ->where('topic', $request->old_topic)
+            ->where('note', $request->old_note)
+            ->update([
+                'topic' => $request->topic,
+                'note' => $request->note
+            ]);
+        }
+        $student = User::find($request->student_id);
+        return redirect()->route('student.notes', $student);
     }
 
     public function remove_note(Request $request) {
         //add policy check for restriction
-        DB::table('student_circumstance')
-        ->where('student_id', $request->student_id)
-        ->where('circumstance_id', $request->circumstance_id)
+        DB::table('student_advisor_notes')
+            ->where('student_id', $request->student_id)
+            ->where('advisor_id', $request->advisor_id)
+            ->where('topic', $request->topic)
+            ->where('note', $request->note)
         ->delete();
 
         return back();
@@ -151,15 +177,15 @@ class StudentController extends Controller
     }
 
     public function student_notes(User $student) {
-        $circumstances = DB::table('circumstances')
-        ->join('student_circumstance', 'circumstances.id', 'student_circumstance.circumstance_id')
-        ->join('users', 'users.id', 'student_circumstance.student_id')
-        ->where('users.id', $student->id)
+        $notes = DB::table('student_advisor_notes')
+        ->where('student_advisor_notes.student_id', $student->id)
+        ->where('student_advisor_notes.advisor_id', auth()->user()->id)
         ->paginate(8);
     
-        return view('students.student_circumstances', [
+        return view('students.student_advisor_notes', [
             'student' => $student,
-            'circumstances' => $circumstances
+            'notes' => $notes,
+            'advisor' => auth()->user()
         ]);
     }
 

@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Mail;
 
 
 use App\Mail\LowGradeNotification;
-use App\Mail\DepressionCircumstance;
+use App\Mail\GradeUpdateNotification;
+use App\Mail\Circumstance;
 
 use App\Models\Assignment;
 use App\Models\Classe;
@@ -18,8 +19,8 @@ class ClassController extends Controller
 {
     public function index()
     {
-        //Mail::to(auth()->user())->send(new LowGradeNotification(auth()->user(), 'CS103'));
-        //Mail::to(auth()->user())->send(new DepressionCircumstance(auth()->user(), 'Daniel'));
+        //Mail::to('danielcarswelltest@gmail.com')->send(new LowGradeNotification(auth()->user(), 'CS103', '33%'));
+        //Mail::to('danielcarswelltest@gmail.com')->send(new GradeUpdateNotification(auth()->user(), '76%'));
         $classes = Classe::with(['students'])
         ->with(['lecturers'])
         ->join('lecturer_class', 'lecturer_class.class_id', '=', 'classes.id')

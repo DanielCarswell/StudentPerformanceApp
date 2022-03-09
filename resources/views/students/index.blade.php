@@ -50,6 +50,14 @@
                           </button>
                       </span>
                   </form>
+                  <form action="{{ route('student.notes', $student)  }}" method="post">
+                      @csrf
+                      <span class="flex justify-center">
+                          <button type="submit" class="bg-red-400 text-white px-4 py-2 border rounded-md hover:bg-white hover:text-black">
+                          View Advisor Notes <i class="fas fa-plus"></i>
+                          </button>
+                      </span>
+                  </form>
                   <form action="{{ route('graph.student_details', $student)  }}" method="post">
                         @csrf
                         <span class="flex justify-center">

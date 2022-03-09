@@ -1,13 +1,13 @@
 @component('mail::message')
-# Your grade is low
+# Your current grade
 
 Dear {{$user->fullname}},
 
-This is an automated message to notify you early that
-your grade is too low for {{  $message  }}, Please reach out if you need
-any help.
+This is an automated message to notify you of your current overall grade
 
-Current Class Grade: {{$score}}
+Current Grade: {{$score}}
+
+
 
 @component('mail::button', ['url' => route('homepage')])
 Monitoring Student Performance
