@@ -17,6 +17,7 @@ class CreateStudentAdvisorNotesTable extends Migration
             $table->primary(["advisor_id", "student_id"]);
             $table->foreignId('student_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('advisor_id')->constrained('users')->onDelete('cascade');
+            $table->string('topic');
             $table->string('note', 10000);
         });
     }

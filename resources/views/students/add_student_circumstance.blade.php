@@ -9,13 +9,7 @@
                 <input name="student_id" value="{{ $student->id }}" type="hidden">
                 <div class="mb-4 dropdown box-content inline-block relative text-black flex justify-center">
                     <label for="circumstance" class="sr-only">Add Circumstance: </label>
-                    
                     <select name="circumstance" id="circumstance" class="p-3 w-full text-black text-bold bg-gray-200 border-2 @error('circumstance') border-red-500 @enderror rounded-lg" value="{{ old('circumstance') }}">
-                        @error('circumstance')
-                            <div class="text-red-500 mt-2 text-sm">
-                                {{ $message }}
-                            </div>
-                        @enderror
                         <option value="Select Circumstance">Select Circumstance</option>
                         @if($circumstances->count())
                             @foreach($circumstances as $circumstance)
@@ -25,6 +19,11 @@
                             <option value="None Available">None Available</option>
                         @endif
                     </select>
+                    @error('circumstance')
+                            <div class="text-red-500 mt-2 text-sm">
+                                {{ $message }}
+                            </div>
+                        @enderror
                 </div>
                 <div class="flex justify-center items-center">
                     <button type="submit" class="bg-purple-500 text-white px-4 py-3 rounded font-bold w-full">Add Student Circumstance</button>

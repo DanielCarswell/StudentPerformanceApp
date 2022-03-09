@@ -1,12 +1,12 @@
 @component('mail::message')
 
-Dear {{  $message  }},
-{{  $circumstance->information  }}
+Dear {{  $user->fullname  }},
+{{  $information  }}
 
-Please check out information on {{  $circumstance->name  }} linked below,
+Please check out information on {{  $cirname  }} linked below,
 
 @foreach($links as $link)
-       echo $link;
+       {{$link->link}}
 @endforeach
 
 

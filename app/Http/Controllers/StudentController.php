@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 use App\Models\User;
+use App\Models\Circumstance;
+use App\Mail\Circumstances;
 
 class StudentController extends Controller
 {
@@ -40,13 +42,52 @@ class StudentController extends Controller
         ]);
     }
 
-    public function update_circumstance(int $circumstance_id) {
+    public function update_circumstance(Request $request) {
+        //Checking circumstance credentials are valid.
+        $credentials = $request->validate([
+            'circumstance' => ['required', 'max:255']
+        ]); 
+
+        $circumstance = Circumstance::with(['circumstance_links'])->where('name', $request->circumstance)->first();
+
+        $student_circumstances = DB::table('circumstances')
+        ->select('circumstances.id', 'circumstances.name', 'circumstances.information')
+        ->from('circumstances')
+        ->join('student_circumstance', 'student_circumstance.circumstance_id', '=', 'circumstances.id')
+        ->join('users', 'student_circumstance.student_id', '=', 'users.id')
+        ->where('users.id', $request->student_id)
+        ->get();
+
+        foreach($student_circumstances as $circumstance1)
+            if($circumstance1->id == $circumstance->id)
+                return back()->withErrors([
+                    'circumstance' => 'This circumstance is already assigned to the Student.'
+                ]);
         
+         //Adding circumstance to student if valid credentials.
+         if ($credentials) {
+            DB::table('student_circumstance')->insert([
+                'student_id' => $request->student_id,
+                'circumstance_id' => $circumstance->id
+            ]);
+            $student = User::find($request->student_id);
+
+            Mail::to($student->email)->send(new Circumstances($student, $circumstance->name, $circumstance->information, $circumstance->circumstance_links));
+        }
+            
+        $student = User::find($request->student_id);
+        return redirect()->route('student.circumstances', $student);
     }
 
 
-    public function remove_circumstance(int $student_id, int $circumstance_id) {
+    public function remove_circumstance(Request $request) {
+        //add policy check for restriction
+        DB::table('student_circumstance')
+        ->where('student_id', $request->student_id)
+        ->where('circumstance_id', $request->circumstance_id)
+        ->delete();
 
+        return back();
     }
 
     public function student_circumstances(User $student) {

@@ -122,8 +122,8 @@ Route::delete('/admin/circumstances/destroy/{circumstance}', [CircumstanceContro
 
 Route::any('/students', [StudentController::class, 'index'])->name('students')->middleware('auth');
 Route::any('/student/circumstance/add/{student}', [StudentController::class, 'add_circumstance'])->name('student.circumstance.add')->middleware('auth');
-Route::post('/student/circumstance/update', [StudentController::class, 'update_circumstance'])->name('student.circumstance.update')->middleware('auth');
-Route::delete('/student/circumstance/remove/{student_id}/{circumstance_id}', [StudentController::class, 'remove_circumstance'])->name('student.circumstance.remove')->middleware('auth');
+Route::any('/student/circumstance/update', [StudentController::class, 'update_circumstance'])->name('student.circumstance.update')->middleware('auth');
+Route::delete('/student/circumstance/remove', [StudentController::class, 'remove_circumstance'])->name('student.circumstance.remove')->middleware('auth');
 Route::any('/student/circumstances/{student}', [StudentController::class, 'student_circumstances'])->name('student.circumstances')->middleware('auth');
 
 Route::any('/assignment/upload_marks', [CSVUploadController::class, 'assignment_marks'])->name('file.upload.assignment');

@@ -8,23 +8,28 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
 use App\Models\User;
+use App\Models\Tables\Circumstance_link;
 
-class DepressionCircumstance extends Mailable
+class Circumstances extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $user;
-    public $message;
+    public $information;
+    public $cirname;
+    public $links;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $user, String $message)
+    public function __construct(User $user, String $cirname, String $information, $links)
     {
         $this->user = $user;
-        $this->message = $message;
+        $this->cirname = $cirname;
+        $this->links = $links;
+        $this->information = $information;
     }
 
     /**
@@ -34,6 +39,6 @@ class DepressionCircumstance extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.circumstances.depression');
+        return $this->markdown('emails.circumstance');
     }
 }
