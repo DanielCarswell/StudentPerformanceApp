@@ -130,5 +130,5 @@ Route::any('/student/notes/{student}', [StudentController::class, 'student_notes
 Route::any('/assignment/upload_marks', [CSVUploadController::class, 'assignment_marks'])->name('file.upload.assignment')->middleware('staff');
 Route::any('/assignment/upload_students', [CSVUploadController::class, 'upload_students'])->name('file.upload.students')->middleware('staff');
 
-Route::get('/pdf/class_records/{class_id}', [PDFController::class, 'class_records'])->name('pdf.class_records')->name('file.upload.students')->middleware('staff');
-Route::get('/pdf/student_records/{student_id}', [PDFController::class, 'student_records'])->name('pdf.student_records')->name('file.upload.students')->middleware('staff');
+Route::get('/pdf/class_records/{class_id}', [PDFController::class, 'class_records'])->name('pdf.class_records')->middleware('staff');
+Route::get('/pdf/student_records/{student_id}', [PDFController::class, 'student_records'])->name('pdf.student_records')->middleware('staff');
