@@ -47,6 +47,7 @@
                     </span>
                 </td>
                 <td class="px-16 py-2 flex justify-center">
+                @hasRole(['Admin', 'Moderator', 'Advisor', 'Staff'])
                     <form action="{{ route('circumstance.links', $circumstance->id)  }}" method="post">
                         @csrf
                         <span class="flex justify-center">
@@ -71,6 +72,7 @@
                             </button>
                         </span>
                     </form>
+                    @endhasRole
                 </td>
             </tr>
           @endforeach

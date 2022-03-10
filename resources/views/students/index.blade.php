@@ -42,6 +42,7 @@
                           </button>
                       </span>
                   </form>
+                  @hasRole(['Admin', 'Moderator', 'Lecturer', 'Advisor', 'Staff'])
                   <form action="{{ route('student.circumstances', $student)  }}" method="post">
                       @csrf
                       <span class="flex justify-center">
@@ -50,6 +51,8 @@
                           </button>
                       </span>
                   </form>
+                  @endhasRole
+                  @hasRole(['Advisor'])
                   <form action="{{ route('student.notes', $student)  }}" method="post">
                       @csrf
                       <span class="flex justify-center">
@@ -58,6 +61,7 @@
                           </button>
                       </span>
                   </form>
+                  @endhasRole
                   <form action="{{ route('graph.student_details', $student)  }}" method="post">
                         @csrf
                         <span class="flex justify-center">

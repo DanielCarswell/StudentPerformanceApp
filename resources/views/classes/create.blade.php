@@ -4,7 +4,7 @@
     <div class="flex justify-center mt-48 mb-48 text-extrabold">
         <div class="w-4/12 bg-gray-700 text-white p-6 rounded-lg">
             <h2 class="text-2xl my-4 flex justify-center"><b>Create New Class</b></h2>
-            <form action="{{ route('class.create') }}" method="post">
+            <form action="{{ route('class.lecturer_create') }}" method="post">
                 @csrf
                 <div class="mb-4">
                     <label for="classname" class="sr-only">Class Name</label>
@@ -19,7 +19,7 @@
                     <button type="submit" class="bg-purple-500 text-white px-4 py-3 rounded font-bold w-full">Add Class</button>
                 </div>
             </form>
-            <a href="{{ route('admin_classes')  }}">
+            <a href="{{ route('classes')  }}">
                 <span class="flex justify-center items-center">
                     <button type="submit" style="background-color:#4dac26;" class="text-white mt-2 px-4 py-3 rounded font-bold w-full">
                         Go Back

@@ -54,7 +54,7 @@ class CircumstanceController extends Controller
             'information' => ['required', 'max:10000']
         ]); 
 
-        $circumstance = \DB::table('circumstances')->where('circumstances.id', '!=', $request->circumstance_id)->get();
+        $circumstances = \DB::table('circumstances')->where('circumstances.id', '!=', $request->circumstance_id)->get();
 
         foreach($circumstances as $cirumstance) {
             if($request->name != $circumstance->name) {}

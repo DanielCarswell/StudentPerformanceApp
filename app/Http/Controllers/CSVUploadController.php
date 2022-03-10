@@ -98,20 +98,40 @@ class CSVUploadController extends Controller
                     ->insert([
                         'student_id' => $data[0],
                         'class_id' => $request->class_id,
-                        'grade' => 0.0,
+                        'grade' => 100.0,
                         'attendance' => 100.0
                     ]);
-                    //Send Email Here
                     DB::commit();
                 } catch (\Exception $e) {
                     DB::rollBack();
                 }
             }
             $class = Classe::find($request->class_id);
-            
+            $this->add($class);
             return redirect()->route('class.students', $class);
         } else {
             throw new \Exception('No file was uploaded', Response::HTTP_BAD_REQUEST);
         }
+    }
+
+    public function add(Classe $class) {
+        $studentsUnfiltered = User::with(['classes'])->get();
+
+        $student_ids = [];
+
+        foreach($studentsUnfiltered as $student) {
+            $count = 0;
+            $check = $student->classes->count();
+            foreach($student->classes as $classe) {
+                if($class->id == $classe->id)
+                    break;
+                else if($count == $check-1)
+                    array_push($student_ids, $student->id);
+                else
+                    $count += 1;
+            }
+        }
+
+        return;
     }
 }

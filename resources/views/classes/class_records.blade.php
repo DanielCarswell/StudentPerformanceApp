@@ -37,7 +37,6 @@
                                 </div>
                                 <div>
                                     <p class="font-semibold text-black">{{  $data->fullname  }}</p>
-                                    <p class="text-xs text-gray-600">CS Student</p>
                                 </div>
                                 </div>
                             </td>

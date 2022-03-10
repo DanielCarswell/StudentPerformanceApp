@@ -3,13 +3,14 @@
 @section('content')
 <section class="container mx-auto p-6 font-mono mt-12">
   <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
+    <p class="text-2xl font-extrabold flex justify-center mb-6">All Users</p>
     <div class="w-full overflow-x-auto">
       <table class="w-full">
         <thead>
           <tr class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-900 uppercase border-b border-gray-600">
             <th class="px-4 py-3 text-white">Name</th>
             <th class="px-4 py-3 text-white">Email</th>
-            <th class="px-4 py-3 text-white">Role</th>
+            <th class="px-4 py-3 text-white">Roles</th>
             <th class="px-4 py-3 text-white">Account Actions</th>
           </tr>
         </thead>
@@ -37,25 +38,27 @@
                 </td>
                 <td class="px-4 py-3 text-ms border">
                     <div class="flex justify-center">
-                        <form>
+                    @hasRole(['Admin', 'Moderator'])
+                        <form action="{{  route('user_roles', $account->id)  }}" method="post">
                             @csrf
                             <button type="submit" class="bg-indigo-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
-                                View Profile <i class="fas fa-plus"></i>
+                              <i class="fas fa-clipboard"></i>&nbsp;&nbsp;User Roles
                             </button>
                         </form>
                         <form action="{{  route('account.edit', $account->acc)  }}">
                             @csrf
                             <button type="submit" class="bg-yellow-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
-                                Edit Account <i class="fas fa-pencil-alt"></i>
+                              <i class="fas fa-pencil-alt"></i>&nbsp;&nbsp;Edit Account
                             </button>
                         </form>
                         <form action="{{ route('accounts.destroy', $account->acc) }}" method="post">
                             @csrf
                             @method('delete')
                             <button type="submit" class="bg-yellow-800 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
-                                Delete Account <i class="fas fa-trash"></i>
+                              <i class="fas fa-trash"></i>&nbsp;&nbsp;Delete Account
                             </button>
                         </form>
+                        @endhasRole
                     </div>
                 </td>
               </tr>

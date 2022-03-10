@@ -37,7 +37,6 @@
                                 </div>
                                 <div>
                                     <p class="font-semibold text-black">{{  $data->name  }}</p>
-                                    <p class="text-xs text-gray-600">Course Computing Science</p>
                                 </div>
                                 </div>
                             </td>

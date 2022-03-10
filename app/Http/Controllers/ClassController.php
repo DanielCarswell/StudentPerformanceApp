@@ -56,8 +56,59 @@ class ClassController extends Controller
         ]);
     }
 
-    public function create(Request $request) {
+    public function create() {
         return view('admin.classes.create_class');
+    }
+
+    public function create_class(Request $request) {
+        $credentials = $request->validate([
+            'classname' => ['required', 'max:255']
+        ]);
+
+        if ($credentials) {
+            DB::table('classes')->insert([
+                'name' => $request->classname
+            ]);
+
+            $class_id = 0;
+            $classes = DB::table('classes')->get();
+
+            foreach($classes as $class) {
+                $class_id = $class->id;
+            }
+        }
+
+        return redirect()->route('admin_classes');
+    }
+
+    public function create_lecturer() {
+        return view('classes.create');
+    }
+
+    public function lecturer_create(Request $request) {
+        $credentials = $request->validate([
+            'classname' => ['required', 'max:255']
+        ]);
+
+        if ($credentials) {
+            DB::table('classes')->insert([
+                'name' => $request->classname
+            ]);
+
+            $class_id = 0;
+            $classes = DB::table('classes')->get();
+
+            foreach($classes as $class) {
+                $class_id = $class->id;
+            }
+
+            DB::table('lecturer_class')->insert([
+                'lecturer_id' => auth()->user()->id,
+                'class_id' => $class_id
+            ]);
+        }
+
+        return redirect()->route('classes');
     }
 
     public function delete(Classe $class) {
@@ -75,7 +126,7 @@ class ClassController extends Controller
 
     public function search_classes(Request $request) {
         $q = $request->q;
-        $classes = Classe::where ( 'name', 'LIKE', '%' . $q . '%' )->orWhere ( 'class_code', 'LIKE', '%' . $q . '%' )->paginate(8);
+        $classes = Classe::where ( 'name', 'LIKE', '%' . $q . '%' )->paginate(8);
         
         return view('admin.classes.index', [
             'classes' => $classes
@@ -147,17 +198,12 @@ class ClassController extends Controller
 
     public function class_records(Classe $class)
     {
-        $lists = DB::table('classes')
+        $lists = DB::table('student_class')
             ->select('users.fullname', 'student_class.grade', 'student_class.attendance')
-            ->from('classes')
-            ->join('student_class', 'student_class.class_id', '=', 'classes.id')
+            ->from('student_class')
+            ->join('classes', 'student_class.class_id', '=', 'classes.id')
             ->join('users', 'users.id', '=', 'student_class.student_id')
-            ->join('user_role', 'user_role.user_id', '=', 'users.id')
-            ->join('roles', 'roles.id', '=', 'user_role.role_id')
-            ->join('lecturer_class', 'lecturer_class.class_id', '=', 'classes.id')
             ->where('classes.id', '=', $class->id)
-            //->where('roles.name', '=', 'Student')
-            ->where('lecturer_class.lecturer_id', '=', auth()->user()->id)
             ->groupBy('users.fullname', 'student_class.grade', 'student_class.attendance')
             ->paginate(8);
 
@@ -219,7 +265,7 @@ class ClassController extends Controller
         foreach($assignments as $assignment)
         {
             DB::table('student_assignment')
-            ->insert(['class_id' => $class_id, 'user_id' => $student_id, 'assignment_id' => $assignment->id]);
+            ->insert(['class_id' => $class_id, 'user_id' => $student_id, 'assignment_id' => $assignment->id, 'grade' => 0, 'attendance' => 100]);
         }
 
         $class = Classe::find($class_id);

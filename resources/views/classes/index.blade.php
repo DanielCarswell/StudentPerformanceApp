@@ -3,6 +3,15 @@
 @section('content')
   <div class="ml-12 mr-12">
     <p class="text-2xl font-extrabold flex justify-center mb-6">My Classes</p>
+    @hasRole(['Admin', 'Moderator', 'Lecturer'])
+    <a href="{{ route('class.lecturer.create')  }}">
+            <span class="flex justify-center">
+                <button type="submit" style="background-color:#4dac26;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+                    <i class="fas fa-plus"></i>&nbsp;&nbsp;Create Class
+                </button>
+            </span>
+        </a>
+    @endhasRole
     <table class="min-w-full table-auto rounded-lg">
       <thead class="justify-between">
         <tr class="bg-gray-800">
@@ -34,6 +43,7 @@
                     </td>
                 @endif
                 <td class="px-16 py-2 flex justify-center">
+                  @hasRole(['Admin', 'Moderator', 'Lecturer'])
                     <form action="{{ route('classes.class_records', $class)  }}" method="post">
                         @csrf
                         <span class="flex justify-center">
@@ -50,6 +60,7 @@
                             </button>
                         </span>
                     </form>
+                    
                     <form action="{{ route('graph.class_grades', $class)  }}" method="post">
                         @csrf
                         <span class="flex justify-center">
@@ -58,6 +69,7 @@
                             </button>
                         </span>
                     </form>
+                    @endhasRole
                     
                 </td>
             </tr>

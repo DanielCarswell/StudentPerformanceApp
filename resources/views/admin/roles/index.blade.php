@@ -4,6 +4,7 @@
   <div class="ml-12 mr-12">
     <p class="text-2xl font-extrabold flex justify-center mb-6">User Roles</p>
     <div class="px-16 py-2 flex justify-center">
+    @hasRole(['Admin', 'Moderator'])
         <a href="{{ route('add_role')  }}">
             <span class="flex justify-center">
                 <button type="submit" style="background-color:#4dac26;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
@@ -11,6 +12,7 @@
                 </button>
             </span>
         </a>
+      @endhasRole
         <a href="{{  route('roles_index')  }}" >
             <span class="flex justify-center">
                 <button type="submit" style="background-color:#a6611a;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
@@ -52,15 +54,8 @@
                     <span class="text-center ml-2 font-semibold flex justify-center">{{  $role->name  }}</span>
                 </td>
                 <td class="px-16 py-2 flex justify-center">
-                    <form action="{{ route('role_permissions', $role)  }}" method="post">
-                        @csrf
-                        <span class="flex justify-center">
-                            <button type="submit" class="bg-blue-500 text-white px-4 py-2 border rounded-md hover:border-indigo-500 hover:text-black">
-                              <i class="fas fa-clipboard-list"></i>&nbsp;&nbsp;View Role Permissions
-                            </button>
-                        </span>
-                    </form>
-                    @if($role->id > 7)
+                @hasRole(['Admin'])
+                    @if($role->id > 8)
                       <form action="{{ route('edit_role', $role)  }}" method="post">
                           @csrf
                           <span class="flex justify-center">
@@ -69,8 +64,6 @@
                               </button>
                           </span>
                       </form>
-                    @endif
-                    @if($role->id > 7)
                       <form action="{{ route('delete_role', $role)  }}" method="post">
                           @csrf
                           <span class="flex justify-center">
@@ -79,7 +72,10 @@
                               </button>
                           </span>
                       </form>
+                      @else
+                      <p>Default Role</p>
                     @endif
+                    @endhasRole
                 </td>
             </tr>
           @endforeach

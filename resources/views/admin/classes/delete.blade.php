@@ -9,16 +9,7 @@
                 @method('delete')
                 <input name="class" value="{{ $class }}" type="hidden">
                 <div class="mb-4 text-xl">
-                    <label for="classcode">Class Code: {{  $class->class_code  }}</label>
-                </div>
-                <div class="mb-4 text-xl">
                     <label for="classname">Class Name: {{  $class->name  }}</label>
-                </div>
-                <div class="mb-4 text-xl">
-                    <label for="classyear">Class Year: {{  $class->year  }}</label>
-                </div>
-                <div class="mb-6  text-xl">
-                    <label for="classcredits">Class Credits: {{  $class->credits  }}</label>
                 </div>
                 <div class="flex justify-center items-center">
                     <button type="submit" class="bg-purple-500 text-white px-4 py-3 rounded font-bold w-full">Delete</button>

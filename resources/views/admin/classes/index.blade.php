@@ -4,6 +4,7 @@
   <div class="ml-12 mr-12">
     <p class="text-2xl font-extrabold flex justify-center mb-6">All Classes</p>
     <div class="px-16 py-2 flex justify-center">
+    @hasRole(['Admin', 'Moderator', 'Lecturer'])
       <a href="{{ route('create_class')  }}">
           <span class="flex justify-center">
               <button type="submit" style="background-color:#4dac26;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
@@ -11,6 +12,7 @@
               </button>
           </span>
       </a>
+      @endhasRole
       <a href="{{ route('admin_classes')  }}">
           <span class="flex justify-center">
               <button type="submit" style="background-color:#a6611a;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
@@ -36,9 +38,6 @@
     <table class="min-w-full table-auto rounded-lg">
       <thead class="justify-between">
         <tr class="bg-gray-800">
-            <th class="px-16 py-2">
-            <span class="text-gray-300">Course</span>
-          </th>
           <th class="px-16 py-2">
             <span class="text-gray-300">Class Name</span>
           </th>
@@ -51,9 +50,6 @@
         @if($classes->count())
           @foreach($classes as $class)
             <tr class="bg-white border-4 border-gray-200 ">
-                <td>
-                    <span class="text-center ml-2 font-semibold flex justify-center">Course name</span>
-                </td>
                 <td>
                     <span class="text-center ml-2 font-semibold flex justify-center">{{  $class->name  }}</span>
                 </td>
@@ -69,11 +65,12 @@
                     <form action="{{ route('class_assignments', $class->id)  }}" method="post">
                         @csrf
                         <span class="flex justify-center">
-                            <button type="submit" class="bg-blue-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+                            <button type="submit" class="bg-blue-700 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
                               <i class="fas fa-clipboard-list"></i>&nbsp;&nbsp;View Assignments
                             </button>
                         </span>
                     </form>
+                    @hasRole(['Admin', 'Moderator', 'Lecturer'])
                     <form action="{{ route('classes.class_records', $class)  }}" method="post">
                         @csrf
                         <span class="flex justify-center">
@@ -90,6 +87,7 @@
                             </button>
                         </span>
                     </form>
+                    @endhasRole
                 </td>
             </tr>
           @endforeach

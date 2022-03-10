@@ -4,6 +4,7 @@
     <div class="ml-12 mr-12">
     <h2 class="text-2xl font-extrabold flex justify-center mb-6">{{$class->name}} - {{$assignment->name}} Grades</h2>
     <div class="mb-6">
+    @hasRole(['Admin', 'Moderator', 'Lecturer'])
       <form action="{{ route('upload_assignment_marks')  }}" method="get">
         <input name="class_id" value="{{$class->id}}" type="hidden">
         <input name="assignment_id" value="{{ $assignment->id }}" type="hidden">
@@ -13,6 +14,7 @@
             </button>
         </span>
       </form>
+      @endhasRole
     </div>
     <table class="min-w-full table-auto rounded-lg">
       <thead class="justify-between">
@@ -39,6 +41,7 @@
                   <span class="text-center ml-2 font-semibold flex justify-center">{{  $student->percent  }}%</span>
               </td>
               <td>
+              @hasRole(['Admin', 'Moderator', 'Lecturer'])
                 <form action="{{  route('update_assignment_mark')  }}" method="post" role="search">
                   @csrf
                   <input name="class_id" value="{{$class->id}}" type="hidden">
@@ -54,6 +57,7 @@
                       </span>
                   </div>
                 </form>
+              @endhasRole
               </td>
             </tr>
           @endforeach

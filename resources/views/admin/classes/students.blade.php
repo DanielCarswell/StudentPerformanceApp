@@ -4,6 +4,7 @@
   <div class="ml-12 mr-12">
     <p class="text-2xl font-extrabold flex justify-center mb-6">{{  $class->name  }} Students</p>
     <div class="px-16 py-2 flex justify-center">
+    @hasRole(['Admin', 'Moderator', 'Lecturer'])
       <form action="{{  route('class.students.add', $class)  }}" method="post" >
         @csrf
         <span class="flex justify-center">
@@ -20,6 +21,7 @@
             </button>
         </span>
       </form>
+      @endhasRole
       <form action="" method="post" >
           @csrf
           <span class="flex justify-center">
@@ -28,21 +30,6 @@
               </button>
           </span>
       </form>
-    </div>
-    <div class="mb-6">
-    <form action="" method="post" role="search">
-        @csrf
-        <div class="input-group">
-            <input name="class_id" value="{{ $class->id }}" type="hidden">
-            <label class="text-xl">Search Class Students: </label>
-            <input type="text" class="form-control pt-4 pb-4 pr-12 pl-2 ml-2 text-xl" name="q" placeholder="Search Students">
-                <span class="input-group-btn">
-                <button type="submit" class="btn btn-default">
-                    <span class="glyphicon glyphicon-search"></span>
-                </button>
-            </span>
-        </div>
-    </form>
     </div>
     <table class="min-w-full table-auto rounded-lg">
       <thead class="justify-between">
@@ -69,6 +56,7 @@
                     <span class="text-center ml-2 font-semibold flex justify-center">{{  number_format((float)$student->class_mark, 0, '.', '')  }}%</span>
                 </td>
                 <td class="px-16 py-2 flex justify-center">
+                @hasRole(['Admin', 'Moderator', 'Lecturer'])
                     <form action="{{  route('class.delete_student', [$class->id, $student->id])  }}" method="post">
                         @csrf
                         @method('delete')
@@ -78,6 +66,7 @@
                             </button>
                         </span>
                     </form>
+                    @endhasRole
                 </td>
             </tr>
           @endforeach
