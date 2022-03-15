@@ -2,23 +2,27 @@
 
 @section('content')
     <div class="ml-12 mr-12">
-    <h2 class="text-2xl font-extrabold flex justify-center mb-6">{{$class->name}} - {{$assignment->name}} Grades</h2>
+    <h2 class="text-2xl font-extrabold flex justify-center mb-6">{{$class->name}} - Attendance</h2>
     <div class="mb-6 flex justify-center">
     @hasRole(['Admin', 'Moderator', 'Lecturer'])
-      <form action="{{ route('upload_assignment_marks')  }}" method="get">
-        <input name="class_id" value="{{$class->id}}" type="hidden">
-        <input name="assignment_id" value="{{ $assignment->id }}" type="hidden">
-            <button type="submit" style="background-color:#4dac26;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
-                <i class="fas fa-plus"></i>&nbsp;&nbsp;Upload Assignment Marks
+        <form action="{{ route('upload_attendance')  }}" method="get">
+            <input name="class_id" value="{{$class->id}}" type="hidden">
+                <button type="submit" style="background-color:#4dac26;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+                    <i class="fas fa-plus"></i>&nbsp;&nbsp;Upload Attendance
+                </button>
+        </form>
+        <form action="{{  route('classes') }}" method="get">
+            @csrf
+            <button type="submit" class="bg-purple-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+                Go Back
             </button>
-      </form>
-      <form action="{{  route('class.assignments', $class) }}" method="post">
-          @csrf
-          <button type="submit" class="bg-purple-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
-              Go Back
-          </button>
-      </form>
+        </form>
       @endhasRole
+      @error('attendance')
+            <div class="text-red-500 mt-2 text-sm">
+                {{ $message }}
+            </div>
+        @enderror
     </div>
     <table class="min-w-full table-auto rounded-lg">
       <thead class="justify-between">
@@ -27,10 +31,10 @@
             <span class="text-gray-300">Student Name</span>
           </th>
           <th class="px-16 py-2">
-            <span class="text-gray-300">Assignment Mark</span>
+            <span class="text-gray-300">Attendance Rate</span>
           </th>
           <th class="px-16 py-2">
-            <span class="text-gray-300">Update Mark</span>
+            <span class="text-gray-300">Update Attendance</span>
           </th>
         </tr>
       </thead>
@@ -42,18 +46,17 @@
                   <span class="text-center ml-2 font-semibold flex justify-center">{{  $student->fullname  }}</span>
               </td>
               <td>
-                  <span class="text-center ml-2 font-semibold flex justify-center">{{  $student->percent  }}%</span>
+                  <span class="text-center ml-2 font-semibold flex justify-center">{{  $student->attendance  }}%</span>
               </td>
               <td>
               @hasRole(['Admin', 'Moderator', 'Lecturer'])
-                <form action="{{  route('update_assignment_mark')  }}" method="post" role="search">
+                <form action="{{  route('update_attendance')  }}" method="post" role="search">
                   @csrf
                   <input name="class_id" value="{{$class->id}}" type="hidden">
-                  <input name="assignment_id" value="{{ $assignment->id }}" type="hidden">
                   <input name="student_id" value="{{ $student->id }}" type="hidden">
                   <div class="input-group flex justify-center">
-                      <label class="text-xl pt-4">Enter Mark: </label>
-                      <input type="text" class="form-control pt-4 pb-4 pr-12 pl-2 ml-2 text-xl" name="percent" placeholder="Enter Mark Here">
+                      <label class="text-xl pt-4">Enter Attendance: </label>
+                      <input type="text" class="form-control pt-4 pb-4 pr-12 pl-2 ml-2 text-xl" name="attendance" placeholder="Enter Attendance Rate">
                           <span class="input-group-btn">
                           <button type="submit" class="btn btn-default">
                               <span class="glyphicon glyphicon-search"></span>

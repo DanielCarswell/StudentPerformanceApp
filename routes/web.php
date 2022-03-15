@@ -49,7 +49,7 @@ Route::get('/admin/accounts/edit/{account}', [AccountController::class, 'edit'])
 Route::post('/admin/accounts/update', [AccountController::class, 'update'])->name('account.update')->middleware('staff');
 Route::delete('/admin/accounts/{account}', [AccountController::class, 'destroy'])->name('accounts.destroy')->middleware('admin');
 
-Route::any('/graph/barchart/class_grades/{class}', [ChartController::class, 'class_grades'])->name('graph.class_grades')->middleware('staff');
+Route::any('/graphs/barchart/class_grades/{class}', [ChartController::class, 'class_grades'])->name('graph.class_grades')->middleware('staff');
 Route::any('/graphs/pichart/ratings/{class}', [ChartController::class, 'class_ratings'])->name('graph.class_ratings')->middleware('staff');
 Route::any('/graphs/student_details/{student}', [ChartController::class, 'student_details'])->name('graph.student_details')->middleware('auth');
 Route::any('/graphs/student_ratings/{student}', [ChartController::class, 'student_ratings'])->name('graph.student_ratings')->middleware('auth');
@@ -74,6 +74,10 @@ Route::get('/class/upload_students', [ClassController::class, 'upload_students']
 Route::any('/classes/class_records/{class}', [ClassController::class, 'class_records'])->name('classes.class_records')->middleware('staff');
 Route::get('/classes/student_records/{student}', [ClassController::class, 'student_records'])->middleware('auth');
 Route::post('/classes/student_records/{student}', [ClassController::class, 'student_records'])->name('classes.student_records')->middleware('auth');
+Route::get('/classes/upload_attendance', [ClassController::class, 'upload_attendance'])->name('upload_attendance')->middleware('staff');
+Route::post('/classes/update_attendance', [ClassController::class, 'update_attendance'])->name('update_attendance')->middleware('staff');
+Route::any('/admin/classes/attendance/{class}', [ClassController::class, 'class_attendance'])->name('class_attendance')->middleware('staff'); 
+
 
 Route::get('/admin/assignments/add_assignment/{class_id}', [AssignmentController::class, 'create'])->name('create_assignment')->middleware('staff');
 Route::post('/admin/assignments/add_assignment', [AssignmentController::class, 'add'])->name('add_assignment')->middleware('staff');
@@ -127,8 +131,9 @@ Route::any('/student/note/modify', [StudentController::class, 'modify_note'])->n
 Route::delete('/student/note/remove', [StudentController::class, 'remove_note'])->name('student.note.remove')->middleware('staff');
 Route::any('/student/notes/{student}', [StudentController::class, 'student_notes'])->name('student.notes')->middleware('staff');
 
+Route::any('/assignment/upload_attendance', [CSVUploadController::class, 'attendance'])->name('file.upload.attendance')->middleware('staff');
 Route::any('/assignment/upload_marks', [CSVUploadController::class, 'assignment_marks'])->name('file.upload.assignment')->middleware('staff');
 Route::any('/assignment/upload_students', [CSVUploadController::class, 'upload_students'])->name('file.upload.students')->middleware('staff');
 
-Route::get('/pdf/class_records/{class_id}', [PDFController::class, 'class_records'])->name('pdf.class_records')->name('file.upload.students')->middleware('staff');
-Route::get('/pdf/student_records/{student_id}', [PDFController::class, 'student_records'])->name('pdf.student_records')->name('file.upload.students')->middleware('staff');
+Route::get('/pdf/class_records/{class_id}', [PDFController::class, 'class_records'])->name('pdf.class_records')->middleware('staff');
+Route::get('/pdf/student_records/{student_id}', [PDFController::class, 'student_records'])->name('pdf.student_records')->middleware('staff');

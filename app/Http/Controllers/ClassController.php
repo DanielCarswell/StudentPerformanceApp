@@ -41,6 +41,17 @@ class ClassController extends Controller
                 $class->average_grade = $average_grade[0]->average_grade;
         }
 
+        foreach($classes as $class) {
+            $average_attendance = DB::table('student_class')
+            ->select(\DB::raw('round(AVG(CAST(student_class.attendance as numeric)), 1) as average_attendance'))
+            ->from('student_class')
+            ->where('student_class.class_id', '=', $class->id)
+            ->groupBy('student_class.class_id')
+            ->get();
+
+            $class->average_attendance = $average_attendance[0]->average_attendance;
+        }
+
         return view('classes.index', [
             'classes' => $classes
         ]);
@@ -290,6 +301,48 @@ class ClassController extends Controller
     public function upload_students(Request $request) {
         return view('admin.classes.upload_class_students', [
             'class_id' => $request->class_id
+        ]);
+    }
+
+    public function upload_attendance(Request $request) {
+        return view('classes.upload_attendance', [
+            'class_id' => $request->class_id
+        ]);
+    }
+
+    public function update_attendance(Request $request) {
+        $credentials = $request->validate([
+            'attendance' => ['numeric']
+        ]);
+
+        if($credentials && $request->attendance >= 0 && $request->attendance <= 100)
+            DB::table('student_class')
+            ->where('class_id', '=', $request->class_id)
+            ->where('student_id', '=', $request->student_id)
+            ->update([
+                'attendance' => $request->attendance
+            ]);
+        else
+            return back()->withErrors([
+                'attendance' => 'Attendance must be between 0 and 100%.'
+            ]);
+
+        $class = Classe::find($request->class_id);
+
+        return redirect()->route('class_attendance', $class);
+    }
+
+    public function class_attendance(Classe $class) {
+        $students = DB::table('users')
+        ->select('student_class.attendance', 'users.fullname', 'users.id')
+        ->from('users')
+        ->join('student_class', 'users.id', '=', 'student_class.student_id')
+        ->where('student_class.class_id', $class->id)
+        ->paginate(8);
+
+        return view('classes.attendance', [
+            'class' => $class,
+            'students' => $students
         ]);
     }
 }

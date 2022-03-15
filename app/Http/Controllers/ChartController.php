@@ -11,12 +11,26 @@ use App\Models\Classe;
 class ChartController extends Controller
 {
     public function select_graph(Request $request) {
-        $class = Classe::find($request->class_id);
-        dd($request);
-        if($request->graphtype == 'Pi Chart')
+        if($request->graphtype == 'Student Ratings') {
+            $class = Classe::find($request->class_id);
             return $this->class_ratings($class);
-        else if($request->graphtype == 'Bar Chart')
+        }
+        else if($request->graphtype == 'Student Grades') {
+            $class = Classe::find($request->class_id);
             return $this->class_grades($class);
+        }
+        else if($request->graphtype == 'Student Attendance') {
+            $class = Classe::find($request->class_id);
+            return $this->class_attendance($class);
+        }
+        else if($request->graphtype == 'Student') {
+            $student = User::find($request->student_id);
+            return $this->student_ratings($student);
+        }
+        else if($request->graphtype == 'Combo') {
+            $student = User::find($request->student_id);
+            return $this->student_details($student);
+        }
         
         return back();
     }
@@ -100,12 +114,10 @@ class ChartController extends Controller
     public function class_grades(Classe $class)
     {
         $grades_model = DB::table('classes')
-            ->select('users.fullname', 'student_class.class_id', 'student_class.grade', 'student_class.attendance')
+            ->select('users.fullname', 'student_class.class_id', 'student_class.grade')
             ->from('classes')
             ->join('student_class', 'classes.id', '=', 'student_class.class_id')
             ->join('users', 'users.id', '=', 'student_class.student_id')
-            ->join('user_role', 'user_role.user_id', '=', 'users.id')
-            ->join('roles', 'roles.id', '=', 'user_role.role_id')
             ->where('classes.id', $class->id)
             ->get();
 
@@ -113,25 +125,24 @@ class ChartController extends Controller
         ->where('id', $class->id)
         ->first();
         
-    	return view('graphs/barchart', ['grades_model' => $grades_model, 'class' => $class]);
+    	return view('graphs/barchart_grades', ['grades_model' => $grades_model, 'class' => $class]);
     }
 
-    public function class_grades_example()
+    public function class_attendance(Classe $class)
     {
-        $grades_model = DB::table('classes')
-            ->select('users.fullname', 'student_class.class_id', 'student_class.grade', 'student_class.attendance')
+        $attendance_model = DB::table('classes')
+            ->select('users.fullname', 'student_class.class_id', 'student_class.attendance')
             ->from('classes')
             ->join('student_class', 'classes.id', '=', 'student_class.class_id')
-            ->join('users', 'users.id', '=', 'student_class.user_id')
-            ->join('user_role', 'user_role.user_id', '=', 'users.id')
-            ->join('roles', 'roles.id', '=', 'user_role.role_id')
-            ->where('classes.id', '=', '12')
+            ->join('users', 'users.id', '=', 'student_class.student_id')
+            ->where('classes.id', $class->id)
             ->get();
 
-            $class = DB::table('classes')
-            ->where('id', '12')
-            ->first();
+        $class = DB::table('classes')
+        ->where('id', $class->id)
+        ->first();
         
-    	return view('graphs/class_grades', ['grades_model' => $grades_model, 'class' => $class]);
+    	return view('graphs/barchart_attendance', ['attendance_model' => $attendance_model, 'class' => $class]);
     }
+
 }

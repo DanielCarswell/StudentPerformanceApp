@@ -91,7 +91,6 @@
                 </td>
             </tr>
           @endforeach
-
           {{  $classes->links()  }}
         @else
           <p>There is no data</p>

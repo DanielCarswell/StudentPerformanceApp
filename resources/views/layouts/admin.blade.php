@@ -16,26 +16,34 @@
         <h1 class="text-white font-bold mr-2 cursor-pointer">Admin Nav</h1>
         </div>
         <ul>
-        <form action="{{  route('accounts')  }}" method="get">
-            <li class="flex space-x-2 mt-4 px-6 py-4 text-white hover:bg-white hover:text-blue-800 font-bold hover:rounded-br-3xl transition duration-100 cursor-pointer">
-                <button type="submit">Users</button>
-            </li>   
-        </form>
-        <form action="{{  route('admin_classes')  }}" method="get">
-            <li class="flex space-x-2 mt-4 px-6 py-4 text-white hover:bg-white hover:text-blue-800 font-bold hover:rounded-br-3xl transition duration-100 cursor-pointer">  
-                <button type="submit">Classes</button>
-            </li>
-        </form>
-        <form action="{{  route('circumstances')  }}" method="get">
-            <li class="flex space-x-2 mt-4 px-6 py-4 text-white hover:bg-white hover:text-blue-800 font-bold hover:rounded-br-3xl transition duration-100 cursor-pointer">  
-                <button type="submit">Circumstances</button>
-            </li>
-        </form>
-        <form action="{{  route('roles_index')  }}" method="get">
-            <li class="flex space-x-2 mt-4 px-6 py-4 text-white hover:bg-white hover:text-blue-800 font-bold hover:rounded-br-3xl transition duration-100 cursor-pointer">
-                <button type="submit">Roles</button>
-            </li>
-        </form>
+        @hasRole(['Admin', 'Moderator', 'Lecturer'])
+            <form action="{{  route('accounts')  }}" method="get">
+                <li class="flex space-x-2 mt-4 px-6 py-4 text-white hover:bg-white hover:text-blue-800 font-bold hover:rounded-br-3xl transition duration-100 cursor-pointer">
+                    <button type="submit">Users</button>
+                </li>   
+            </form>
+        @endhasRole
+        @hasRole(['Admin', 'Moderator', 'Lecturer'])
+            <form action="{{  route('admin_classes')  }}" method="get">
+                <li class="flex space-x-2 mt-4 px-6 py-4 text-white hover:bg-white hover:text-blue-800 font-bold hover:rounded-br-3xl transition duration-100 cursor-pointer">  
+                    <button type="submit">Classes</button>
+                </li>
+            </form>
+        @endhasRole
+        @hasRole(['Admin', 'Moderator', 'Advisor', 'Staff'])
+            <form action="{{  route('circumstances')  }}" method="get">
+                <li class="flex space-x-2 mt-4 px-6 py-4 text-white hover:bg-white hover:text-blue-800 font-bold hover:rounded-br-3xl transition duration-100 cursor-pointer">  
+                    <button type="submit">Circumstances</button>
+                </li>
+            </form>
+        @endhasRole
+        @hasRole(['Admin', 'Moderator'])
+            <form action="{{  route('roles_index')  }}" method="get">
+                <li class="flex space-x-2 mt-4 px-6 py-4 text-white hover:bg-white hover:text-blue-800 font-bold hover:rounded-br-3xl transition duration-100 cursor-pointer">
+                    <button type="submit">Roles</button>
+                </li>
+            </form>
+        @endhasRole
         <form action="{{ route('homepage') }}" method="get">
             <li class="flex space-x-2 mt-4 px-6 py-4 text-white hover:bg-white hover:text-blue-800 font-bold hover:rounded-br-3xl transition duration-100 cursor-pointer">
                 <button type="submit">Return to App</button>

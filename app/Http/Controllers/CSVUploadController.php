@@ -13,6 +13,56 @@ use App\Models\Classe;
 
 class CSVUploadController extends Controller
 {
+    public function attendance(Request $request) {
+        $file = $request->file('upload');
+
+        if ($file) {
+            $filename = $file->getClientOriginalName();
+            $location = 'Uploads';
+            $file->move($location, $filename);
+            $filepath = public_path($location . "/" . $filename);
+            $file = fopen($filepath, "r");
+            $imported = array();
+            $i = 0;
+
+            while (($filedata = fgetcsv($file, 1000, ",")) !== FALSE) {
+                $num = count($filedata);
+                if ($i == 0) {
+                    $i++;
+                    continue;
+                }
+                for ($c = 0; $c < $num; $c++) {
+                    $imported[$i][] = $filedata[$c];
+                }
+                $i++;
+            }
+            fclose($file); //Close after reading
+
+            $j = 0;
+            foreach ($imported as $data) {
+                $j++;
+                try {
+                    DB::beginTransaction();
+                    DB::table('student_class')
+                    ->where('student_id', $data[0])
+                    ->where('class_id', $request->class_id)
+                    ->update([
+                        'attendance' => $data[1]
+                    ]);
+                    //Send Email Here
+                    DB::commit();
+                } catch (\Exception $e) {
+                    DB::rollBack();
+                }
+            }
+            $class = Classe::find($request->class_id);
+            
+            return redirect()->route('class_attendance', $class);
+        } else {
+            throw new \Exception('No file was uploaded', Response::HTTP_BAD_REQUEST);
+        }
+    }
+
     public function assignment_marks(Request $request) {
         $file = $request->file('upload');
 

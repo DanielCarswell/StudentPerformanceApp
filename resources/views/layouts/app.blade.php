@@ -53,9 +53,15 @@
                     <div x-show="dropdownOpen" @click="dropdownOpen = false" class="fixed inset-0 h-full w-full z-10"></div>
 
                     <div x-show="dropdownOpen" class="absolute right-0 mt-2 w-48 bg-white rounded-md overflow-hidden shadow-xl z-20">
-                    <a href="{{  route('admin')  }}" class="block px-4 py-2 text-sm text-white border-b bg-gray-500 hover:bg-blue-400 hover:text-black">Admin Page</a>
-                    <a href="{{  route('students')  }}" class="block px-4 py-2 text-sm text-white border-b bg-gray-500 hover:bg-blue-400 hover:text-black">My Students</a>
-                    <a href="{{  route('classes')  }}" class="block px-4 py-2 text-sm text-white border-b bg-gray-500 hover:bg-blue-400 hover:text-black">My Classes</a>
+                    @hasRole(['Admin', 'Moderator', 'Lecturer', 'Advisor', 'Staff'])
+                        <a href="{{  route('admin')  }}" class="block px-4 py-2 text-sm text-white border-b bg-gray-500 hover:bg-blue-400 hover:text-black">Admin Page</a>
+                    @endhasRole
+                    @hasRole(['Admin', 'Moderator', 'Lecturer'])
+                        <a href="{{  route('classes')  }}" class="block px-4 py-2 text-sm text-white border-b bg-gray-500 hover:bg-blue-400 hover:text-black">My Classes</a>
+                    @endhasRole
+                    @hasRole(['Admin', 'Moderator', 'Advisor'])
+                        <a href="{{  route('students')  }}" class="block px-4 py-2 text-sm text-white border-b bg-gray-500 hover:bg-blue-400 hover:text-black">Advising Students</a>
+                    @endhasRole
                     </div>
                 </div>
             </div>

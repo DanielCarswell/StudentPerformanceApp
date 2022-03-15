@@ -25,6 +25,12 @@ class StudentController extends Controller
             ->where('student_class.student_id', '=', $student->id)
             ->groupBy('student_class.student_id')
             ->get()[0]->average_grade);
+
+            $student->average_attendance = (\DB::table('student_class')
+            ->select(\DB::raw('round(AVG(CAST(student_class.attendance as numeric)), 1) as average_attendance'))
+            ->where('student_class.student_id', '=', $student->id)
+            ->groupBy('student_class.student_id')
+            ->get()[0]->average_attendance);
         }
 
         return view('students.index', [
