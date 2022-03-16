@@ -198,7 +198,7 @@ class ClassController extends Controller
         $lists = DB::table('users')
             ->join('student_class', 'users.id', '=', 'student_class.student_id')
             ->join('classes', 'classes.id', '=', 'student_class.class_id')
-            ->from('classes', 'users', 'student_class')
+            ->from('users')
             ->where('users.id', $student->id)
             ->paginate(8);
 

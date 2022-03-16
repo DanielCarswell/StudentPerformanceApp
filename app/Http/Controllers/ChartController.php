@@ -57,7 +57,7 @@ class ChartController extends Controller
 
         $details = DB::table('users')
         ->select('student_class.grade', 'student_class.attendance')
-        ->from('classes', 'users')
+        ->from('users')
         ->join('student_class', 'student_class.student_id', '=', 'users.id')
         ->join('classes', 'classes.id', '=', 'student_class.class_id')
         ->where('users.id', '=', $student->id)
