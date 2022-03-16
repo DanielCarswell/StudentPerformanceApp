@@ -44,10 +44,11 @@ Route::post('/register', [AuthController::class, 'register_confirm'])->name('reg
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 Route::post('/forgot', [AuthController::class, 'forgot'])->name('forgot_password');
 
-Route::get('/admin/accounts', [AccountController::class, 'index'])->name('accounts')->middleware('staff');
-Route::get('/admin/accounts/edit/{account}', [AccountController::class, 'edit'])->name('account.edit')->middleware('staff');
-Route::post('/admin/accounts/update', [AccountController::class, 'update'])->name('account.update')->middleware('staff');
+Route::get('/admin/accounts', [AccountController::class, 'index'])->name('accounts')->middleware('admin');
+Route::get('/admin/accounts/edit/{account}', [AccountController::class, 'edit'])->name('account.edit')->middleware('admin');
+Route::post('/admin/accounts/update', [AccountController::class, 'update'])->name('account.update')->middleware('admin');
 Route::delete('/admin/accounts/{account}', [AccountController::class, 'destroy'])->name('accounts.destroy')->middleware('admin');
+Route::get('/admin/accounts/create_students', [AccountController::class, 'student_accounts'])->name('create_student_accounts')->middleware('admin');
 
 Route::any('/graphs/barchart/class_grades/{class}', [ChartController::class, 'class_grades'])->name('graph.class_grades')->middleware('staff');
 Route::any('/graphs/pichart/ratings/{class}', [ChartController::class, 'class_ratings'])->name('graph.class_ratings')->middleware('staff');
@@ -134,6 +135,7 @@ Route::any('/student/notes/{student}', [StudentController::class, 'student_notes
 Route::any('/assignment/upload_attendance', [CSVUploadController::class, 'attendance'])->name('file.upload.attendance')->middleware('staff');
 Route::any('/assignment/upload_marks', [CSVUploadController::class, 'assignment_marks'])->name('file.upload.assignment')->middleware('staff');
 Route::any('/assignment/upload_students', [CSVUploadController::class, 'upload_students'])->name('file.upload.students')->middleware('staff');
+Route::any('/assignment/upload_student_accounts', [CSVUploadController::class, 'upload_student_accounts'])->name('file.upload.student_accounts')->middleware('admin');
 
 Route::get('/pdf/class_records/{class_id}', [PDFController::class, 'class_records'])->name('pdf.class_records')->middleware('staff');
 Route::get('/pdf/student_records/{student_id}', [PDFController::class, 'student_records'])->name('pdf.student_records')->middleware('staff');

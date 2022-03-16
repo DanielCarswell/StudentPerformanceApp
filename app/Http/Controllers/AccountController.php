@@ -48,6 +48,10 @@ class AccountController extends Controller
         ]);
     }
 
+    public function student_accounts() {
+        return view('accounts.student_accounts');
+    }
+
     public function update(Request $request) 
     {
         //Checking user credentials are valid.

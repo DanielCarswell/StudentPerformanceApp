@@ -3,8 +3,15 @@
 @section('content')
 <section class="container mx-auto p-6 font-mono mt-12">
   <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
-    <p class="text-2xl font-extrabold flex justify-center mb-6">All Users</p>
+    <p class="text-2xl font-extrabold flex justify-center mb-6">Users</p>
     <div class="w-full overflow-x-auto">
+    <form action="{{ route('create_student_accounts')  }}" method="get">
+        <span class="flex justify-center">
+            <button type="submit" class="bg-purple-500 text-white px-4 py-2 border rounded-md hover:border-indigo-500 hover:text-black">
+                <i class="fas fa-plus"></i>&nbsp;&nbsp;Upload Student Accounts - CSV File
+            </button>
+        </span>
+      </form>
       <table class="w-full">
         <thead>
           <tr class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-900 uppercase border-b border-gray-600">

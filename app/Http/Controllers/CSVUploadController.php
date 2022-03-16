@@ -114,6 +114,60 @@ class CSVUploadController extends Controller
         }
     }
 
+    public function upload_student_accounts(Request $request) {
+        $file = $request->file('upload');
+
+        if ($file) {
+            $filename = $file->getClientOriginalName();
+            $location = 'Uploads';
+            $file->move($location, $filename);
+            $filepath = public_path($location . "/" . $filename);
+            $file = fopen($filepath, "r");
+            $imported = array();
+            $i = 0;
+
+            while (($filedata = fgetcsv($file, 1000, ",")) !== FALSE) {
+                $num = count($filedata);
+                if ($i == 0) {
+                    $i++;
+                    continue;
+                }
+                for ($c = 0; $c < $num; $c++) {
+                    $imported[$i][] = $filedata[$c];
+                }
+                $i++;
+            }
+            fclose($file); //Close after reading
+
+            $j = 0;
+            foreach ($imported as $data) {
+                $j++;
+                try {
+                    DB::beginTransaction();
+                    DB::table('users')
+                    ->insert([
+                        'email' => $data[0],
+                        'firstname' => $data[1],
+                        'lastname' => $data[2],
+                        'password' => $data[3],
+                        'fullname' => $data[1] . ' ' . $data[2],
+                        'username' => substr($data[1], 0) . ' ' . substr($data[2], 0) . rand(10000, 99999),
+                        'remember_token' => Str::random(10),
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                        'password' => Hash::make($request->password)
+                    ]);
+                    DB::commit();
+                } catch (\Exception $e) {
+                    DB::rollBack();
+                }
+            }
+            return redirect()->route('accounts');
+        } else {
+            throw new \Exception('No file was uploaded', Response::HTTP_BAD_REQUEST);
+        }
+    }
+
     public function upload_students(Request $request) {
         $file = $request->file('upload');
 

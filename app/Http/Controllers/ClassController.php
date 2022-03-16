@@ -19,14 +19,13 @@ class ClassController extends Controller
 {
     public function index()
     {
-        //Mail::to('danielcarswelltest@gmail.com')->send(new LowGradeNotification(auth()->user(), 'CS103', '33%'));
-        //Mail::to('danielcarswelltest@gmail.com')->send(new GradeUpdateNotification(auth()->user(), '76%'));
         $classes = Classe::with(['students'])
         ->with(['lecturers'])
         ->join('lecturer_class', 'lecturer_class.class_id', '=', 'classes.id')
         ->where('lecturer_class.lecturer_id', '=', auth()->user()->id)
         ->paginate(8);
 
+        //dd('hi');
         foreach($classes as $class) {
             $average_grade = DB::table('student_class')
             ->select(\DB::raw('round(AVG(CAST(student_class.grade as numeric)), 1) as average_grade'))
@@ -49,7 +48,10 @@ class ClassController extends Controller
             ->groupBy('student_class.class_id')
             ->get();
 
-            $class->average_attendance = $average_attendance[0]->average_attendance;
+            if($average_attendance->count() == 0)
+                $class->average_attendance = 'No Attendance Yet';
+            else
+                $class->average_attendance = $average_attendance[0]->average_attendance;
         }
 
         return view('classes.index', [
@@ -76,18 +78,21 @@ class ClassController extends Controller
             'classname' => ['required', 'max:255']
         ]);
 
-        if ($credentials) {
-            DB::table('classes')->insert([
-                'name' => $request->classname
-            ]);
+        DB::table('classes')->insert([
+            'name' => $request->classname
+        ]);
 
-            $class_id = 0;
-            $classes = DB::table('classes')->get();
+        $class_id = 0;
+        $classes = DB::table('classes')->get();
 
-            foreach($classes as $class) {
-                $class_id = $class->id;
-            }
+        foreach($classes as $class) {
+            $class_id = $class->id;
         }
+
+        DB::table('lecturer_class')->insert([
+            'lecturer_id' => auth()->user()->id,
+            'class_id' => $class_id
+        ]);
 
         return redirect()->route('admin_classes');
     }

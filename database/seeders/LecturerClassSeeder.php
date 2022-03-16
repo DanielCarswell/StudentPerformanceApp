@@ -14,7 +14,7 @@ class LecturerClassSeeder extends Seeder
      */
     public function run()
     {
-        $class_models_ids = range(1,40);
+        $class_models_ids = range(1,6);
 
         foreach($class_models_ids as $class_models_id)
             DB::table('lecturer_class')->insert([
