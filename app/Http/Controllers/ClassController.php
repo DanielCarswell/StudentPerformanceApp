@@ -281,7 +281,7 @@ class ClassController extends Controller
         foreach($assignments as $assignment)
         {
             DB::table('student_assignment')
-            ->insert(['class_id' => $class_id, 'user_id' => $student_id, 'assignment_id' => $assignment->id, 'grade' => 0, 'attendance' => 100]);
+            ->insert(['class_id' => $class_id, 'user_id' => $student_id, 'assignment_id' => $assignment->id, 'percent' => 0]);
         }
 
         $class = Classe::find($class_id);

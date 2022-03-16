@@ -5,13 +5,7 @@
     <div class="ml-12 mr-12">
         <p class="text-2xl font-extrabold flex justify-center mb-6">Student {{  $student->fullname  }} Performance</p>
         <div class="px-16 py-2 flex justify-center">
-            <a href="{{ route('pdf.student_records', $student->id)  }}">
-                <span class="flex justify-center">
-                    <button type="submit" class="bg-purple-500 text-white px-4 py-2 border rounded-md hover:border-purple-500 hover:text-black">
-                        <i class="fas fa-plus"></i>&nbsp;&nbsp;Print Basic PDF Of Student Performance
-                    </button>
-                </span>
-            </a>
+            
         </div>
     </div>
     <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">

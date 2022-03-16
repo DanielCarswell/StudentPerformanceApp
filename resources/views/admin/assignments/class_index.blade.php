@@ -13,29 +13,6 @@
             </span>
         </a>
         @endhasRole
-        <form action="{{  route('class_assignments', $class)  }}" method="post" >
-            @csrf
-            <span class="flex justify-center">
-                <button type="submit" style="background-color:#a6611a;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
-                    <i class="fas fa-circle-notch"></i>&nbsp;&nbsp;Reset Search
-                </button>
-            </span>
-        </form>
-    </div>
-    <div class="mb-6">
-    <form action="{{  route('search_assignments')  }}" method="post" role="search">
-        @csrf
-        <div class="input-group">
-            <input name="class_id" value="{{ $class->id }}" type="hidden">
-            <label class="text-xl">Search Class Assignments: </label>
-            <input type="text" class="form-control pt-4 pb-4 pr-12 pl-2 ml-2 text-xl" name="q" placeholder="Search Assignments">
-                <span class="input-group-btn">
-                <button type="submit" class="btn btn-default">
-                    <span class="glyphicon glyphicon-search"></span>
-                </button>
-            </span>
-        </div>
-    </form>
     </div>
     <div>
       <h2>(Please be careful that the total does not exceed 100% class worth)</h2>
