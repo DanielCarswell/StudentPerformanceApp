@@ -28,7 +28,7 @@ use App\Http\Controllers\PDFController;
 
 Route::get('/home', function () {
     return view('index');
-})->name('homepage');
+})->name('/home');
 
 Route::get('/', function () {
     return view('index');

@@ -7,7 +7,7 @@
     @hasRole(['Admin', 'Moderator', 'Lecturer'])
         <a href="{{ route('create_assignment', $class->id)  }}">
             <span class="flex justify-center">
-                <button type="submit" style="background-color:#4dac26;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+                <button name="Add Assignment" type="submit" style="background-color:#4dac26;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
                     <i class="fas fa-plus"></i>&nbsp;&nbsp;Add Assignment
                 </button>
             </span>
@@ -15,7 +15,7 @@
         @endhasRole
         <form action="{{  route('classes') }}" method="get">
           @csrf
-          <button type="submit" class="bg-purple-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+          <button name="Go Back" type="submit" class="bg-purple-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
               Go Back
           </button>
         </form>

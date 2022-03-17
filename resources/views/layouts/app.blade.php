@@ -17,10 +17,10 @@
                 <div class="flex items-center relative cursor-pointer whitespace-nowrap">Home</div>
             </a>
             @auth
-                <a class="inline-block py-2 px-3 hover:bg-blue-400 hover:text-black rounded-full" href="{{  route('classes')  }}">
+                <a id="My-Classes" class="inline-block py-2 px-3 hover:bg-blue-400 hover:text-black rounded-full" href="{{  route('classes')  }}">
                     <div class="flex items-center relative cursor-pointer whitespace-nowrap">My Classes</div>
                 </a>
-                <a class="inline-block py-2 px-3 hover:bg-blue-400 hover:text-black rounded-full" href="{{  route('students')  }}">
+                <a id="Advising-Students" class="inline-block py-2 px-3 hover:bg-blue-400 hover:text-black rounded-full" href="{{  route('students')  }}">
                     <div class="flex items-center relative cursor-pointer whitespace-nowrap">Advising Students</div>
                 </a>
             @endauth
@@ -54,7 +54,7 @@
 
                     <div x-show="dropdownOpen" class="absolute right-0 mt-2 w-48 bg-white rounded-md overflow-hidden shadow-xl z-20">
                     @hasRole(['Admin', 'Moderator', 'Lecturer', 'Advisor', 'Staff'])
-                        <a href="{{  route('admin')  }}" class="block px-4 py-2 text-sm text-white border-b bg-gray-500 hover:bg-blue-400 hover:text-black">Admin Page</a>
+                        <a href="{{  route('admin')  }}" id="Admin-Page" class="block px-4 py-2 text-sm text-white border-b bg-gray-500 hover:bg-blue-400 hover:text-black">Admin Page</a>
                     @endhasRole
                     @hasRole(['Admin', 'Moderator', 'Lecturer'])
                         <a href="{{  route('classes')  }}" class="block px-4 py-2 text-sm text-white border-b bg-gray-500 hover:bg-blue-400 hover:text-black">My Classes</a>
@@ -69,7 +69,7 @@
                     <form action="{{ route('logout') }}" method="post" class="inline-block py-2 px-3 hover:bg-blue-400 hover:text-black rounded-full">
                         @csrf
                         <div class="flex items-center relative cursor-pointer whitespace-nowrap">
-                            <button type="submit">Logout</button>
+                            <button name="Logout" type="submit">Logout</button>
                         </div>
                     </form>
                 </div>

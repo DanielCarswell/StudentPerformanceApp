@@ -4,6 +4,8 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Laravel\Dusk\Chrome;
+use Tests\DuskTestCase;
 use Tests\TestCase;
 
 class UserTest extends TestCase

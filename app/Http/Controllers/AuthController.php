@@ -106,7 +106,7 @@ class AuthController extends Controller
             //Login and redirect.
             if (Auth::attempt($login_credentials)) {
                 $request->session()->regenerate();
-                return redirect()->intended('homepage');
+                return redirect()->intended('/home');
             }
         }
 

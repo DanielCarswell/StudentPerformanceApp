@@ -59,7 +59,7 @@
                     <form action="{{ route('classes.class_records', $class)  }}" method="post">
                         @csrf
                         <span class="flex justify-center">
-                            <button type="submit" class="bg-indigo-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+                            <button name="View Class Records" type="submit" class="bg-indigo-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
                                 View Class Records <i class="fas fa-plus"></i>
                             </button>
                         </span>
@@ -67,7 +67,7 @@
                     <form action="{{ route('class.assignments', $class)  }}" method="post">
                         @csrf
                         <span class="flex justify-center">
-                            <button type="submit" style="background-color:orange;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 text-black hover:text-black">
+                            <button name="Assignments" type="submit" style="background-color:orange;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 text-black hover:text-black">
                                 Assignments <i class="fas fa-clipboard-list"></i>
                             </button>
                         </span>
@@ -75,7 +75,7 @@
                     <form action="{{ route('class_attendance', $class)  }}" method="post">
                         @csrf
                         <span class="flex justify-center">
-                            <button type="submit" style="background-color:orange;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 text-black hover:text-black">
+                            <button name="Attendance" type="submit" style="background-color:orange;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 text-black hover:text-black">
                                 Attendance <i class="fas fa-clipboard-list"></i>
                             </button>
                         </span>
@@ -83,7 +83,7 @@
                     <form action="{{ route('graph.class_grades', $class)  }}" method="post">
                         @csrf
                         <span class="flex justify-center">
-                            <button type="submit" class="bg-purple-400 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 text-black hover:text-black">
+                            <button name="Graph" type="submit" class="bg-purple-400 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 text-black hover:text-black">
                                 View As Graph <i class="fas fa-star"></i>
                             </button>
                         </span>
