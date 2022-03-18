@@ -9,13 +9,18 @@ use Tests\DuskTestCase;
 class LoginTest extends DuskTestCase
 {
     /** @test */
+    public function login_buttons()
+    {
+        $this->browse(function ($browser) {
+            $browser->visit('/login')
+                    ->assertSee('Login')
+                    ->assertSee('Forgot Password');
+        });
+    }
+
+    /** @test */
     public function failed_login()
     {
-        $this->browse(function (Browser $browser) {
-            $browser->visit('/home')
-                    ->assertPathIs('/home');
-        });
-
         $this->browse(function ($browser) {
             $browser->visit('/login')
                     ->type('email', 'admin@studentperformance.net')

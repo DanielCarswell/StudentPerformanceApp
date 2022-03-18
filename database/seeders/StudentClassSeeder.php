@@ -19,9 +19,9 @@ class StudentClassSeeder extends Seeder
         $user_ids3 = range(14,33);
         $user_ids4 = range(30,43);
 
-        $class_models_ids1 = range(1,2);
-        $class_models_ids2 = range(3,4);
-        $class_models_ids3 = range(5,6);
+        $class_models_ids1 = range(1,3);
+        $class_models_ids2 = range(4,5);
+        $class_models_ids3 = range(6,7);
 
         foreach($user_ids1 as $user_id)
             foreach($class_models_ids1 as $class_models_id)

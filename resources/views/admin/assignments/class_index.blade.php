@@ -46,7 +46,7 @@
                   <form action="{{ route('class.assignments', $class)  }}" method="post">
                       @csrf
                       <span class="flex justify-center">
-                        <button type="submit"class="bg-indigo-500 text-white px-4 py-2 border rounded-md hover:border-indigo-500 hover:text-black">
+                        <button name="View Assignment" type="submit"class="bg-indigo-500 text-white px-4 py-2 border rounded-md hover:border-indigo-500 hover:text-black">
                               <i class="fas fa-clipboard"></i>&nbsp;&nbsp;View Assignment
                           </button>
                       </span>
@@ -54,7 +54,7 @@
                   <form action="{{ route('edit_assignment', [$assignment->id, $class->id])  }}" method="post">
                       @csrf
                       <span class="flex justify-center">
-                          <button type="submit" style="background-color:#f97316;" class="bg-orange-400 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+                          <button name="Edit Assignment Details" type="submit" style="background-color:#f97316;" class="bg-orange-400 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
                             <i class="fas fa-pencil-alt"></i>&nbsp;&nbsp;Edit Assignment Details
                           </button>
                       </span>
@@ -62,7 +62,7 @@
                   <form action="{{ route('delete_assignment', [$class->id, $assignment->id])  }}" method="post">
                       @csrf
                       <span class="flex justify-center">
-                          <button type="submit" style="background-color:#7b3294;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 text-black hover:text-black">
+                          <button name="Delete Assignment" type="submit" style="background-color:#7b3294;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 text-black hover:text-black">
                             <i class="fas fa-trash"></i>&nbsp;&nbsp;Delete Assignment
                           </button>
                       </span>

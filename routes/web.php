@@ -73,7 +73,6 @@ Route::post('/class/assignments/{class}', [ClassController::class, 'assignments'
 Route::any('/admin/classes/assignment_grades/{assignment}/{class}', [ClassController::class, 'assignment_grades'])->name('assignment_grades')->middleware('staff'); 
 Route::get('/class/upload_students', [ClassController::class, 'upload_students'])->name('upload_students')->middleware('staff');
 Route::any('/classes/class_records/{class}', [ClassController::class, 'class_records'])->name('classes.class_records')->middleware('staff');
-Route::get('/classes/student_records/{student}', [ClassController::class, 'student_records'])->middleware('auth');
 Route::post('/classes/student_records/{student}', [ClassController::class, 'student_records'])->name('classes.student_records')->middleware('auth');
 Route::get('/classes/upload_attendance', [ClassController::class, 'upload_attendance'])->name('upload_attendance')->middleware('staff');
 Route::post('/classes/update_attendance', [ClassController::class, 'update_attendance'])->name('update_attendance')->middleware('staff');

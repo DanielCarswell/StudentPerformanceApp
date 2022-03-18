@@ -30,10 +30,10 @@
         <div class="flex justify-end items-center relative">
         @guest
             <div class="flex mr-4 items-center">
-                <a class="inline-block py-2 px-3 hover:bg-blue-400 hover:text-black rounded-full" href="{{  route('login')  }}">
+                <a id="Login" class="inline-block py-2 px-3 hover:bg-blue-400 hover:text-black rounded-full" href="{{  route('login')  }}">
                     <div class="flex items-center relative cursor-pointer whitespace-nowrap">Login</div>
                 </a>
-                <a class="inline-block py-2 px-3 hover:bg-blue-400 hover:text-black rounded-full" href="{{  route('register')  }}">
+                <a id="Register" class="inline-block py-2 px-3 hover:bg-blue-400 hover:text-black rounded-full" href="{{  route('register')  }}">
                     <div class="flex items-center relative cursor-pointer whitespace-nowrap">Register</div>
                 </a>
             </div>

@@ -9,27 +9,31 @@ use Tests\DuskTestCase;
 class NavigationBarTest extends DuskTestCase
 {
     /** @test */
-    public function navbar_links()
+    public function not_logged_in_nav_links()
     {
         $this->browse(function ($browser) {
-            $browser->visit('/login')
+            $browser->visit('/')
+                    ->assertSeeLink('Home')
+                    ->assertSeeLink('Login')
+                    ->assertSeeLink('Register');
+        });
+    }
+
+    /** @test */
+    public function logged_in_nav_links()
+    {
+        $this->browse(function ($browser) {
+            $browser->clickLink('Login')
                     ->type('email', 'admin@studentperformance.net')
                     ->type('password', 'admin')
-                    ->press('Login');
-        });
-
-        $this->browse(function ($browser) {
-            $browser->visit('/home')
-                    ->assertVisible('#My-Classes')
+                    ->press('Login')
+                    ->clickLink('Home')
+                    ->assertSeeLink('My Classes')
                     ->visit(
                         $browser->attribute('#My-Classes', 'href')
                     )
-                    ->assertPathIs('/classes');
-        });
-
-        $this->browse(function ($browser) {
-            $browser->visit('/home')
-                    ->assertVisible('#Advising-Students')
+                    ->assertPathIs('/classes')
+                    ->assertSeeLink('Advising Students')
                     ->visit(
                         $browser->attribute('#Advising-Students', 'href')
                     )

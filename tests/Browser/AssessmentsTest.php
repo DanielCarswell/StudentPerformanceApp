@@ -21,39 +21,46 @@ class AssessmentsTest extends DuskTestCase
         $this->browse(function ($browser) {
             $browser->visit('/classes')
                     ->press('Assignments')
+                    ->assertSee('Add Assignment')
+                    ->assertSee('Go Back')
                     ->press('Go Back')
-                    ->assertPathIs('/classes');
-        });
-
-        $this->browse(function ($browser) {
-            $browser->visit('/classes')
+                    ->assertPathIs('/classes')
                     ->press('Assignments')
                     ->press('Add Assignment')
-                    ->assertPathIs('/admin/assignments/add_assignment/7');
+                    ->assertPathIs('/admin/assignments/add_assignment/1')
+                    ->assertSee('Add Assignment')
+                    ->assertSee('Go Back');
         });
     }
 
     /** @test */
     public function create_assignment_fail()
     {
+        #No Class Worth.
         $this->browse(function ($browser) {
-            $browser->visit('/classes')
-                    ->press('Assignments')
-                    ->press('Add Assignment')
+            $browser->visit('/admin/assignments/add_assignment/1')
                     ->type('assignmentname', 'Test 2')
                     ->type('classworth', '')
                     ->press('Add Assignment')
-                    ->assertPathIs('/admin/assignments/add_assignment/7');
+                    ->assertPathIs('/admin/assignments/add_assignment/1');
         });
 
+        #No Assignment name or class worth.
         $this->browse(function ($browser) {
-            $browser->visit('/classes')
-                    ->press('Assignments')
-                    ->press('Add Assignment')
+            $browser->visit('/admin/assignments/add_assignment/1')
                     ->type('assignmentname', '')
                     ->type('classworth', '')
                     ->press('Add Assignment')
-                    ->assertPathIs('/admin/assignments/add_assignment/7');
+                    ->assertPathIs('/admin/assignments/add_assignment/1');
+        });
+
+        #No assignment name.
+        $this->browse(function ($browser) {
+            $browser->visit('/admin/assignments/add_assignment/1')
+                    ->type('assignmentname', '')
+                    ->type('classworth', '20')
+                    ->press('Add Assignment')
+                    ->assertPathIs('/admin/assignments/add_assignment/1');
         });
     }
 
@@ -63,13 +70,22 @@ class AssessmentsTest extends DuskTestCase
         $this->browse(function ($browser) {
             $num = rand(0, 10000);
             
-            $browser->visit('/classes')
-                    ->press('Assignments')
-                    ->press('Add Assignment')
-                    ->type('assignmentname', 'Test' . $num)
+            $browser->visit('/admin/assignments/add_assignment/1')
+                    ->type('assignmentname', 'Test')
                     ->type('classworth', '20')
                     ->press('Add Assignment')
                     ->assertPathIs('/admin/assignments/add_assignment');
+        });
+    }
+
+    /** @test */
+    public function admin_class_assignments_view_buttons()
+    {                    
+        $this->browse(function ($browser) {       
+                $browser->assertSee('Add Assignment')
+                    ->assertSee('View Assignment')
+                    ->assertSee('Edit Assignment Details')
+                    ->assertSee('Delete Assignment');
         });
     }
 }

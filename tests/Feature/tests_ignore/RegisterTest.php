@@ -9,6 +9,15 @@ use Tests\DuskTestCase;
 class RegisterTest extends DuskTestCase
 {
     /** @test */
+    public function register_buttons()
+    {
+        $this->browse(function ($browser) {
+            $browser->visit('/register')
+            ->assertSee('Complete Registration');
+        });
+    }
+
+    /** @test */
     public function failed_register_registered_email()
     {
         $this->browse(function ($browser) {
@@ -30,7 +39,7 @@ class RegisterTest extends DuskTestCase
             $browser->visit('/register')
                     ->type('firstname', 'daniel')
                     ->type('lastname', 'carswell')
-                    ->type('email', 'abcwjfwi@studentperformance.net')
+                    ->type('email', 'test@studentperformance.net')
                     ->type('password', 'danielCarswell1234!')
                     ->type('confirmpassword', 'danielCarswel!')
                     ->press('Register')
@@ -43,11 +52,55 @@ class RegisterTest extends DuskTestCase
     {
         $this->browse(function ($browser) {
             $browser->visit('/register')
-                    ->type('firstname', 'daniel')
-                    ->type('lastname', '')
-                    ->type('email', 'admin@studentperformance.net')
+                    ->type('firstname', '')
+                    ->type('lastname', 'carswell')
+                    ->type('email', 'test@studentperformance.net')
                     ->type('password', 'danielCarswell1234!')
                     ->type('confirmpassword', 'danielCarswell1234!')
+                    ->press('Register')
+                    ->assertPathIs('/register');
+        });
+
+        $this->browse(function ($browser) {
+            $browser->visit('/register')
+                    ->type('firstname', 'daniel')
+                    ->type('lastname', '')
+                    ->type('email', 'test@studentperformance.net')
+                    ->type('password', 'danielCarswell1234!')
+                    ->type('confirmpassword', 'danielCarswell1234!')
+                    ->press('Register')
+                    ->assertPathIs('/register');
+        });
+
+        $this->browse(function ($browser) {
+            $browser->visit('/register')
+                    ->type('firstname', 'daniel')
+                    ->type('lastname', 'carswell')
+                    ->type('email', '')
+                    ->type('password', 'danielCarswell1234!')
+                    ->type('confirmpassword', 'danielCarswell1234!')
+                    ->press('Register')
+                    ->assertPathIs('/register');
+        });
+
+        $this->browse(function ($browser) {
+            $browser->visit('/register')
+                    ->type('firstname', 'daniel')
+                    ->type('lastname', 'carswell')
+                    ->type('email', 'test@studentperformance.net')
+                    ->type('password', '')
+                    ->type('confirmpassword', 'danielCarswell1234!')
+                    ->press('Register')
+                    ->assertPathIs('/register');
+        });
+
+        $this->browse(function ($browser) {
+            $browser->visit('/register')
+                    ->type('firstname', 'daniel')
+                    ->type('lastname', 'carswell')
+                    ->type('email', 'test@studentperformance.net')
+                    ->type('password', 'danielCarswell1234!')
+                    ->type('confirmpassword', '')
                     ->press('Register')
                     ->assertPathIs('/register');
         });
@@ -62,7 +115,7 @@ class RegisterTest extends DuskTestCase
             $browser->visit('/register')
                     ->type('firstname', 'daniel')
                     ->type('lastname', 'carswell')
-                    ->type('email', 'daniel'. $num .'@studentperformance.net')
+                    ->type('email', 'test'. $num .'@studentperformance.net')
                     ->type('password', 'danielCarswell1234!')
                     ->type('confirmpassword', 'danielCarswell1234!')
                     ->press('Register')

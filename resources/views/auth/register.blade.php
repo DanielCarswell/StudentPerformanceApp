@@ -54,7 +54,7 @@
                         @enderror
                     </div>
                     <div class="flex justify-center items-center">
-                        <button type="submit" class="bg-purple-500 text-white px-4 py-3 rounded font-bold w-full">Complete Registeration</button>
+                        <button name="Register" type="submit" class="bg-purple-500 text-white px-4 py-3 rounded font-bold w-full">Complete Registration</button>
                     </div>
                 </form>
         </div>

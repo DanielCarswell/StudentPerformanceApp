@@ -16,7 +16,7 @@ class AssignmentSeeder extends Seeder
      */
     public function run()
     {
-        $class_ids = range(1,6);
+        $class_ids = range(2,7);
 
         foreach($class_ids as $class_id) {
             DB::table('assignments')->insert([
@@ -68,7 +68,7 @@ class AssignmentSeeder extends Seeder
         $user_ids4 = range(30,43);
 
         foreach($user_ids as $user_id) {
-            $class_id = range(1,2);
+            $class_id = range(2,3);
             $assignment_ids = range(1,12);
 
             foreach($class_id as $id) {
@@ -86,7 +86,7 @@ class AssignmentSeeder extends Seeder
         }
 
         foreach($user_ids2 as $user_id) {
-            $class_id = range(3,4);
+            $class_id = range(4,5);
             $assignment_ids = range(13,24);
 
             foreach($class_id as $id) {
@@ -104,7 +104,7 @@ class AssignmentSeeder extends Seeder
         }
 
         foreach($user_ids3 as $user_id) {
-            $class_id = range(5,6);
+            $class_id = range(6,7);
             $assignment_ids = range(25,36);
 
             foreach($class_id as $id) {
