@@ -48,7 +48,7 @@ class AssignmentController extends Controller
                 ]);
         }
 
-        return $this->class_assignments($request->class_id);
+        return redirect()->route('class_assignments', $request->class_id);
     }
 
     public function create(int $class_id) {
@@ -74,7 +74,7 @@ class AssignmentController extends Controller
     public function destroy(int $assignment_id, int $class_id) {
         $assignment = Assignment::find($assignment_id);
         $assignment->delete();
-        return $this->class_assignments($class_id);
+        return redirect()->route('class_assignments', $class_id);
     }
 
     public function edit(int $assignment_id, int $class_id){
@@ -107,7 +107,7 @@ class AssignmentController extends Controller
             ]);
         }
 
-        return $this->class_assignments($request->class_id);
+        return redirect()->route('class_assignments', $request->class_id);
     }
 
     public function class_assignments(int $class_id) {

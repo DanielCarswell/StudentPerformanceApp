@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
-class NavigationBarTest extends DuskTestCase
+class Test4_NavigationBarTest extends DuskTestCase
 {
     /** @test */
     public function not_logged_in_nav_links()

@@ -26,8 +26,3 @@ class DatabaseSeeder extends Seeder
         ]);
     }
 }
-/**
- * \App\Models\User::factory(10)->create()->each(function($user){
-            $user->classes()->save(\App\Models\ClassModel::factory($name))
-        })
- */

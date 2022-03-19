@@ -54,9 +54,9 @@
                   <div class="input-group flex justify-center">
                       <label class="text-xl pt-4">Enter Mark: </label>
                       <input type="text" class="form-control pt-4 pb-4 pr-12 pl-2 ml-2 text-xl" name="percent" placeholder="Enter Mark Here">
-                          <span class="input-group-btn">
-                          <button type="submit" class="btn btn-default">
-                              <span class="glyphicon glyphicon-search"></span>
+                          <span>
+                          <button type="submit" class="mt-2 bg-purple-400 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+                              Enter Mark
                           </button>
                       </span>
                   </div>

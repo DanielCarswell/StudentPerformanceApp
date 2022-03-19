@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
-class LoginTest extends DuskTestCase
+class Test3_LoginTest extends DuskTestCase
 {
     /** @test */
     public function login_buttons()
@@ -43,7 +43,7 @@ class LoginTest extends DuskTestCase
 
         $this->browse(function ($browser) {
             $browser->press('Logout')
-                    ->assertPathIs('/home');
+                    ->assertPathBeginsWith('/home');
         });
     }
 

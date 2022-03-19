@@ -30,6 +30,10 @@ Route::get('/home', function () {
     return view('index');
 })->name('/home');
 
+Route::get('/homepage', function () {
+    return view('index');
+})->name('homepage');
+
 Route::get('/', function () {
     return view('index');
 });
@@ -79,11 +83,11 @@ Route::post('/classes/update_attendance', [ClassController::class, 'update_atten
 Route::any('/admin/classes/attendance/{class}', [ClassController::class, 'class_attendance'])->name('class_attendance')->middleware('staff'); 
 
 
-Route::get('/admin/assignments/add_assignment/{class_id}', [AssignmentController::class, 'create'])->name('create_assignment')->middleware('staff');
+Route::any('/admin/assignments/add_assignment/{class_id}', [AssignmentController::class, 'create'])->name('create_assignment')->middleware('staff');
 Route::post('/admin/assignments/add_assignment', [AssignmentController::class, 'add'])->name('add_assignment')->middleware('staff');
 Route::post('/admin/assignments/edit/{assignment_id}/{class_id}', [AssignmentController::class, 'edit'])->name('edit_assignment')->middleware('staff');
 Route::post('/admin/assignments/edit', [AssignmentController::class, 'modify'])->name('modify_assignment')->middleware('staff');
-Route::post('/admin/assignments/index/{class_id}', [AssignmentController::class, 'class_assignments'])->name('class_assignments')->middleware('staff');
+Route::any('/admin/assignments/index/{class_id}', [AssignmentController::class, 'class_assignments'])->name('class_assignments')->middleware('staff');
 Route::post('/admin/search_assignments', [AssignmentController::class, 'search_assignments'])->name('search_assignments')->middleware('staff');
 Route::post('/admin/assignments/delete/{class_id}/{assignment_id}', [AssignmentController::class, 'delete'])->name('delete_assignment')->middleware('staff');
 Route::delete('/admin/assignments/destroy/{assignment_id}/{class_id}', [AssignmentController::class, 'destroy'])->name('destroy_assignment')->middleware('staff');
