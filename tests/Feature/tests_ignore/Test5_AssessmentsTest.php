@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
-class AssessmentsTest extends DuskTestCase
+class Test5_AssessmentsTest extends DuskTestCase
 {
     /** @test */
     public function class_view_assignments_buttons()
@@ -164,6 +164,7 @@ class AssessmentsTest extends DuskTestCase
                     ->type('assignmentname', '')
                     ->type('classworth', '20')
                     ->press('Edit Assignment')
+                    ->assertSee('The assignmentname field is required.')
                     ->assertPathBeginsWith('/admin/assignments/edit/');
         });
 
@@ -173,6 +174,8 @@ class AssessmentsTest extends DuskTestCase
                     ->type('assignmentname', '')
                     ->type('classworth', '')
                     ->press('Edit Assignment')
+                    ->assertSee('The assignmentname field is required.')
+                    ->assertSee('The classworth field is required.')
                     ->assertPathBeginsWith('/admin/assignments/edit/');
         });
 
@@ -182,6 +185,7 @@ class AssessmentsTest extends DuskTestCase
                     ->type('assignmentname', 'TestA')
                     ->type('classworth', '')
                     ->press('Edit Assignment')
+                    ->assertSee('The classworth field is required.')
                     ->assertPathBeginsWith('/admin/assignments/edit/');
         });
     }

@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
-class MyClassesPageTest extends DuskTestCase
+class Test4_MyClassesPageTest extends DuskTestCase
 {
     /** @test */
     public function my_classes_buttons_exist()

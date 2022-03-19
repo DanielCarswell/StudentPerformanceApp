@@ -13,7 +13,7 @@
                     </button>
                 </div>
             </form>
-            <form action="" method="post">
+            <form action="{{ route('class_attendance', $class_id)  }}" method="post">
                 @csrf
                 <span class="flex justify-center items-center">
                     <button type="submit" style="background-color:#4dac26;" class="text-white mt-2 px-4 py-3 rounded font-bold w-full">

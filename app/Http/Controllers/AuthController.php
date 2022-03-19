@@ -136,6 +136,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('homepage');
+        return view('/home/index');
     }
 }

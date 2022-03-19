@@ -57,11 +57,9 @@
                   <div class="input-group flex justify-center">
                       <label class="text-xl pt-4">Enter Attendance: </label>
                       <input type="text" class="form-control pt-4 pb-4 pr-12 pl-2 ml-2 text-xl" name="attendance" placeholder="Enter Attendance Rate">
-                          <span class="input-group-btn">
-                          <button type="submit" class="btn btn-default">
-                              <span class="glyphicon glyphicon-search"></span>
+                          <button type="submit" class="mt-1 bg-purple-400 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+                              Enter Attendance
                           </button>
-                      </span>
                   </div>
                 </form>
               @endhasRole

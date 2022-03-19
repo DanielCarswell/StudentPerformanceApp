@@ -80,12 +80,12 @@ Route::any('/classes/class_records/{class}', [ClassController::class, 'class_rec
 Route::post('/classes/student_records/{student}', [ClassController::class, 'student_records'])->name('classes.student_records')->middleware('auth');
 Route::get('/classes/upload_attendance', [ClassController::class, 'upload_attendance'])->name('upload_attendance')->middleware('staff');
 Route::post('/classes/update_attendance', [ClassController::class, 'update_attendance'])->name('update_attendance')->middleware('staff');
-Route::any('/admin/classes/attendance/{class}', [ClassController::class, 'class_attendance'])->name('class_attendance')->middleware('staff'); 
+Route::any('/classes/attendance/{class}', [ClassController::class, 'class_attendance'])->name('class_attendance')->middleware('staff'); 
 
 
 Route::any('/admin/assignments/add_assignment/{class_id}', [AssignmentController::class, 'create'])->name('create_assignment')->middleware('staff');
 Route::post('/admin/assignments/add_assignment', [AssignmentController::class, 'add'])->name('add_assignment')->middleware('staff');
-Route::post('/admin/assignments/edit/{assignment_id}/{class_id}', [AssignmentController::class, 'edit'])->name('edit_assignment')->middleware('staff');
+Route::any('/admin/assignments/edit/{assignment_id}/{class_id}', [AssignmentController::class, 'edit'])->name('edit_assignment')->middleware('staff');
 Route::post('/admin/assignments/edit', [AssignmentController::class, 'modify'])->name('modify_assignment')->middleware('staff');
 Route::any('/admin/assignments/index/{class_id}', [AssignmentController::class, 'class_assignments'])->name('class_assignments')->middleware('staff');
 Route::post('/admin/search_assignments', [AssignmentController::class, 'search_assignments'])->name('search_assignments')->middleware('staff');

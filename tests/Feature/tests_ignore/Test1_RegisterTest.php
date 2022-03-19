@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
-class Test2_RegisterTest extends DuskTestCase
+class Test1_RegisterTest extends DuskTestCase
 {
     /** @test */
     public function register_buttons()
