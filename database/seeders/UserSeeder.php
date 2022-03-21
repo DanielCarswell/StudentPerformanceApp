@@ -52,5 +52,14 @@ class UserSeeder extends Seeder
         ]); 
 
         \App\Models\User::factory(39)->create();
+
+        DB::table('users')->insert([
+            'fullname' => 'test',
+            'username' => 'test acc',
+            'firstname' => 'test',
+            'lastname' => 'acc',
+            'email' => 'test@studentperformance.net',
+            'password' => Hash::make('testAcc12345!')
+        ]);
     }
 }

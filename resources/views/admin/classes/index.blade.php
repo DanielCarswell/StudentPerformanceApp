@@ -28,8 +28,7 @@
         <label class="text-xl">Search Classes: </label>
           <input type="text" class="form-control pt-4 pb-4 pr-12 pl-2 ml-2 text-xl" name="q" placeholder="Search classes">
             <span class="input-group-btn">
-              <button type="submit" class="btn btn-default">
-                  <span class="glyphicon glyphicon-search"></span>
+              <button type="submit" class="bg-purple-400 text-white px-8 py-4 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">Search Classes
               </button>
           </span>
       </div>
@@ -54,11 +53,19 @@
                     <span class="text-center ml-2 font-semibold flex justify-center">{{  $class->name  }}</span>
                 </td>
                 <td class="px-16 py-2 flex justify-center">
+                    <form action="{{ route('class.lecturers', $class->id)  }}" method="post">
+                      @csrf
+                      <span class="flex justify-center">
+                          <button type="submit" class="bg-blue-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+                            <i class="fas fa-clipboard-list"></i>&nbsp;&nbsp;Manage Lecturers
+                          </button>
+                      </span>
+                    </form>
                     <form action="{{ route('class.students', $class->id)  }}" method="post">
                         @csrf
                         <span class="flex justify-center">
                             <button type="submit" class="bg-blue-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
-                              <i class="fas fa-clipboard-list"></i>&nbsp;&nbsp;View Students
+                              <i class="fas fa-clipboard-list"></i>&nbsp;&nbsp;Manage Students
                             </button>
                         </span>
                     </form>
@@ -71,7 +78,7 @@
                         </span>
                     </form>
                     @hasRole(['Admin', 'Moderator', 'Lecturer'])
-                    <form action="{{ route('classes.class_records', $class)  }}" method="post">
+                    <form action="{{ route('class.edit', $class)  }}" method="post">
                         @csrf
                         <span class="flex justify-center">
                             <button type="submit" style="background-color:#f97316;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">

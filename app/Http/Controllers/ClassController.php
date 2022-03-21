@@ -61,8 +61,11 @@ class ClassController extends Controller
 
     public function admin_index()
     {
-        $classes = Classe::with(['students'])
-        ->paginate(8);
+        //Get classes from Database, all if Admin/Moderator or Lecturer specific.
+        if(!auth()->user()->hasRole(['Admin', 'Moderator']))
+            $classes = Classe::with(['students'])->whereRelation('lecturers', 'id', '=', auth()->user()->id)->paginate(8);
+        else
+            $classes = Classe::with(['students'])->paginate(8);
 
         return view('admin.classes.index', [
             'classes' => $classes
@@ -127,6 +130,30 @@ class ClassController extends Controller
         return redirect()->route('classes');
     }
 
+    public function edit(Classe $class) {
+        return view('admin.classes.edit', [
+            'class' => $class
+        ]);
+    }
+
+    public function modify(Request $request) {
+        //Checking class credentials are valid.
+        $credentials = $request->validate([
+            'classname' => ['required', 'max:255']
+        ]);
+
+        //Updating class in database if valid credentials.
+        if ($credentials) {
+            DB::table('classes')
+            ->where('classes.id', '=', $request->class_id)
+            ->update([
+                'name' => $request->classname
+            ]);
+        }
+
+        return redirect()->route('admin_classes');
+    }
+
     public function delete(Classe $class) {
         return view('admin.classes.delete', [
             'class' => $class
@@ -137,7 +164,7 @@ class ClassController extends Controller
     {
         $class = Classe::find($class_id);   
         $class->delete();
-        return $this->index();
+        return redirect()->route('admin_classes');
     }
 
     public function search_classes(Request $request) {
@@ -245,25 +272,28 @@ class ClassController extends Controller
     }
 
     public function add(Classe $class) {
-        $studentsUnfiltered = User::with(['classes'])->get();
-
-        $student_ids = [];
-
-        foreach($studentsUnfiltered as $student) {
-            $count = 0;
-            $check = $student->classes->count();
-            foreach($student->classes as $classe) {
-                if($class->id == $classe->id)
-                    break;
-                else if($count == $check-1)
-                    array_push($student_ids, $student->id);
-                else
-                    $count += 1;
-            }
-        }
+        $ids = [];
 
         $students = DB::table('users')
-        ->whereIn('id', $student_ids)
+        ->select('users.id')
+        ->from('users')
+        ->join('student_class', 'student_class.student_id', '=', 'users.id')
+        ->join('user_role', 'user_role.user_id', '=', 'users.id')
+        ->join('roles', 'user_role.role_id', '=', 'roles.id')
+        ->where('student_class.class_id', $class->id)
+        ->where('roles.name', 'Student')
+        ->get();
+
+        foreach($students as $student)
+            array_push($ids, $student->id);
+
+        $students = DB::table('users')
+        ->select('users.id', 'users.fullname')
+        ->from('users')
+        ->join('user_role', 'user_role.user_id', '=', 'users.id')
+        ->join('roles', 'user_role.role_id', '=', 'roles.id')
+        ->where('roles.name', 'Student')
+        ->whereNotIn('users.id', $ids)
         ->paginate(10);
 
         return view('admin.classes.add_student', [
@@ -348,6 +378,133 @@ class ClassController extends Controller
         return view('classes.attendance', [
             'class' => $class,
             'students' => $students
+        ]);
+    }
+
+    public function lecturers(Classe $class) {
+        $lecturers = DB::table('users')
+        ->join('lecturer_class', 'lecturer_class.lecturer_id', 'users.id')
+        ->where('lecturer_class.class_id', $class->id)
+        ->paginate(10);
+
+        return view('admin.classes.lecturers', [
+            'class' => $class,
+            'lecturers' => $lecturers
+        ]);
+    }
+
+    public function add_lecturer(Classe $class) {
+        $ids = [];
+
+        $lecturers = DB::table('users')
+        ->select('users.id')
+        ->from('users')
+        ->join('lecturer_class', 'lecturer_class.lecturer_id', '=', 'users.id')
+        ->join('user_role', 'user_role.user_id', '=', 'users.id')
+        ->join('roles', 'user_role.role_id', '=', 'roles.id')
+        ->where('lecturer_class.class_id', $class->id)
+        ->where('roles.name', 'Lecturer')
+        ->get();
+
+        foreach($lecturers as $lecturer)
+            array_push($ids, $lecturer->id);
+
+        $lecturers = DB::table('users')
+        ->select('users.id', 'users.fullname')
+        ->from('users')
+        ->join('user_role', 'user_role.user_id', '=', 'users.id')
+        ->join('roles', 'user_role.role_id', '=', 'roles.id')
+        ->where('roles.name', 'Lecturer')
+        ->whereNotIn('users.id', $ids)
+        ->paginate(10);
+
+        return view('admin.classes.add_lecturer', [
+            'class' => $class,
+            'lecturers' => $lecturers
+        ]);
+    }
+
+    public function lecturer_add(int $class_id, int $lecturer_id) {
+        DB::table('lecturer_class')
+        ->insert(['class_id' => $class_id, 'lecturer_id' => $lecturer_id]);
+
+        $class = Classe::find($class_id);
+
+        return redirect()->route('class.lecturers', $class);
+    }
+
+    public function delete_lecturer(int $class_id, int $lecturer_id) {
+        DB::table('lecturer_class')
+        ->where('lecturer_id', $lecturer_id)
+        ->where('class_id', $class_id)
+        ->delete();
+
+        $class = Classe::find($class_id);
+
+        return redirect()->route('class.lecturers', $class);
+    }
+
+    public function search_class_students(Request $request) {
+        $q = $request->q;
+        $ids = [];
+
+        $student_ids = DB::table('users')
+        ->select('users.id')
+        ->from('users')
+        ->join('student_class', 'student_class.student_id', '=', 'users.id')
+        ->where('student_class.class_id', $request->class_id)
+        ->where( 'users.fullname', 'LIKE', '%' . $q . '%' )
+        ->get();
+
+        foreach($student_ids as $id)
+            array_push($ids, $id->id);
+
+        $students = DB::table('users')
+        ->select('users.id', 'users.fullname')
+        ->from('users')
+        ->join('student_class', 'student_class.student_id', '=', 'users.id')
+        ->where( 'users.fullname', 'LIKE', '%' . $q . '%' )
+        ->whereNotIn('users.id', $ids)
+        ->distinct()
+        ->paginate(8);
+
+        $class = Classe::find($request->class_id);
+
+        return view('admin.classes.add_student', [
+            'class' => $class,
+            'students' => $students
+        ]);
+    }
+
+    public function search_class_lecturers(Request $request) {
+        $q = $request->q;
+        $ids = [];
+
+        $lecturer_ids = DB::table('users')
+        ->select('users.id')
+        ->from('users')
+        ->join('lecturer_class', 'lecturer_class.lecturer_id', '=', 'users.id')
+        ->where('lecturer_class.class_id', $request->class_id)
+        ->where( 'users.fullname', 'LIKE', '%' . $q . '%' )
+        ->get();
+
+        foreach($lecturer_ids as $id)
+            array_push($ids, $id->id);
+
+        $lecturers = DB::table('users')
+        ->select('users.id', 'users.fullname')
+        ->from('users')
+        ->join('student_class', 'student_class.student_id', '=', 'users.id')
+        ->where( 'users.fullname', 'LIKE', '%' . $q . '%' )
+        ->whereNotIn('users.id', $ids)
+        ->distinct()
+        ->paginate(8);
+
+        $class = Classe::find($request->class_id);
+
+        return view('admin.classes.add_lecturer', [
+            'class' => $class,
+            'lecturers' => $lecturers
         ]);
     }
 }

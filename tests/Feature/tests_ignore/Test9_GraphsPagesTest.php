@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
-class Test8_GraphsPagesTest extends DuskTestCase
+class Test9_GraphsPagesTest extends DuskTestCase
 {
    /** @test */
    public function class_graphs()

@@ -14,10 +14,6 @@ class ClassSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('classes')->insert([
-            'name' => 'Test Class',
-        ]);
-
         $names = [
             'Information Access', 'Cyber Security',
             'Hair styling', 'User Testing',

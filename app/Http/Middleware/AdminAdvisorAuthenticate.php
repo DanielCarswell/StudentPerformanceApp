@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminLecturerAuthenticate
+class AdminAdvisorAuthenticate
 {
     public function handle(Request $request, Closure $next)
     {
@@ -18,7 +18,7 @@ class AdminLecturerAuthenticate
         ->get();
 
         foreach($roles as $role)
-            if($role->name === 'Admin' || $role->name === 'Moderator' || $role->name === 'Lecturer')
+            if($role->name === 'Admin' || $role->name === 'Moderator' || $role->name === 'Advisor')
                 return $next($request);
 
         return new Response('Page Access/Permission Denied', 403);

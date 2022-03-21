@@ -41,10 +41,20 @@
                     <span class="font-semibold text-black">{{  $account->email  }}</span>
                 </td>
                 <td class="px-4 py-3 text-ms border">
-                    <span class="font-semibold text-black">{{  $account->role_name  }}</span>
+                  @foreach($account->roles as $role)
+                    <span class="font-semibold text-black">{{  $role->name  }}, </span>
+                  @endforeach
                 </td>
                 <td class="px-4 py-3 text-ms border">
                     <div class="flex justify-center">
+                    @if($account->roles->contains('name', 'Student'))
+                      <form action="{{ route('student.advisors', $account->id)  }}" method="post">
+                        @csrf
+                        <button type="submit" class="bg-indigo-400 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+                          <i class="fas fa-clipboard"></i>&nbsp;&nbsp;Manage Advisors
+                        </button>
+                      </form>
+                    @endif
                     @hasRole(['Admin', 'Moderator'])
                         <form action="{{  route('user_roles', $account->id)  }}" method="post">
                             @csrf

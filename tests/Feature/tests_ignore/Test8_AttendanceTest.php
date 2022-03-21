@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
-class Test7_AttendanceTest extends DuskTestCase
+class Test8_AttendanceTest extends DuskTestCase
 {
         /** @test */
     public function Attendance_page()

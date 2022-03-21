@@ -6,18 +6,33 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
-class Test5_AssessmentsTest extends DuskTestCase
+class Test7_AssessmentsTest extends DuskTestCase
 {
     /** @test */
-    public function class_view_assignments_buttons()
+    public function create_test_class_and_student()
     {
         $this->browse(function ($browser) {
             $browser->visit('/login')
-                    ->type('email', 'admin@studentperformance.net')
-                    ->type('password', 'admin')
-                    ->press('Login');
+                    ->type('email', 'test@studentperformance.net')
+                    ->type('password', 'testAcc12345!')
+                    ->press('Login')
+                    ->visit('/classes')
+                    ->press('Create Class')
+                    ->type('classname', 'test class')
+                    ->press('Add Class')
+                    ->assertPathIs('/classes')
+                    ->assertSee('test class')
+                    ->visit('/admin/classes')
+                    ->press('View Students')
+                    ->press('Add Student')
+                    ->press('Add Student')
+                    ->assertSee('Delete from Class');
         });
+    }
 
+    /** @test */
+    public function class_view_assignments_buttons()
+    {
         $this->browse(function ($browser) {
             $browser->visit('/classes')
                     ->press('Assignments')
@@ -25,10 +40,10 @@ class Test5_AssessmentsTest extends DuskTestCase
                     ->assertSee('Add Assignment')
                     ->assertSee('Go Back')
                     ->press('Go Back')
-                    ->assertPathIs('/classes')
+                    ->assertPathBeginsWith('/classes')
                     ->press('Assignments')
                     ->press('Add Assignment')
-                    ->assertPathIs('/admin/assignments/add_assignment/1')
+                    ->assertPathBeginsWith('/admin/assignments/add_assignment/')
                     ->assertSee('Add Assignment')
                     ->assertSee('Go Back');
         });
@@ -39,29 +54,35 @@ class Test5_AssessmentsTest extends DuskTestCase
     {
         #No Class Worth.
         $this->browse(function ($browser) {
-            $browser->visit('/admin/assignments/add_assignment/1')
+            $browser->visit('/admin/classes')
+                    ->press('View Assignments')
+                    ->press('Add Assignment')
                     ->type('assignmentname', 'Test 2')
                     ->type('classworth', '')
                     ->press('Add Assignment')
-                    ->assertPathIs('/admin/assignments/add_assignment/1');
+                    ->assertPathBeginsWith('/admin/assignments/add_assignment/');
         });
 
         #No Assignment name or class worth.
         $this->browse(function ($browser) {
-            $browser->visit('/admin/assignments/add_assignment/1')
+            $browser->visit('/admin/classes')
+                    ->press('View Assignments')
+                    ->press('Add Assignment')
                     ->type('assignmentname', '')
                     ->type('classworth', '')
                     ->press('Add Assignment')
-                    ->assertPathIs('/admin/assignments/add_assignment/1');
+                    ->assertPathBeginsWith('/admin/assignments/add_assignment/');
         });
 
         #No assignment name.
         $this->browse(function ($browser) {
-            $browser->visit('/admin/assignments/add_assignment/1')
+            $browser->visit('/admin/classes')
+                    ->press('View Assignments')
+                    ->press('Add Assignment')
                     ->type('assignmentname', '')
                     ->type('classworth', '20')
                     ->press('Add Assignment')
-                    ->assertPathIs('/admin/assignments/add_assignment/1');
+                    ->assertPathBeginsWith('/admin/assignments/add_assignment/');
         });
     }
 
@@ -71,11 +92,13 @@ class Test5_AssessmentsTest extends DuskTestCase
         $this->browse(function ($browser) {
             $num = rand(0, 10000);
             
-            $browser->visit('/admin/assignments/add_assignment/1')
+            $browser->visit('/admin/classes')
+                    ->press('View Assignments')
+                    ->press('Add Assignment')
                     ->type('assignmentname', 'Test')
                     ->type('classworth', '20')
                     ->press('Add Assignment')
-                    ->assertPathIs('/admin/assignments/index/1');
+                    ->assertPathBeginsWith('/admin/assignments/index/');
         });
     }
 
@@ -101,11 +124,12 @@ class Test5_AssessmentsTest extends DuskTestCase
     public function admin_class_assignments_view_buttons()
     {                    
         $this->browse(function ($browser) {       
-                $browser->visit('/admin/assignments/index/1')
-                    ->assertSee('Add Assignment')
-                    ->assertSee('View Assignment')
-                    ->assertSee('Edit Assignment Details')
-                    ->assertSee('Delete Assignment');
+                $browser->visit('/admin/classes')
+                        ->press('View Assignments')
+                        ->assertSee('Add Assignment')
+                        ->assertSee('View Assignment')
+                        ->assertSee('Edit Assignment Details')
+                        ->assertSee('Delete Assignment');
         });
     }
 
@@ -113,10 +137,11 @@ class Test5_AssessmentsTest extends DuskTestCase
     public function delete_assignment_view_buttons()
     {                    
         $this->browse(function ($browser) {       
-                $browser->visit('/admin/assignments/index/1')
-                    ->press('Delete')
-                    ->assertSee('Delete')
-                    ->assertSee('Cancel');
+                $browser->visit('/admin/classes')
+                        ->press('View Assignments')
+                        ->press('Delete')
+                        ->assertSee('Delete')
+                        ->assertSee('Cancel');
         });
     }
 
@@ -124,9 +149,10 @@ class Test5_AssessmentsTest extends DuskTestCase
     public function view_assignment()
     {                    
         $this->browse(function ($browser) { 
-            $browser->visit('/admin/assignments/index/1')
+            $browser->visit('/admin/classes')
+                    ->press('View Assignments')
                     ->press('View Assignment')
-                    ->assertPathIs('/class/assignments/1');
+                    ->assertPathBeginsWith('/class/assignments/');
         });
     }
 
@@ -134,7 +160,8 @@ class Test5_AssessmentsTest extends DuskTestCase
     public function edit_assignment_page()
     {                    
         $this->browse(function ($browser) { 
-            $browser->visit('/admin/assignments/index/1')
+            $browser->visit('/admin/classes')
+                    ->press('View Assignments')
                     ->press('Edit Assignment Details')
                     ->assertSee('Edit Assignment')
                     ->assertSee('Go Back')
@@ -148,10 +175,11 @@ class Test5_AssessmentsTest extends DuskTestCase
     public function edit_assignment_go_back()
     {                    
         $this->browse(function ($browser) { 
-            $browser->visit('/admin/assignments/index/1')
+            $browser->visit('/admin/classes')
+                    ->press('View Assignments')
                     ->press('Edit Assignment Details')
                     ->press('Go Back')
-                    ->assertPathIs('/admin/assignments/index/1');
+                    ->assertPathBeginsWith('/admin/assignments/index/');
         });
     }
 
@@ -159,7 +187,8 @@ class Test5_AssessmentsTest extends DuskTestCase
     public function edit_assignment_fail()
     {                    
         $this->browse(function ($browser) { 
-            $browser->visit('/admin/assignments/index/1')
+            $browser->visit('/admin/classes')
+                    ->press('View Assignments')
                     ->press('Edit Assignment Details')
                     ->type('assignmentname', '')
                     ->type('classworth', '20')
@@ -169,7 +198,8 @@ class Test5_AssessmentsTest extends DuskTestCase
         });
 
         $this->browse(function ($browser) { 
-            $browser->visit('/admin/assignments/index/1')
+            $browser->visit('/admin/classes')
+                    ->press('View Assignments')
                     ->press('Edit Assignment Details')
                     ->type('assignmentname', '')
                     ->type('classworth', '')
@@ -180,7 +210,8 @@ class Test5_AssessmentsTest extends DuskTestCase
         });
 
         $this->browse(function ($browser) { 
-            $browser->visit('/admin/assignments/index/1')
+            $browser->visit('/admin/classes')
+                    ->press('View Assignments')
                     ->press('Edit Assignment Details')
                     ->type('assignmentname', 'TestA')
                     ->type('classworth', '')
@@ -194,7 +225,8 @@ class Test5_AssessmentsTest extends DuskTestCase
     public function edit_assignment_success()
     {                    
         $this->browse(function ($browser) { 
-            $browser->visit('/admin/assignments/index/1')
+            $browser->visit('/admin/classes')
+                    ->press('View Assignments')
                     ->press('Edit Assignment Details')
                     ->type('assignmentname', 'TestA')
                     ->type('classworth', '20')
@@ -207,10 +239,11 @@ class Test5_AssessmentsTest extends DuskTestCase
     public function delete_assignment_cancel()
     {                    
         $this->browse(function ($browser) { 
-            $browser->visit('/admin/assignments/index/1')
+            $browser->visit('/admin/classes')
+                    ->press('View Assignments')
                     ->press('Delete Assignment')
                     ->press('Cancel')
-                    ->assertPathIs('/admin/assignments/index/1');
+                    ->assertPathBeginsWith('/admin/assignments/index/');
         });
     }
 
@@ -218,10 +251,23 @@ class Test5_AssessmentsTest extends DuskTestCase
     public function delete_assignment_confirm()
     {                    
         $this->browse(function ($browser) { 
-            $browser->visit('/admin/assignments/index/1')
+            $browser->visit('/admin/classes')
+                    ->press('View Assignments')
                     ->press('Delete Assignment')
                     ->press('Delete')
-                    ->assertPathIs('/admin/assignments/index/1');
+                    ->assertPathBeginsWith('/admin/assignments/index/');
+        });
+    }
+
+    /** @test */
+    public function delete_test_class()
+    {
+        $this->browse(function ($browser) {
+            $browser->visit('/admin/classes')
+                    ->assertSee('test class')
+                    ->press('Delete Class')
+                    ->press('Delete')
+                    ->assertDontSee('test class');
         });
     }
 }

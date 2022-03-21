@@ -13,8 +13,8 @@ class Test4_MyClassesPageTest extends DuskTestCase
     {
         $this->browse(function ($browser) {
             $browser->visit('/login')
-                    ->type('email', 'admin@studentperformance.net')
-                    ->type('password', 'admin')
+                    ->type('email', 'test@studentperformance.net')
+                    ->type('password', 'testAcc12345!')
                     ->press('Login')
                     ->visit('/classes')
                     ->assertSee('Create Class')

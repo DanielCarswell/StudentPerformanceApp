@@ -4,17 +4,23 @@
   <div class="ml-12 mr-12">
     <p class="text-2xl font-extrabold flex justify-center mb-6">{{  $circumstance->name  }} Circumstance Links</p>
     <div class="mb-6">
+    <div class="px-16 py-2 flex justify-center">
+    <form action="{{ route('circumstances')  }}" method="get">
+        <span class="flex justify-center">
+            <button type="submit" style="background-color:#4dac26;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+                Go Back
+            </button>
+        </span>
+      </form>
+    </div>
     <form action="{{  route('circumstance.add_link')  }}" method="post">
         @csrf
         <div class="input-group">
             <input name="circumstance_id" value="{{ $circumstance->id }}" type="hidden">
             <label class="text-xl">Add Helpful Link: </label>
             <input type="text" class="form-control pt-4 pb-4 pr-12 pl-2 ml-2 text-xl" name="link" placeholder="Enter Helpful Link">
-                <span class="input-group-btn">
-                <button type="submit" class="btn btn-default">
-                    <span class="glyphicon glyphicon-search"></span>
-                </button>
-            </span>
+            <button type="submit" class="bg-purple-400 text-white px-8 py-4 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">Enter Link
+              </button>
             @error('link')
                 <div class="text-red-500 mt-2 text-sm">
                     {{ $message }}
