@@ -13,6 +13,19 @@ use App\Models\Classe;
 
 class CSVUploadController extends Controller
 {
+    /**
+    * Ensures user authentication to access Controller.  
+    */
+    public function __construct()
+    {
+        $this->middleware(['auth']);
+    }
+    
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function attendance(Request $request) {
         $file = $request->file('upload');
 
@@ -63,6 +76,11 @@ class CSVUploadController extends Controller
         }
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function assignment_marks(Request $request) {
         $file = $request->file('upload');
 
@@ -114,6 +132,11 @@ class CSVUploadController extends Controller
         }
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function upload_student_accounts(Request $request) {
         $file = $request->file('upload');
 
@@ -168,6 +191,11 @@ class CSVUploadController extends Controller
         }
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function upload_students(Request $request) {
         $file = $request->file('upload');
 
@@ -218,6 +246,11 @@ class CSVUploadController extends Controller
         }
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function add(Classe $class) {
         $studentsUnfiltered = User::with(['classes'])->get();
 

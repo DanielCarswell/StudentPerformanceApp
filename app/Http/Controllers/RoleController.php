@@ -7,19 +7,35 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\User;
 use App\Models\Role;
-use App\Models\Permission;
 
 class RoleController extends Controller
 {
+    /**
+    * Ensures user authentication to access Controller.  
+    */
+    public function __construct()
+    {
+        $this->middleware(['auth']);
+    }
+    
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function index() {
-        $roles = Role::with(['permissions'])
-        ->get();
+        $roles = Role::get();
 
         return view('admin.roles.index', [
             'roles' => $roles
         ]);
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function user_roles(int $user_id) {
         $roles = DB::table('roles')
         ->select('roles.id', 'roles.name')
@@ -37,14 +53,11 @@ class RoleController extends Controller
         ]);
     }
 
-    public function add_role_permission(Role $role) {
-        $permissions = Permission::all();
-        return view('admin.roles.add_role_permission', [
-            'permissions' => $permissions,
-            'role' => $role
-        ]);
-    }
-
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function add(Request $request) {
         //Checking assignment credentials are valid.
         $credentials = $request->validate([
@@ -61,10 +74,20 @@ class RoleController extends Controller
         return $this->index();
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function create() {
         return view('admin.roles.create_role');
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function edit(Role $role) {
         if($role->id < 9)
             return back();
@@ -73,6 +96,11 @@ class RoleController extends Controller
         ]);
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function modify(Request $request) {
         if($role->id < 9)
             return back();
@@ -100,6 +128,11 @@ class RoleController extends Controller
         }
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function delete(Role $role) {
         if($role->id < 9)
             return back();
@@ -107,6 +140,11 @@ class RoleController extends Controller
         return back();
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function remove(Request $request) {
         DB::table('user_role')
         ->where('role_id', $request->role_id)
@@ -116,6 +154,11 @@ class RoleController extends Controller
         return back();
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function give(User $user) {
         $roles = DB::table('roles')
         ->get();
@@ -126,6 +169,11 @@ class RoleController extends Controller
         ]);
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function give_role(Request $request) {
         //Checking circumstance credentials are valid.
         $credentials = $request->validate([
@@ -161,20 +209,29 @@ class RoleController extends Controller
         return redirect()->route('user_roles', $request->user_id);
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function destroy(Role $role) {
         if($role->id < 9)
             return back();
         $this->authorize('delete_role', auth()->user());   
         $role->delete();
         
-        $roles = Role::with(['permissions'])
-        ->paginate(8);
+        $roles = Role::paginate(8);
 
         return view('admin.classes.index', [
             'classes' => $classes
         ]);
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function search_roles(Request $request) {
         $query = $request->q;
 

@@ -12,7 +12,11 @@ use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
-
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function index() 
     {
         return view('auth.login');
@@ -44,8 +48,10 @@ class AuthController extends Controller
     }
 
     /**
-     * Redirect to Register page
-     */
+    * Redirect to Register page.
+    *
+    * @return view     
+    */
     public function register() 
     {
         return view('auth.register');

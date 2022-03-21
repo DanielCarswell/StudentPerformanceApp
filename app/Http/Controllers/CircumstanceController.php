@@ -11,6 +11,19 @@ use App\Models\Tables\Circumstance_link;
 
 class CircumstanceController extends Controller
 {
+    /**
+    * Ensures user authentication to access Controller.  
+    */
+    public function __construct()
+    {
+        $this->middleware(['auth']);
+    }
+    
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function index() {
         $circumstances = Circumstance::with(['circumstance_links'])->paginate(8);
 
@@ -19,10 +32,20 @@ class CircumstanceController extends Controller
         ]);
     }
     
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function add() {
         return view('admin.circumstances.add_circumstance');
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function create(Request $request) {
         //Checking circumstance credentials are valid.
         $credentials = $request->validate([
@@ -41,12 +64,22 @@ class CircumstanceController extends Controller
         return $this->index();
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function edit(Circumstance $circumstance) {
         return view('admin.circumstances.edit', [
             'circumstance' => $circumstance
         ]);
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function update(Request $request) {
         //Checking circumstance credentials are valid.
         $credentials = $request->validate([
@@ -76,25 +109,43 @@ class CircumstanceController extends Controller
         return $this->index();
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function delete(Circumstance $circumstance) {
         return view('admin.circumstances.delete', [
             'circumstance' => $circumstance
         ]);
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function destroy(Circumstance $circumstance) {
-        //Add policy
-
         $circumstance->delete();
         return $this->index();
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function links(Circumstance $circumstance) {
         return view('admin.circumstances.helpful_links', [
             'circumstance' => $circumstance
         ]);
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function add_link(Request $request) {
         //Checking circumstance credentials are valid.
         $credentials = $request->validate([
@@ -121,8 +172,12 @@ class CircumstanceController extends Controller
         return back();
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function delete_link(Request $request) {
-        //Add policy
         $link = Circumstance_link::where('circumstance_id', $request->circumstance_id)
         ->where('link', $request->link_l)
         ->delete();

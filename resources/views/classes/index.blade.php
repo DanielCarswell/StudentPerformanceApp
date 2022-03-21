@@ -4,7 +4,7 @@
   <div class="ml-12 mr-12">
     <p class="text-2xl font-extrabold flex justify-center mb-6">My Classes</p>
     @hasRole(['Admin', 'Moderator', 'Lecturer'])
-    <a href="{{ route('class.lecturer.create')  }}">
+    <a href="{{ route('create_class')  }}">
             <span class="flex justify-center">
                 <button type="submit" style="background-color:#4dac26;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
                     <i class="fas fa-plus"></i>&nbsp;&nbsp;Create Class

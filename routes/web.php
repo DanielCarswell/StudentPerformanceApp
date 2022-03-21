@@ -38,6 +38,10 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/admin', function () {
+    return view('admin.index');
+})->name('admin')->middleware('auth');
+
 Route::get('/login', [AuthController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [AuthController::class, 'login_confirm'])->name('login_confirm');
 Route::get('/register', [AuthController::class, 'register'])->name('register')->middleware('guest');
@@ -66,9 +70,7 @@ Route::any('/graphs/select', [ChartController::class, 'select_graph'])->name('gr
 Route::get('/classes', [ClassController::class, 'index'])->name('classes')->middleware('auth');
 Route::get('/admin/classes', [ClassController::class, 'admin_index'])->name('admin_classes')->middleware('adminlecturer');
 Route::get('/admin/classes/create', [ClassController::class, 'create'])->name('create_class')->middleware('adminlecturer'); 
-Route::post('/admin/create/class', [ClassController::class, 'create_class'])->name('class.create')->middleware('adminlecturer'); 
-Route::get('/create/class', [ClassController::class, 'create_lecturer'])->name('class.lecturer.create')->middleware('adminlecturer'); 
-Route::post('/lecturer/create/class', [ClassController::class, 'lecturer_create'])->name('class.lecturer_create')->middleware('adminlecturer'); 
+Route::post('/admin/create/class', [ClassController::class, 'create_class'])->name('class.create')->middleware('adminlecturer');
 Route::any('/admin/class/edit/{class}', [ClassController::class, 'edit'])->name('class.edit')->middleware('adminlecturer'); 
 Route::post('/admin/classes/modify', [ClassController::class, 'modify'])->name('class.modify')->middleware('adminlecturer'); 
 Route::post('/admin/classes/delete/{class}', [ClassController::class, 'delete'])->name('delete_class')->middleware('adminlecturer'); 
@@ -88,7 +90,7 @@ Route::post('/class/assignments/{class}', [ClassController::class, 'assignments'
 Route::any('/admin/classes/assignment_grades/{assignment}/{class}', [ClassController::class, 'assignment_grades'])->name('assignment_grades')->middleware('adminlecturer'); 
 Route::get('/class/upload_students', [ClassController::class, 'upload_students'])->name('upload_students')->middleware('adminlecturer');
 Route::any('/classes/class_records/{class}', [ClassController::class, 'class_records'])->name('classes.class_records')->middleware('adminlecturer');
-Route::post('/classes/student_records/{student}', [ClassController::class, 'student_records'])->name('classes.student_records')->middleware('adminlecturer');
+Route::post('/classes/student_records/{student}', [ClassController::class, 'student_records'])->name('classes.student_records')->middleware('adminadvisor');
 Route::get('/classes/upload_attendance', [ClassController::class, 'upload_attendance'])->name('upload_attendance')->middleware('adminlecturer');
 Route::post('/classes/update_attendance', [ClassController::class, 'update_attendance'])->name('update_attendance')->middleware('adminlecturer');
 Route::any('/classes/attendance/{class}', [ClassController::class, 'class_attendance'])->name('class_attendance')->middleware('adminlecturer'); 

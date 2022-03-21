@@ -12,6 +12,19 @@ use PDF;
 
 class PDFController extends Controller
 {
+    /**
+    * Ensures user authentication to access Controller.  
+    */
+    public function __construct()
+    {
+        $this->middleware(['auth']);
+    }
+    
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function student_records(int $student_id) {
         $lists = DB::table('users')
             ->join('student_class', 'users.id', '=', 'student_class.student_id')
@@ -34,6 +47,11 @@ class PDFController extends Controller
         return $pdf->download($student->fullname . '_student_records.pdf');
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function class_records(int $class_id) {
         $lists = DB::table('classes')
             ->select('users.fullname', 'student_class.grade', 'student_class.attendance')

@@ -10,6 +10,19 @@ use App\Models\Classe;
 
 class ChartController extends Controller
 {
+    /**
+    * Ensures user authentication to access Controller.  
+    */
+    public function __construct()
+    {
+        $this->middleware(['auth']);
+    }
+    
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function select_graph(Request $request) {
         if($request->graphtype == 'Student Ratings') {
             $class = Classe::find($request->class_id);
@@ -35,6 +48,11 @@ class ChartController extends Controller
         return back();
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function student_details(User $student) {
         $classes = DB::table('classes')
         ->select('classes.name', 'student_class.grade', 'student_class.attendance')
@@ -49,6 +67,11 @@ class ChartController extends Controller
         ]);
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function student_ratings(User $student) {
         //Local variables.
         $ratingCount1 = 0;
@@ -80,6 +103,11 @@ class ChartController extends Controller
         ]);
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function class_ratings(Classe $class) {
         //Local variables.
         $ratingCount1 = 0;
@@ -111,6 +139,11 @@ class ChartController extends Controller
         ]);
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function class_grades(Classe $class)
     {
         $grades_model = DB::table('classes')

@@ -10,6 +10,19 @@ use App\Models\Assignment;
 
 class AssignmentController extends Controller
 {
+    /**
+    * Ensures user authentication to access Controller.  
+    */
+    public function __construct()
+    {
+        $this->middleware(['auth']);
+    }
+    
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function add(Request $request) {
         //Checking assignment credentials are valid.
         $credentials = $request->validate([
@@ -51,12 +64,22 @@ class AssignmentController extends Controller
         return redirect()->route('class_assignments', $request->class_id);
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function create(int $class_id) {
         return view('admin.assignments.create_assignment', [
             'class_id' => $class_id
         ]);
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function delete(int $class_id, int $assignment_id) {
         $assignment = Assignment::find($assignment_id);
 
@@ -71,12 +94,22 @@ class AssignmentController extends Controller
         ]);
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function destroy(int $assignment_id, int $class_id) {
         $assignment = Assignment::find($assignment_id);
         $assignment->delete();
         return redirect()->route('class_assignments', $class_id);
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function edit(int $assignment_id, int $class_id){
         $assignment = Assignment::find($assignment_id);
 
@@ -86,6 +119,11 @@ class AssignmentController extends Controller
         ]);
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function modify(Request $request){
         //Checking assignment credentials are valid.
         $credentials = $request->validate([
@@ -110,6 +148,11 @@ class AssignmentController extends Controller
         return redirect()->route('class_assignments', $request->class_id);
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function class_assignments(int $class_id) {
         $assignments = DB::table('classes')
         ->select('assignments.id', 'assignments.name', 'assignments.class_worth', 'classes.name AS class_name')
@@ -127,6 +170,11 @@ class AssignmentController extends Controller
         ]);
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function search_assignments(Request $request) {
         $q = $request->q;
         $class_id = $request->class_id;
@@ -147,6 +195,11 @@ class AssignmentController extends Controller
         ]);
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function update_mark(Request $request){
         $credentials = $request->validate([
             'percent' => ['numeric']
@@ -169,6 +222,11 @@ class AssignmentController extends Controller
         return redirect()->route('assignment_grades', [$assignment, $class]);
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function update_student_grades(int $student_id) {
         $classes = \DB::table('classes')
         ->select('classes.id', 'classes.name', 'student_class.grade', 'student_class.attendance')
@@ -211,6 +269,11 @@ class AssignmentController extends Controller
         return;
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function upload(Request $request) {
         return view('classes.upload_assignment_grades', [
             'class_id' => $request->class_id,

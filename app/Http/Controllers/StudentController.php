@@ -12,6 +12,19 @@ use App\Mail\Circumstances;
 
 class StudentController extends Controller
 {
+    /**
+    * Ensures user authentication to access Controller.  
+    */
+    public function __construct()
+    {
+        $this->middleware(['auth']);
+    }
+    
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function index()
     {
         $students = User::with(['classes'])
@@ -38,6 +51,11 @@ class StudentController extends Controller
         ]);
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function add_circumstance(User $student) {
         $circumstances = DB::table('circumstances')
         ->get();
@@ -48,6 +66,11 @@ class StudentController extends Controller
         ]);
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function update_circumstance(Request $request) {
         //Checking circumstance credentials are valid.
         $credentials = $request->validate([
@@ -85,7 +108,11 @@ class StudentController extends Controller
         return redirect()->route('student.circumstances', $student);
     }
 
-
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function remove_circumstance(Request $request) {
         //add policy check for restriction
         DB::table('student_circumstance')
@@ -103,6 +130,11 @@ class StudentController extends Controller
         ]);
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function update_note(Request $request) {
         //Checking note credentials are valid.
         $credentials = $request->validate([
@@ -125,6 +157,11 @@ class StudentController extends Controller
         return redirect()->route('student.notes', $student);
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function edit_note(Request $request) {
         $student = User::find($request->student_id);
 
@@ -136,6 +173,11 @@ class StudentController extends Controller
         ]);
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function modify_note(Request $request) {
         //Checking note credentials are valid.
         $credentials = $request->validate([
@@ -157,6 +199,11 @@ class StudentController extends Controller
         return redirect()->route('student.notes', $student);
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function remove_note(Request $request) {
         //add policy check for restriction
         DB::table('student_advisor_notes')
@@ -164,11 +211,16 @@ class StudentController extends Controller
             ->where('advisor_id', $request->advisor_id)
             ->where('topic', $request->topic)
             ->where('note', $request->note)
-        ->delete();
+            ->delete();
 
         return back();
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function student_circumstances(User $student) {
         $circumstances = DB::table('circumstances')
         ->join('student_circumstance', 'circumstances.id', 'student_circumstance.circumstance_id')
@@ -182,6 +234,11 @@ class StudentController extends Controller
         ]);
     }
 
+    /**
+    *
+    * @param 
+    * @return view     
+    */
     public function student_notes(User $student) {
         $notes = DB::table('student_advisor_notes')
         ->where('student_advisor_notes.student_id', $student->id)
@@ -193,20 +250,5 @@ class StudentController extends Controller
             'notes' => $notes,
             'advisor' => auth()->user()
         ]);
-    }
-
-    public function add_to_class(User $student, int $class_id){
-        $assignments = Assignment::where('class_id', '=', $class_id)->get();
-
-        DB::table('student_class')->insert([
-            'name' => $request->assignmentname,
-            'class_worth' => $request->classworth,
-            'is_exam' => $request->isexam,
-            'class_id' => $request->class_id
-        ]);
-
-        if($assignments->count()) {
-
-        }
     }
 }
