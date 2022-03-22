@@ -13,8 +13,8 @@ use Illuminate\Validation\Rules\Password;
 class AuthController extends Controller
 {
     /**
+    * Returns login.
     *
-    * @param 
     * @return view     
     */
     public function index() 
@@ -26,6 +26,8 @@ class AuthController extends Controller
      * Attempt to Log user in to the Application.
      * 
      * @param Illuminate\Http\Request request
+     * @return route
+     * @return back error message
      */
     public function login_confirm(Request $request)
     {
@@ -37,6 +39,7 @@ class AuthController extends Controller
 
         //Attempt login and redirect upon success.
         if (Auth::attempt($credentials)) {
+            //Creates session and return intended route.
             $request->session()->regenerate();
             return redirect()->intended('classes');
         }
@@ -61,6 +64,9 @@ class AuthController extends Controller
      * Attempting to register a user.
      * 
      * @param Illuminate\Http\Request request
+     * @return previous.view
+     * @return intended.redirect
+     * @return back error message(s)
      */
     public function register_confirm(Request $request)
     {
@@ -72,14 +78,14 @@ class AuthController extends Controller
             'password' =>  ['required', Password::min(8)->mixedCase()->letters()->numbers()->symbols()],
         ]); 
 
-        //Confirming Passwords match.
+        //Confirming Passwords match or returning error.
         if($request->password != $request->confirmpassword)
             return back()->withErrors([
                 'password' => 'Password and Confirm Password do not match.',
                 'confirmpassword' => 'Password and Confirm Password do not match.'
             ]);
 
-        //Adding user to database if valid credentials.
+        //Adding user to database if valid credentials with hashed password.
         if ($credentials) {
             DB::table('users')->insert([
                 'fullname' => $request->firstname . ' ' . $request->lastname,
@@ -123,6 +129,7 @@ class AuthController extends Controller
      * Forgot password functionality, to be added.
      * 
      * @param Illuminate\Http\Request request
+     * @return route.redirect
      */
     public function forgot(Request $request) 
     {
@@ -134,11 +141,14 @@ class AuthController extends Controller
      * Log user out of the Application.
      * 
      * @param Illuminate\Http\Request request
+     * @return view
      */
     public function logout(Request $request) 
     {
+        //Logs authenticated user out.
         Auth::logout();
 
+        //Resets session details.
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

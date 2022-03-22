@@ -20,11 +20,12 @@ class CircumstanceController extends Controller
     }
     
     /**
+    * Gets all circumstances for view.
     *
-    * @param 
     * @return view     
     */
     public function index() {
+        //Get all circumstances and helpful links.
         $circumstances = Circumstance::with(['circumstance_links'])->paginate(8);
 
         return view('admin.circumstances.index', [
@@ -33,8 +34,8 @@ class CircumstanceController extends Controller
     }
     
     /**
+    * Returns add circumstance view.
     *
-    * @param 
     * @return view     
     */
     public function add() {
@@ -42,8 +43,9 @@ class CircumstanceController extends Controller
     }
 
     /**
+    * Creates new Circumstance in Database.
     *
-    * @param 
+    * @param \Illuminate\Http\Request request
     * @return view     
     */
     public function create(Request $request) {
@@ -61,12 +63,13 @@ class CircumstanceController extends Controller
             ]);
         }
 
-        return $this->index();
+        return redirect()->route('circumstances');
     }
 
     /**
+    * Returns Circumstance edit page with circumstance model.
     *
-    * @param 
+    * @param \App\Models\Circumstance circumstance
     * @return view     
     */
     public function edit(Circumstance $circumstance) {
@@ -76,8 +79,9 @@ class CircumstanceController extends Controller
     }
 
     /**
+    * Updates circumstance in the Database.
     *
-    * @param 
+    * @param \Illuminate\Http\Request request
     * @return view     
     */
     public function update(Request $request) {
@@ -87,8 +91,10 @@ class CircumstanceController extends Controller
             'information' => ['required', 'max:10000']
         ]); 
 
+        //Gets all circumstances other than the one updating.
         $circumstances = \DB::table('circumstances')->where('circumstances.id', '!=', $request->circumstance_id)->get();
 
+        //Confirming no other circumstance has the name entered, returns an error if it does.
         foreach($circumstances as $cirumstance) {
             if($request->name != $circumstance->name) {}
             else return back()->withErrors([
@@ -106,12 +112,13 @@ class CircumstanceController extends Controller
             ]);
         }
 
-        return $this->index();
+        return redirect()->route('circumstances');
     }
 
     /**
+    * Returns Circumstance delete view with circumstance model.
     *
-    * @param 
+    * @param \App\Models\Classe class
     * @return view     
     */
     public function delete(Circumstance $circumstance) {
@@ -121,8 +128,9 @@ class CircumstanceController extends Controller
     }
 
     /**
+    * Deletes circumstance.
     *
-    * @param 
+    * @param \App\Models\Circumstance circumstance
     * @return view     
     */
     public function destroy(Circumstance $circumstance) {
@@ -131,8 +139,9 @@ class CircumstanceController extends Controller
     }
 
     /**
+    * Returns view for Circumstance helpful links.
     *
-    * @param 
+    * @param \App\Models\Circumstance circumstance
     * @return view     
     */
     public function links(Circumstance $circumstance) {
@@ -142,25 +151,29 @@ class CircumstanceController extends Controller
     }
 
     /**
+    * Adds circumstance help link to Database.
     *
-    * @param 
-    * @return view     
+    * @param \Illuminate\Http\Request request
+    * @return back error message
+    * @return back.to.previous.view     
     */
     public function add_link(Request $request) {
-        //Checking circumstance credentials are valid.
+        //Checking link credentials are valid.
         $credentials = $request->validate([
-            'link' => ['required', 'max:255']
+            'link' => ['required', 'max:255', 'url']
         ]);
 
+        //Get circumstance from database.
         $circumstance = Circumstance::with(['circumstance_links'])->where('circumstances.id', $request->circumstance_id)->first();
 
+        //If link is already associated with circumstance, return error message.
         foreach($circumstance->circumstance_links as $link) {
             if($request->link == $link->link) return back()->withErrors([
                 'link' => 'This link has already been added.'
             ]);
         }
 
-        //Adding circumstance to database if valid credentials.
+        //Adding circumstance help link to database if valid credentials.
         if ($credentials) {
             DB::table('circumstance_links')->insert([
                 'circumstance_id' => $request->circumstance_id,
@@ -173,9 +186,10 @@ class CircumstanceController extends Controller
     }
 
     /**
+    * Deletes help link association to Circumstance.
     *
-    * @param 
-    * @return view     
+    * @param  \Illuminate\Http\Request request
+    * @return back.to.previous.view     
     */
     public function delete_link(Request $request) {
         $link = Circumstance_link::where('circumstance_id', $request->circumstance_id)

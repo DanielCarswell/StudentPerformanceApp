@@ -399,7 +399,7 @@ class ClassController extends Controller
     public function add_student(int $class_id, int $student_id) {
         //Add student to class with 100% grade and attendance to start.
         DB::table('student_class')
-        ->insert(['class_id' => $class_id, 'student_id' => $student_id, 'grade' => 100, 'attendance' => 100]);
+        ->insert(['class_id' => $class_id, 'student_id' => $student_id]);
 
         //Get all assignments for class.
         $assignments = Assignment::where('class_id', $class_id)->get();

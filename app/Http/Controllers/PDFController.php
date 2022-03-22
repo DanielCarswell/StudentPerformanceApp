@@ -21,11 +21,13 @@ class PDFController extends Controller
     }
     
     /**
+    * Generates PDF for a students class records.
     *
-    * @param 
-    * @return view     
+    * @param int student_id
+    * @return pdf     
     */
     public function student_records(int $student_id) {
+        //Gets all Student classes.
         $lists = DB::table('users')
             ->join('student_class', 'users.id', '=', 'student_class.student_id')
             ->join('classes', 'classes.id', '=', 'student_class.class_id')
@@ -33,26 +35,32 @@ class PDFController extends Controller
             ->where('users.id', $student_id)
             ->get();
 
+        //Gets student from database.
         $student = User::find($student_id);
 
+        //Adds fullname to list of class model to each for display.
         foreach($lists as $list) {
             $list->fullname = $student->fullname;
         }
 
+        //PDF view initialization.
         $pdf = PDF::loadView('classes.student_records_pdf', [
             'student' => $student,
             'lists' => $lists
         ]);
     
+        //Downloads PDF.
         return $pdf->download($student->fullname . '_student_records.pdf');
     }
 
     /**
+    * Generates PDF of records for a Class and each students average grade.
     *
     * @param 
-    * @return view     
+    * @return pdf     
     */
     public function class_records(int $class_id) {
+        //Gets all students for class.
         $lists = DB::table('classes')
             ->select('users.fullname', 'student_class.grade', 'student_class.attendance')
             ->from('classes')
@@ -62,18 +70,19 @@ class PDFController extends Controller
             ->join('roles', 'roles.id', '=', 'user_role.role_id')
             ->join('lecturer_class', 'lecturer_class.class_id', '=', 'classes.id')
             ->where('classes.id', '=', $class_id)
-            //->where('roles.name', '=', 'Student')
-            ->where('lecturer_class.lecturer_id', '=', auth()->user()->id)
             ->groupBy('users.fullname', 'student_class.grade', 'student_class.attendance')
             ->get();
 
+        //Gets class from database.
         $class = Classe::find($class_id);
         
+        //PDF view initialization.
         $pdf = PDF::loadView('classes.class_records_pdf', [
             'class' => $class,
             'lists' => $lists
         ]);
     
+        //Downloads PDF.
         return $pdf->download($class->name . '_class_records.pdf');
     }
 }

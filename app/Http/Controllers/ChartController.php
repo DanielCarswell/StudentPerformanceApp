@@ -19,9 +19,10 @@ class ChartController extends Controller
     }
     
     /**
+    * Redirects to appropriate Graph view based on Dropdown element selected.
     *
-    * @param 
-    * @return view     
+    * @param \Illuminate\Http\Request request
+    * @return back.to.previous.view     
     */
     public function select_graph(Request $request) {
         if($request->graphtype == 'Student Ratings') {
@@ -49,11 +50,13 @@ class ChartController extends Controller
     }
 
     /**
+    * Passes student and classes to view for graph of Student Grades And Attendance for all classes.
     *
-    * @param 
+    * @param \App\Models\User user
     * @return view     
     */
     public function student_details(User $student) {
+        //Gets all classes for the passed student.
         $classes = DB::table('classes')
         ->select('classes.name', 'student_class.grade', 'student_class.attendance')
         ->from('classes')
@@ -68,16 +71,18 @@ class ChartController extends Controller
     }
 
     /**
+    * Passes student and classes to view for graph of Student Rating pichart for all class ratings.
     *
     * @param 
     * @return view     
     */
     public function student_ratings(User $student) {
-        //Local variables.
+        //Initialize local variables.
         $ratingCount1 = 0;
         $ratingCount2 = 0;
         $ratingCount3 = 0;
 
+        //Get all grades and attendance for passed student classes.
         $details = DB::table('users')
         ->select('student_class.grade', 'student_class.attendance')
         ->from('users')
@@ -86,6 +91,7 @@ class ChartController extends Controller
         ->where('users.id', '=', $student->id)
         ->get();
 
+        //Increase rating count for rating 1, 2 or 3 appropriately.
         foreach($details as $data) {
             if($data->attendance < 30 && $data->grade < 30)
                 $ratingCount3 += 1;
@@ -104,8 +110,9 @@ class ChartController extends Controller
     }
 
     /**
+    * Get ratings for view Graph for all Students in passed class.
     *
-    * @param 
+    * @param \App\Models\Classe class
     * @return view     
     */
     public function class_ratings(Classe $class) {
@@ -114,6 +121,7 @@ class ChartController extends Controller
         $ratingCount2 = 0;
         $ratingCount3 = 0;
 
+        //Get all grades and attendance for passed class students.
         $details = DB::table('users')
         ->select('student_class.grade', 'student_class.attendance')
         ->from('classes', 'users')
@@ -122,6 +130,7 @@ class ChartController extends Controller
         ->where('classes.id', '=', $class->id)
         ->get();
 
+        //Increase rating count for rating 1, 2 or 3 appropriately.
         foreach($details as $data) {
             if($data->attendance < 30 && $data->grade < 30)
                 $ratingCount3 += 1;
@@ -140,12 +149,14 @@ class ChartController extends Controller
     }
 
     /**
+    * Gets all student grades in passed class for barchart of all student grades.
     *
-    * @param 
+    * @param \App\Models\Classe class
     * @return view     
     */
     public function class_grades(Classe $class)
     {
+        //Get full name and grade for each student in class.
         $grades_model = DB::table('classes')
             ->select('users.fullname', 'student_class.class_id', 'student_class.grade')
             ->from('classes')
@@ -154,15 +165,27 @@ class ChartController extends Controller
             ->where('classes.id', $class->id)
             ->get();
 
+        //get class model for view.
         $class = DB::table('classes')
         ->where('id', $class->id)
         ->first();
         
-    	return view('graphs/barchart_grades', ['grades_model' => $grades_model, 'class' => $class]);
+    	return view('graphs/barchart_grades', [
+            'grades_model' => $grades_model, 
+            'class' => $class
+        ]);
     }
 
+
+    /**
+    * Gets all student attendance in passed class for graph view.
+    *
+    * @param \App\Models\Classe class
+    * @return view     
+    */
     public function class_attendance(Classe $class)
     {
+        //Gets fullname, attendance for all students in class with class_id for display.
         $attendance_model = DB::table('classes')
             ->select('users.fullname', 'student_class.class_id', 'student_class.attendance')
             ->from('classes')
@@ -171,11 +194,15 @@ class ChartController extends Controller
             ->where('classes.id', $class->id)
             ->get();
 
+        //Gets class model for view.
         $class = DB::table('classes')
         ->where('id', $class->id)
         ->first();
         
-    	return view('graphs/barchart_attendance', ['attendance_model' => $attendance_model, 'class' => $class]);
+    	return view('graphs/barchart_attendance', [
+            'attendance_model' => $attendance_model,
+            'class' => $class
+        ]);
     }
 
 }

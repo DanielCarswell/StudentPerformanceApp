@@ -21,17 +21,20 @@ class StudentController extends Controller
     }
     
     /**
+    * Returns Advising Students model with All students assigned to Advisor
+    * and their average grade and attendance.
     *
-    * @param 
     * @return view     
     */
     public function index()
     {
+        //Gets all students for logged in Advisor.
         $students = User::with(['classes'])
         ->join('student_advisor', 'student_advisor.student_id', '=', 'users.id')
         ->where('student_advisor.advisor_id', '=', auth()->user()->id)
         ->paginate(8);
 
+        //Gets average grade and attendance for each student.
         foreach($students as $student) {
             $student->average_grade = (\DB::table('student_class')
             ->select(\DB::raw('round(AVG(CAST(student_class.grade as numeric)), 1) as average_grade'))
@@ -52,8 +55,9 @@ class StudentController extends Controller
     }
 
     /**
+    * Returns add student circumstance view passing all circumstances.
     *
-    * @param 
+    * @param \App\Models\User student
     * @return view     
     */
     public function add_circumstance(User $student) {
@@ -67,9 +71,10 @@ class StudentController extends Controller
     }
 
     /**
+    * Adds circumstance to Student.
     *
-    * @param 
-    * @return view     
+    * @param  \Illuminate\Http\Request request
+    * @return route.redirect     
     */
     public function update_circumstance(Request $request) {
         //Checking circumstance credentials are valid.
@@ -77,8 +82,10 @@ class StudentController extends Controller
             'circumstance' => ['required', 'max:255']
         ]); 
 
+        //Gets circumstance from database.
         $circumstance = Circumstance::with(['circumstance_links'])->where('name', $request->circumstance)->first();
 
+        //Adds circumstacne to student.
         $student_circumstances = DB::table('circumstances')
         ->select('circumstances.id', 'circumstances.name', 'circumstances.information')
         ->from('circumstances')
@@ -87,6 +94,7 @@ class StudentController extends Controller
         ->where('users.id', $request->student_id)
         ->get();
 
+        //Checks circumstance is not already assigned to student.
         foreach($student_circumstances as $circumstance1)
             if($circumstance1->id == $circumstance->id)
                 return back()->withErrors([
@@ -99,22 +107,27 @@ class StudentController extends Controller
                 'student_id' => $request->student_id,
                 'circumstance_id' => $circumstance->id
             ]);
+
+            //Gets student model for view.
             $student = User::find($request->student_id);
 
-            Mail::to($student->email)->send(new Circumstances($student, $circumstance->name, $circumstance->information, $circumstance->circumstance_links));
+            //Send email to student with details on dealing with the circumstance.
+            //Mail::to($student->email)->send(new Circumstances($student, $circumstance->name, $circumstance->information, $circumstance->circumstance_links));
         }
             
+        //Gets student model for view.
         $student = User::find($request->student_id);
         return redirect()->route('student.circumstances', $student);
     }
 
     /**
+    * Removes student circumstance association.
     *
-    * @param 
-    * @return view     
+    * @param \Illuminate\Http\Request request
+    * @return back.to.previous.view     
     */
     public function remove_circumstance(Request $request) {
-        //add policy check for restriction
+        //Removes circumstance from student.
         DB::table('student_circumstance')
         ->where('student_id', $request->student_id)
         ->where('circumstance_id', $request->circumstance_id)
@@ -123,6 +136,12 @@ class StudentController extends Controller
         return back();
     }
 
+    /**
+    * Returns view to add note to student.
+    *
+    * @param \App\Models\User user
+    * @return view     
+    */
     public function add_note(User $student) {
         return view('students.add_advisor_note', [
             'student' => $student,
@@ -131,6 +150,8 @@ class StudentController extends Controller
     }
 
     /**
+    * Adds note to student if valid.
+    * note can only be viewed by advisor
     *
     * @param 
     * @return view     
@@ -150,19 +171,21 @@ class StudentController extends Controller
                 'topic' => $request->topic,
                 'note' => $request->note
             ]);
-            $student = User::find($request->student_id);
         }
-            
+
+        //Gets student model for view.
         $student = User::find($request->student_id);
         return redirect()->route('student.notes', $student);
     }
 
     /**
+    * Returns view to edit advisors student note.
     *
-    * @param 
+    * @param \Illuminate\Http\Request request
     * @return view     
     */
     public function edit_note(Request $request) {
+        //Gets student model for view.
         $student = User::find($request->student_id);
 
         return view('students.edit_advisor_note', [
@@ -174,6 +197,8 @@ class StudentController extends Controller
     }
 
     /**
+    * Modifies note for student if valid
+    * note can only be viewed by advisor
     *
     * @param 
     * @return view     
@@ -184,6 +209,8 @@ class StudentController extends Controller
             'topic' => ['required', 'max:255'],
             'note' => ['required', 'max:10000']
         ]);
+
+        //Updates note if valid.
         if ($credentials) {
             DB::table('student_advisor_notes')
             ->where('student_id', $request->student_id)
@@ -195,14 +222,17 @@ class StudentController extends Controller
                 'note' => $request->note
             ]);
         }
+
+        //Gets student model for view.
         $student = User::find($request->student_id);
         return redirect()->route('student.notes', $student);
     }
 
     /**
+    * Deletes note.
     *
-    * @param 
-    * @return view     
+    * @param \Illuminate\Http\Request request
+    * @return back.to.previous.view
     */
     public function remove_note(Request $request) {
         //add policy check for restriction
@@ -217,11 +247,13 @@ class StudentController extends Controller
     }
 
     /**
+    * Returns view for student and their circumstances.
     *
-    * @param 
+    * @param \App\Model\User student
     * @return view     
     */
     public function student_circumstances(User $student) {
+        //Get all circumstances for student.
         $circumstances = DB::table('circumstances')
         ->join('student_circumstance', 'circumstances.id', 'student_circumstance.circumstance_id')
         ->join('users', 'users.id', 'student_circumstance.student_id')
@@ -235,8 +267,9 @@ class StudentController extends Controller
     }
 
     /**
+    * Loads view with student and notes associated for current logged in advisor.
     *
-    * @param 
+    * @param \App\Models\User student
     * @return view     
     */
     public function student_notes(User $student) {

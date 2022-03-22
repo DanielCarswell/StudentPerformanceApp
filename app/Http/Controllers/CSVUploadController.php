@@ -22,11 +22,13 @@ class CSVUploadController extends Controller
     }
     
     /**
+    * Upload Attendance for students from CSV file.
     *
-    * @param 
-    * @return view     
+    * @param \Illuminate\Http\Request request
+    * @return route.redirect     
     */
     public function attendance(Request $request) {
+        //Get file from request.
         $file = $request->file('upload');
 
         if ($file) {
@@ -77,49 +79,67 @@ class CSVUploadController extends Controller
     }
 
     /**
+    * Upload Assignments marks from CSV file.
     *
-    * @param 
-    * @return view     
+    * @param \Illuminate\Http\Request request
+    * @return route.redirect     
     */
     public function assignment_marks(Request $request) {
+        //Get file from request.
         $file = $request->file('upload');
 
+        //If file exists.
         if ($file) {
+            //Get file name and initialize location to save.
             $filename = $file->getClientOriginalName();
             $location = 'Uploads';
+            //Move file to location and get filepath of that file in the location.
             $file->move($location, $filename);
             $filepath = public_path($location . "/" . $filename);
+
+            //Open file and initalize local variables.
             $file = fopen($filepath, "r");
             $imported = array();
             $i = 0;
 
+            //Loop throug csv file up to 1000 rows seperated by comma as filedata if successful.
             while (($filedata = fgetcsv($file, 1000, ",")) !== FALSE) {
                 $num = count($filedata);
+                //Skip first row as it involves titles not data.
                 if ($i == 0) {
                     $i++;
                     continue;
                 }
+                //Set imported at position i equal to each part of row in file data.
                 for ($c = 0; $c < $num; $c++) {
                     $imported[$i][] = $filedata[$c];
                 }
+
+                //increment i.
                 $i++;
             }
             fclose($file); //Close after reading
 
+            //Initialize new incremental variable.
             $j = 0;
             foreach ($imported as $data) {
+                //Increment j.
                 $j++;
+                //Try catch for Exceptions.
                 try {
+                    //Begin transaction incase wrongful data add.
                     DB::beginTransaction();
+                    //Update student assignment marks.
                     DB::table('student_assignment')
                     ->where('user_id', $data[0])
                     ->where('assignment_id', $request->assignment_id)
                     ->update([
                         'percent' => $data[1]
                     ]);
-                    //Send Email Here
+                    //Commit the transaction.
                     DB::commit();
                 } catch (\Exception $e) {
+                    //Rollback the transaction.
                     DB::rollBack();
                 }
             }
@@ -133,40 +153,57 @@ class CSVUploadController extends Controller
     }
 
     /**
+    * Upload student accounts to Database from CSV file.
     *
-    * @param 
-    * @return view     
+    * @param \Illuminate\Http\Request request 
+    * @return route.redirect  
     */
     public function upload_student_accounts(Request $request) {
+        //Get file from request.
         $file = $request->file('upload');
 
+        //If file exists.
         if ($file) {
+            //Get file name and initialize location to save.
             $filename = $file->getClientOriginalName();
             $location = 'Uploads';
+            //Move file to location and get filepath of that file in the location.
             $file->move($location, $filename);
             $filepath = public_path($location . "/" . $filename);
+
+            //Open file and initalize local variables.
             $file = fopen($filepath, "r");
             $imported = array();
             $i = 0;
 
+            //Loop throug csv file up to 1000 rows seperated by comma as filedata if successful.
             while (($filedata = fgetcsv($file, 1000, ",")) !== FALSE) {
                 $num = count($filedata);
+                //Skip first row as it involves titles not data.
                 if ($i == 0) {
                     $i++;
                     continue;
                 }
+                //Set imported at position i equal to each part of row in file data.
                 for ($c = 0; $c < $num; $c++) {
                     $imported[$i][] = $filedata[$c];
                 }
+
+                //increment i.
                 $i++;
             }
             fclose($file); //Close after reading
 
+            //Initialize new incremental variable.
             $j = 0;
             foreach ($imported as $data) {
+                //Increment j.
                 $j++;
+                //Try catch for Exceptions.
                 try {
+                    //Begin transaction incase wrongful data add.
                     DB::beginTransaction();
+                    //Insert users to database.
                     DB::table('users')
                     ->insert([
                         'email' => $data[0],
@@ -180,8 +217,10 @@ class CSVUploadController extends Controller
                         'updated_at' => now(),
                         'password' => Hash::make($request->password)
                     ]);
+                    //Commit the transaction.
                     DB::commit();
                 } catch (\Exception $e) {
+                    //Rollback the transaction.
                     DB::rollBack();
                 }
             }
@@ -192,83 +231,86 @@ class CSVUploadController extends Controller
     }
 
     /**
+    * Upload students to a class from csv file.
     *
-    * @param 
-    * @return view     
+    * @param \Illuminate\Http\Request request
+    * @return route.redirect     
     */
     public function upload_students(Request $request) {
+        //Get file from request.
         $file = $request->file('upload');
 
+        //If file exists.
         if ($file) {
+            //Get file name and initialize location to save.
             $filename = $file->getClientOriginalName();
             $location = 'Uploads';
+            //Move file to location and get filepath of that file in the location.
             $file->move($location, $filename);
             $filepath = public_path($location . "/" . $filename);
+
+            //Open file and initalize local variables.
             $file = fopen($filepath, "r");
             $imported = array();
             $i = 0;
 
+            //Loop throug csv file up to 1000 rows seperated by comma as filedata if successful.
             while (($filedata = fgetcsv($file, 1000, ",")) !== FALSE) {
                 $num = count($filedata);
+                //Skip first row as it involves titles not data.
                 if ($i == 0) {
                     $i++;
                     continue;
                 }
+                //Set imported at position i equal to each part of row in file data.
                 for ($c = 0; $c < $num; $c++) {
                     $imported[$i][] = $filedata[$c];
                 }
+
+                //increment i.
                 $i++;
             }
             fclose($file); //Close after reading
 
+            //Initialize new incremental variable.
             $j = 0;
             foreach ($imported as $data) {
+                //Increment j.
                 $j++;
+                //Try catch for Exceptions.
                 try {
+                    //Begin transaction incase wrongful data add.
                     DB::beginTransaction();
+                    //Add student to class.
                     DB::table('student_class')
                     ->insert([
                         'student_id' => $data[0],
-                        'class_id' => $request->class_id,
-                        'grade' => 100.0,
-                        'attendance' => 100.0
+                        'class_id' => $request->class_id
                     ]);
+
+                    //Get all assignments for class.
+                    $assignments = Assignment::where('class_id', $request->class_id)->get();
+
+                    //Add student association to all assignments for class.
+                    foreach($assignments as $assignment)
+                    {
+                        DB::table('student_assignment')
+                        ->insert(['class_id' => $request->class_id, 'user_id' => $data[0], 'assignment_id' => $assignment->id]);
+                    }
+
+                    //Commit the transaction.
                     DB::commit();
                 } catch (\Exception $e) {
+                    //Rollback the transaction.
                     DB::rollBack();
                 }
             }
+            //get class model for view.
             $class = Classe::find($request->class_id);
-            $this->add($class);
+            
             return redirect()->route('class.students', $class);
         } else {
             throw new \Exception('No file was uploaded', Response::HTTP_BAD_REQUEST);
         }
-    }
-
-    /**
-    *
-    * @param 
-    * @return view     
-    */
-    public function add(Classe $class) {
-        $studentsUnfiltered = User::with(['classes'])->get();
-
-        $student_ids = [];
-
-        foreach($studentsUnfiltered as $student) {
-            $count = 0;
-            $check = $student->classes->count();
-            foreach($student->classes as $classe) {
-                if($class->id == $classe->id)
-                    break;
-                else if($count == $check-1)
-                    array_push($student_ids, $student->id);
-                else
-                    $count += 1;
-            }
-        }
-
-        return;
     }
 }

@@ -17,8 +17,8 @@ class CreateStudentClassTable extends Migration
             $table->primary(["student_id", "class_id"]);
             $table->foreignId('student_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('class_id')->constrained('classes')->onDelete('cascade');
-            $table->double('grade');
-            $table->double('attendance');
+            $table->double('grade')->nullable();
+            $table->double('attendance')->nullable();
         });
     }
 
