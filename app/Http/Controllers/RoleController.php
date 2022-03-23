@@ -17,20 +17,6 @@ class RoleController extends Controller
     {
         $this->middleware(['auth']);
     }
-    
-    /**
-    * Gets all roles for view.
-    *
-    * @return view     
-    */
-    public function index() {
-        //Get all roles in Database.
-        $roles = Role::get();
-
-        return view('admin.roles.index', [
-            'roles' => $roles
-        ]);
-    }
 
     /**
     * Get all Roles for a certain User.

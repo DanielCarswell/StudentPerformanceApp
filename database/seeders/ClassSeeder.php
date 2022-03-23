@@ -14,6 +14,7 @@ class ClassSeeder extends Seeder
      */
     public function run()
     {
+        ////////// TEST DATA START /////////////////
         $names = [
             'Information Access', 'Cyber Security',
             'Hair styling', 'User Testing',
@@ -25,5 +26,7 @@ class ClassSeeder extends Seeder
                 'name' => $name,
             ]);  
         }  
+
+        //////////  TEST DATA END  /////////////////
     }
 }

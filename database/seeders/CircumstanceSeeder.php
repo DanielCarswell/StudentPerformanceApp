@@ -14,6 +14,7 @@ class CircumstanceSeeder extends Seeder
      */
     public function run()
     {
+        ////////// TEST DATA START /////////////////
         DB::table('circumstances')->insert([
             'name' => 'Depression',
             'information' => 'Dealing with Depression can be hard and mentally draining, there are many 
@@ -44,5 +45,7 @@ class CircumstanceSeeder extends Seeder
                 'student_id' => $i
             ]);
         }
+
+        //////////  TEST DATA END  /////////////////
     }
 }

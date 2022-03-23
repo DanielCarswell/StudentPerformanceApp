@@ -14,6 +14,7 @@ class LecturerClassSeeder extends Seeder
      */
     public function run()
     {
+        ////////// TEST DATA START /////////////////
         $class_models_ids = range(1,6);
 
         foreach($class_models_ids as $class_models_id)
@@ -21,5 +22,7 @@ class LecturerClassSeeder extends Seeder
                 'lecturer_id' => 2,
                 'class_id' => $class_models_id
             ]); 
+
+        //////////  TEST DATA END  /////////////////
     }
 }

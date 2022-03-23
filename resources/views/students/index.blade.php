@@ -46,42 +46,42 @@
                   </td>
               @endif
               <td class="px-16 py-2 flex justify-center">
-              <form action="{{ route('classes.student_records', $student)  }}" method="post">
+                <form action="{{ route('classes.student_records', $student)  }}" method="post">
+                    @csrf
+                    <span class="flex justify-center">
+                        <button type="submit" class="bg-indigo-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+                        View Students Records <i class="fas fa-plus"></i>
+                        </button>
+                    </span>
+                </form>
+                @hasRole(['Admin', 'Moderator', 'Lecturer', 'Advisor', 'Staff'])
+                <form action="{{ route('student.circumstances', $student)  }}" method="post">
+                    @csrf
+                    <span class="flex justify-center">
+                        <button type="submit" class="bg-yellow-600 text-white px-4 py-2 border rounded-md hover:bg-white hover:text-black">
+                        View Circumstances <i class="fas fa-plus"></i>
+                        </button>
+                    </span>
+                </form>
+                @endhasRole
+                @hasRole(['Advisor'])
+                <form action="{{ route('student.notes', $student)  }}" method="post">
+                    @csrf
+                    <span class="flex justify-center">
+                        <button type="submit" class="bg-yellow-600 text-white px-4 py-2 border rounded-md hover:bg-white hover:text-black">
+                        View Advisor Notes <i class="fas fa-plus"></i>
+                        </button>
+                    </span>
+                </form>
+                @endhasRole
+                <form action="{{ route('graph.student_details', $student)  }}" method="post">
                       @csrf
                       <span class="flex justify-center">
-                          <button type="submit" class="bg-indigo-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
-                          View Students Records <i class="fas fa-plus"></i>
+                          <button type="submit" class="bg-purple-400 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 text-black hover:text-black">
+                              View Performance Graph <i class="fas fa-star"></i>
                           </button>
                       </span>
                   </form>
-                  @hasRole(['Admin', 'Moderator', 'Lecturer', 'Advisor', 'Staff'])
-                  <form action="{{ route('student.circumstances', $student)  }}" method="post">
-                      @csrf
-                      <span class="flex justify-center">
-                          <button type="submit" class="bg-yellow-600 text-white px-4 py-2 border rounded-md hover:bg-white hover:text-black">
-                          View Circumstances <i class="fas fa-plus"></i>
-                          </button>
-                      </span>
-                  </form>
-                  @endhasRole
-                  @hasRole(['Advisor'])
-                  <form action="{{ route('student.notes', $student)  }}" method="post">
-                      @csrf
-                      <span class="flex justify-center">
-                          <button type="submit" class="bg-yellow-600 text-white px-4 py-2 border rounded-md hover:bg-white hover:text-black">
-                          View Advisor Notes <i class="fas fa-plus"></i>
-                          </button>
-                      </span>
-                  </form>
-                  @endhasRole
-                  <form action="{{ route('graph.student_details', $student)  }}" method="post">
-                        @csrf
-                        <span class="flex justify-center">
-                            <button type="submit" class="bg-purple-400 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 text-black hover:text-black">
-                                View Performance Graph <i class="fas fa-star"></i>
-                            </button>
-                        </span>
-                    </form>
               </td>
             </tr>
           @endforeach

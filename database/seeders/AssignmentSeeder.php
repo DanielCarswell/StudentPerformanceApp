@@ -16,6 +16,7 @@ class AssignmentSeeder extends Seeder
      */
     public function run()
     {
+        ////////// TEST DATA START /////////////////
         $class_ids = range(1,6);
 
         foreach($class_ids as $class_id) {
@@ -118,5 +119,7 @@ class AssignmentSeeder extends Seeder
                     ]);
             }
         }
+
+        //////////  TEST DATA END  /////////////////
     }
 }

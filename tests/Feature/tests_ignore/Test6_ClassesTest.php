@@ -20,6 +20,7 @@ class Test6_ClassesTest extends DuskTestCase
                     ->press('Create Class')
                     ->type('classname', 'test class')
                     ->press('Add Class')
+                    ->visit('/classes')
                     ->visit(
                         $browser->attribute('#Admin-Page', 'href')
                     )
@@ -82,7 +83,7 @@ class Test6_ClassesTest extends DuskTestCase
                     ->assertSee('Add Student')
                     ->press('Add Student')
                     ->assertPathBeginsWith('/admin/class/students/')
-                    ->assertSee('100%')
+                    ->assertSee('0%')
                     ->assertSee('Delete from Class')
                     ->press('Delete from Class')
                     ->assertPathBeginsWith('/admin/class/students/')

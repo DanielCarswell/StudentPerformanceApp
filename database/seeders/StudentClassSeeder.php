@@ -14,6 +14,7 @@ class StudentClassSeeder extends Seeder
      */
     public function run()
     {
+        ////////// TEST DATA START /////////////////
         $user_ids1 = range(5,13);
         $user_ids2 = range(5,23);
         $user_ids3 = range(14,33);
@@ -49,5 +50,7 @@ class StudentClassSeeder extends Seeder
                     'grade' => rand(20,100),
                     'attendance' => rand(10,100)
                 ]);  
+
+        //////////  TEST DATA END  /////////////////
     }
 }

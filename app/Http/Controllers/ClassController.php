@@ -670,7 +670,6 @@ class ClassController extends Controller
         ->from('users')
         ->join('lecturer_class', 'lecturer_class.lecturer_id', '=', 'users.id')
         ->where('lecturer_class.class_id', $request->class_id)
-        ->where( 'users.fullname', 'LIKE', '%' . $q . '%' )
         ->get();
 
         //Adds ids to array for whereNotIn query.
@@ -681,7 +680,7 @@ class ClassController extends Controller
         $lecturers = DB::table('users')
         ->select('users.id', 'users.fullname')
         ->from('users')
-        ->join('student_class', 'student_class.student_id', '=', 'users.id')
+        ->join('lecturer_class', 'lecturer_class.lecturer_id', '=', 'users.id')
         ->where( 'users.fullname', 'LIKE', '%' . $q . '%' )
         ->whereNotIn('users.id', $ids)
         ->distinct()

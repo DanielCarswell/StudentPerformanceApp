@@ -17,9 +17,11 @@ class AdminAdvisorAuthenticate
         ->where('user_id', '=', auth()->user()->id)
         ->get();
 
-        foreach($roles as $role)
-            if($role->name === 'Admin' || $role->name === 'Moderator' || $role->name === 'Advisor')
+        foreach($roles as $role) {
+            if($role->name === 'Admin' || $role->name === 'Moderator' || $role->name === 'Advisor')  {
                 return $next($request);
+            }
+        }
 
         return new Response('Page Access/Permission Denied', 403);
     }

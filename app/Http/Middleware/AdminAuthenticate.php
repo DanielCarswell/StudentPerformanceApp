@@ -17,9 +17,11 @@ class AdminAuthenticate
         ->where('user_id', '=', auth()->user()->id)
         ->get();
 
-        foreach($roles as $role)
-            if($role->name === 'Admin')
+        foreach($roles as $role) {
+            if($role->name === 'Admin') {
                 return $next($request);
+            }
+        }
 
         return new Response('Page Access/Permission Denied', 403);
     }

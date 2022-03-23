@@ -31,6 +31,10 @@ class AssignmentController extends Controller
             'classworth' => ['required', 'numeric']
         ]);
 
+        //If no isexam then initalize False.
+        if(!$request->isexam)
+            $request->isexam = FALSE;
+
         //Adding assignment to database if valid credentials.
         if ($credentials) {
             DB::table('assignments')->insert([

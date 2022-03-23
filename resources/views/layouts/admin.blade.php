@@ -16,7 +16,7 @@
         <h1 class="text-white font-bold mr-2 cursor-pointer">Admin Nav</h1>
         </div>
         <ul>
-        @hasRole(['Admin', 'Moderator', 'Lecturer'])
+        @hasRole(['Admin', 'Moderator'])
             <form action="{{  route('accounts')  }}" method="get">
                 <li class="flex space-x-2 mt-4 px-6 py-4 text-white hover:bg-white hover:text-blue-800 font-bold hover:rounded-br-3xl transition duration-100 cursor-pointer">
                     <button type="submit">Users</button>
@@ -34,13 +34,6 @@
             <form action="{{  route('circumstances')  }}" method="get">
                 <li class="flex space-x-2 mt-4 px-6 py-4 text-white hover:bg-white hover:text-blue-800 font-bold hover:rounded-br-3xl transition duration-100 cursor-pointer">  
                     <button type="submit">Circumstances</button>
-                </li>
-            </form>
-        @endhasRole
-        @hasRole(['Admin', 'Moderator'])
-            <form action="{{  route('roles_index')  }}" method="get">
-                <li class="flex space-x-2 mt-4 px-6 py-4 text-white hover:bg-white hover:text-blue-800 font-bold hover:rounded-br-3xl transition duration-100 cursor-pointer">
-                    <button type="submit">Roles</button>
                 </li>
             </form>
         @endhasRole

@@ -72,6 +72,16 @@
                                 </td>
                             @endif
                         </tr>
+                        <tr>
+                            <form action="{{ route('classes.student_records', $data)  }}" method="post">
+                                @csrf
+                                <span class="flex justify-center">
+                                    <button type="submit" class="bg-indigo-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+                                    View Students Records <i class="fas fa-plus"></i>
+                                    </button>
+                                </span>
+                            </form>
+                        </tr>
                     @endforeach
                     {{ $lists->links() }}
                     @else

@@ -14,6 +14,7 @@ class StudentAdvisorSeeder extends Seeder
      */
     public function run()
     {
+        ////////// TEST DATA START /////////////////
         $user_ids1 = range(11,20);
         $user_ids2 = range(21,30);
 
@@ -28,5 +29,7 @@ class StudentAdvisorSeeder extends Seeder
                 'student_id' => $user_id,
                 'advisor_id' => 4
             ]);
+
+        //////////  TEST DATA END  /////////////////
     }
 }

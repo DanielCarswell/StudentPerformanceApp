@@ -53,7 +53,7 @@
                     <div x-show="dropdownOpen" @click="dropdownOpen = false" class="fixed inset-0 h-full w-full z-10"></div>
 
                     <div x-show="dropdownOpen" class="absolute right-0 mt-2 w-48 bg-white rounded-md overflow-hidden shadow-xl z-20">
-                    @hasRole(['Admin', 'Moderator', 'Lecturer', 'Advisor', 'Staff'])
+                    @hasRole(['Admin', 'Moderator', 'Lecturer', 'Advisor'])
                         <a href="{{  route('admin')  }}" id="Admin-Page" class="block px-4 py-2 text-sm text-white border-b bg-gray-500 hover:bg-blue-400 hover:text-black">Admin Page</a>
                     @endhasRole
                     @hasRole(['Admin', 'Moderator', 'Lecturer'])

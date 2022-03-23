@@ -3,13 +3,11 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\ClassController;
-use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\CSVUploadController;
 use App\Http\Controllers\CircumstanceController;
@@ -40,7 +38,7 @@ Route::get('/', function () {
 
 Route::get('/admin', function () {
     return view('admin.index');
-})->name('admin')->middleware('auth');
+})->name('admin')->middleware('staff');
 
 Route::get('/login', [AuthController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [AuthController::class, 'login_confirm'])->name('login_confirm');
@@ -90,7 +88,7 @@ Route::post('/class/assignments/{class}', [ClassController::class, 'assignments'
 Route::any('/admin/classes/assignment_grades/{assignment}/{class}', [ClassController::class, 'assignment_grades'])->name('assignment_grades')->middleware('adminlecturer'); 
 Route::get('/class/upload_students', [ClassController::class, 'upload_students'])->name('upload_students')->middleware('adminlecturer');
 Route::any('/classes/class_records/{class}', [ClassController::class, 'class_records'])->name('classes.class_records')->middleware('adminlecturer');
-Route::post('/classes/student_records/{student}', [ClassController::class, 'student_records'])->name('classes.student_records')->middleware('adminadvisor');
+Route::post('/classes/student_records/{student}', [ClassController::class, 'student_records'])->name('classes.student_records')->middleware('staff');
 Route::get('/classes/upload_attendance', [ClassController::class, 'upload_attendance'])->name('upload_attendance')->middleware('adminlecturer');
 Route::post('/classes/update_attendance', [ClassController::class, 'update_attendance'])->name('update_attendance')->middleware('adminlecturer');
 Route::any('/classes/attendance/{class}', [ClassController::class, 'class_attendance'])->name('class_attendance')->middleware('adminlecturer'); 
@@ -107,23 +105,10 @@ Route::delete('/admin/assignments/destroy/{assignment_id}/{class_id}', [Assignme
 Route::get('/assignments/upload_marks', [AssignmentController::class, 'upload'])->name('upload_assignment_marks')->middleware('adminlecturer');
 Route::post('/admin/assignments/update_mark', [AssignmentController::class, 'update_mark'])->name('update_assignment_mark')->middleware('adminlecturer');
 
-Route::get('/admin/roles/create', [RoleController::class, 'create'])->name('add_role')->middleware('admin');
-Route::post('/admin/roles/edit_role/{role}', [RoleController::class, 'edit'])->name('edit_role')->middleware('admin');
-Route::post('/admin/roles/edit', [RoleController::class, 'modify'])->name('modify_role')->middleware('admin');
-Route::get('/admin/roles/index', [RoleController::class, 'index'])->name('roles_index')->middleware('admin');
 Route::any('/admin/user/roles/index/{user_id}', [RoleController::class, 'user_roles'])->name('user_roles')->middleware('admin');
-Route::post('/admin/roles/add_role', [RoleController::class, 'add'])->name('create_role')->middleware('admin');
 Route::get('/admin/user/roles/add/{user}', [RoleController::class, 'give'])->name('give_role')->middleware('admin');
 Route::post('/admin/user/roles/add', [RoleController::class, 'give_role'])->name('give_user_role')->middleware('admin');
-Route::post('/admin/search_roles', [RoleController::class, 'search_roles'])->name('search_roles')->middleware('admin');
-Route::post('/admin/delete_role/{role}', [RoleController::class, 'delete'])->name('delete_role')->middleware('admin'); 
 Route::post('/admin/user/remove_role', [RoleController::class, 'remove'])->name('remove_role')->middleware('admin'); 
-Route::post('/admin/roles/add_role_permission/{role}', [RoleController::class, 'add_role_permission'])->name('add_role_permission')->middleware('admin'); 
-
-Route::get('/admin/permissions/index', [PermissionController::class, 'index'])->name('permission_index')->middleware('admin');
-Route::post('/admin/permissions/role_permissions/{role}', [PermissionController::class, 'role_permissions'])->name('role_permissions')->middleware('admin');
-Route::post('/admin/permissions/add_role_permission', [PermissionController::class, 'add_role_permission'])->name('add_permission')->middleware('admin'); 
-Route::post('/admin/permissions/delete/{role_id}/{permission_id}', [PermissionController::class, 'delete'])->name('delete_role_permission')->middleware('admin'); 
 
 Route::any('/admin/circumstances', [CircumstanceController::class, 'index'])->name('circumstances')->middleware('adminadvisor');
 Route::any('/admin/circumstances/{circumstance}/links', [CircumstanceController::class, 'links'])->name('circumstance.links')->middleware('adminadvisor');

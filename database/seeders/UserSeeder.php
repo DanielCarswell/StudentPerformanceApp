@@ -24,6 +24,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('admin')
         ]); 
 
+        ////////// TEST DATA START /////////////////
         DB::table('users')->insert([
             'fullname' => 'lecturer Example',
             'username' => 'lecturer',
@@ -61,5 +62,7 @@ class UserSeeder extends Seeder
             'email' => 'test@studentperformance.net',
             'password' => Hash::make('testAcc12345!')
         ]);
+
+        //////////  TEST DATA END  /////////////////
     }
 }

@@ -47,35 +47,37 @@
                 </td>
                 <td class="px-4 py-3 text-ms border">
                     <div class="flex justify-center">
-                    @if($account->roles->contains('name', 'Student'))
-                      <form action="{{ route('student.advisors', $account->id)  }}" method="post">
-                        @csrf
-                        <button type="submit" class="bg-indigo-400 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
-                          <i class="fas fa-clipboard"></i>&nbsp;&nbsp;Manage Advisors
-                        </button>
-                      </form>
-                    @endif
                     @hasRole(['Admin', 'Moderator'])
-                        <form action="{{  route('user_roles', $account->id)  }}" method="post">
-                            @csrf
-                            <button type="submit" class="bg-indigo-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
-                              <i class="fas fa-clipboard"></i>&nbsp;&nbsp;User Roles
-                            </button>
+                      @if($account->roles->contains('name', 'Student'))
+                        <form action="{{ route('student.advisors', $account->id)  }}" method="post">
+                          @csrf
+                          <button type="submit" class="bg-indigo-400 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+                            <i class="fas fa-clipboard"></i>&nbsp;&nbsp;Manage Advisors
+                          </button>
                         </form>
-                        <form action="{{  route('account.edit', $account->acc)  }}">
-                            @csrf
-                            <button type="submit" class="bg-yellow-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
-                              <i class="fas fa-pencil-alt"></i>&nbsp;&nbsp;Edit Account
-                            </button>
-                        </form>
-                        <form action="{{ route('accounts.destroy', $account->acc) }}" method="post">
-                            @csrf
-                            @method('delete')
-                            <button type="submit" class="bg-yellow-800 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
-                              <i class="fas fa-trash"></i>&nbsp;&nbsp;Delete Account
-                            </button>
-                        </form>
-                        @endhasRole
+                      @endif
+                      <form action="{{  route('user_roles', $account->id)  }}" method="post">
+                          @csrf
+                          <button type="submit" class="bg-indigo-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+                            <i class="fas fa-clipboard"></i>&nbsp;&nbsp;User Roles
+                          </button>
+                      </form>
+                      <form action="{{  route('account.edit', $account->acc)  }}">
+                          @csrf
+                          <button type="submit" class="bg-yellow-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+                            <i class="fas fa-pencil-alt"></i>&nbsp;&nbsp;Edit Account
+                          </button>
+                      </form>
+                    @endhasRole
+                    @hasRole(['Admin'])
+                      <form action="{{ route('accounts.destroy', $account->acc) }}" method="post">
+                          @csrf
+                          @method('delete')
+                          <button type="submit" class="bg-yellow-800 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+                            <i class="fas fa-trash"></i>&nbsp;&nbsp;Delete Account
+                          </button>
+                      </form>
+                    @endhasRole
                     </div>
                 </td>
               </tr>

@@ -20,10 +20,9 @@ class Test7_AssessmentsTest extends DuskTestCase
                     ->press('Create Class')
                     ->type('classname', 'test class')
                     ->press('Add Class')
-                    ->assertPathIs('/classes')
+                    ->assertPathIs('/admin/classes')
                     ->assertSee('test class')
-                    ->visit('/admin/classes')
-                    ->press('View Students')
+                    ->press('Manage Students')
                     ->press('Add Student')
                     ->press('Add Student')
                     ->assertSee('Delete from Class');
