@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-
+use Symfony\Component\HttpFoundation\Response;
 
 use App\Mail\LowGradeNotification;
 use App\Mail\GradeUpdateNotification;
@@ -50,7 +50,7 @@ class ClassController extends Controller
             ->groupBy('student_class.class_id')
             ->get();
 
-            if($average_grade->count() == 0)
+            if($average_grade->count() == 0 || $average_grade[0]->average_grade == null)
                 $class->average_grade = 'No Grades Yet';
             else
                 $class->average_grade = $average_grade[0]->average_grade;
@@ -65,7 +65,7 @@ class ClassController extends Controller
             ->groupBy('student_class.class_id')
             ->get();
 
-            if($average_attendance->count() == 0)
+            if($average_attendance->count() == 0 || $average_attendance[0]->average_attendance == null)
                 $class->average_attendance = 'No Attendance Yet';
             else
                 $class->average_attendance = $average_attendance[0]->average_attendance;
@@ -240,7 +240,7 @@ class ClassController extends Controller
             ->where('assignments.id', '=', $assignment->id)
             ->get();
 
-            if ($average[0]->average != null)
+            if ($average[0]->average != null || $average->count() != 0)
                 $assignment->average = $average[0]->average;
             else
                 $assignment->average = 'No Grades Yet';
@@ -271,9 +271,10 @@ class ClassController extends Controller
         ->paginate(10);
 
         //If student does not have an assignment grade yet, set percent 0.
-        foreach($students as $student)
+        foreach($students as $student) {
             if($student->percent == null)
                 $student->percent = 0;
+        }
 
         return view('classes.assignment_grades', [
             'assignment' => $assignment,
@@ -286,17 +287,17 @@ class ClassController extends Controller
     * Shows all records for a chosen Student.
     *
     * @param \App\Models\User student
-    * @return view     
+    * @return view
     */
     public function student_records(User $student)
     {
         //Get all student and associated classes details.
         $lists = DB::table('users')
-            ->join('student_class', 'users.id', '=', 'student_class.student_id')
-            ->join('classes', 'classes.id', '=', 'student_class.class_id')
-            ->from('users')
-            ->where('users.id', $student->id)
-            ->paginate(8);
+                    ->join('student_class', 'users.id', '=', 'student_class.student_id')
+                    ->join('classes', 'classes.id', '=', 'student_class.class_id')
+                    ->from('users')
+                    ->where('users.id', $student->id)
+                    ->paginate(8);
 
         return view('classes.student_records', [
             'lists' => $lists,
@@ -314,12 +315,12 @@ class ClassController extends Controller
     {
         //Get all student names, grades and attendance for passed class.
         $lists = DB::table('student_class')
-            ->select('users.fullname', 'student_class.grade', 'student_class.attendance')
+            ->select('users.id', 'users.fullname', 'student_class.grade', 'student_class.attendance')
             ->from('student_class')
             ->join('classes', 'student_class.class_id', '=', 'classes.id')
             ->join('users', 'users.id', '=', 'student_class.student_id')
             ->where('classes.id', '=', $class->id)
-            ->groupBy('users.fullname', 'student_class.grade', 'student_class.attendance')
+            ->groupBy('users.id', 'users.fullname', 'student_class.grade', 'student_class.attendance')
             ->paginate(8);
 
         return view('classes.class_records', [

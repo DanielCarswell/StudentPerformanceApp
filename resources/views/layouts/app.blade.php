@@ -16,14 +16,16 @@
             <a class="inline-block py-2 px-3 hover:bg-blue-400 hover:text-black rounded-full" href="/">
                 <div class="flex items-center relative cursor-pointer whitespace-nowrap">Home</div>
             </a>
-            @auth
+            @hasRole(['Admin', 'Moderator', 'Lecturer'])
                 <a id="My-Classes" class="inline-block py-2 px-3 hover:bg-blue-400 hover:text-black rounded-full" href="{{  route('classes')  }}">
                     <div class="flex items-center relative cursor-pointer whitespace-nowrap">My Classes</div>
                 </a>
+            @endhasRole
+            @hasRole(['Admin', 'Moderator', 'Advisor'])
                 <a id="Advising-Students" class="inline-block py-2 px-3 hover:bg-blue-400 hover:text-black rounded-full" href="{{  route('students')  }}">
                     <div class="flex items-center relative cursor-pointer whitespace-nowrap">Advising Students</div>
                 </a>
-            @endauth
+            @endhasRole
         </div>
 
         <div class="flex-initial">

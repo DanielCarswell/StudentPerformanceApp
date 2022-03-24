@@ -68,7 +68,7 @@ class Test6_ClassesTest extends DuskTestCase
     }
 
     /** @test */
-    public function View_students_tests()
+    public function Manage_students_tests()
     {
         $this->browse(function ($browser) {
             $browser->visit('/admin/classes')
@@ -94,6 +94,32 @@ class Test6_ClassesTest extends DuskTestCase
                     ->assertPathIs('/admin/class/students/search_students')
                     ->press('Go Back')
                     ->assertPathBeginsWith('/admin/class/students/')
+                    ->press('Go Back')
+                    ->assertPathBeginsWith('/admin/classes');
+        });
+    }
+
+    /** @test */
+    public function Manage_lecturers_tests()
+    {
+        $this->browse(function ($browser) {
+            $browser->visit('/admin/classes')
+                    ->press('Manage Lecturers')
+                    ->assertPathBeginsWith('/admin/class/lecturers/')
+                    ->assertSee('Add Lecturer')
+                    ->press('Add Lecturer')
+                    ->assertPathBeginsWith('/admin/class/lecturers/add/')
+                    ->assertSee('Reset Search')
+                    ->assertSee('Add Lecturer')
+                    ->press('Add Lecturer')
+                    ->assertPathBeginsWith('/admin/class/lecturers/')
+                    ->assertSee('Delete from Class')
+                    ->press('Add Lecturer')
+                    ->type('q', 'Daniel')
+                    ->press('Search Lecturers')
+                    ->assertPathIs('/admin/class/lecturers/search_lecturers')
+                    ->press('Go Back')
+                    ->assertPathBeginsWith('/admin/class/lecturers/')
                     ->press('Go Back')
                     ->assertPathBeginsWith('/admin/classes');
         });

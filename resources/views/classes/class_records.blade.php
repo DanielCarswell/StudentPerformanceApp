@@ -23,6 +23,7 @@
                 <th class="px-4 py-3 text-white">Grade</th>
                 <th class="px-4 py-3 text-white">Attendance</th>
                 <th class="px-4 py-3 text-white">Rating</th>
+                <th class="px-4 py-3 text-white">Option Links</th>
             </tr>
             </thead>
             <tbody class="bg-white">
@@ -71,16 +72,16 @@
                                     <span class="px-2 py-1 font-semibold leading-tight bg-blue-400 rounded-full">2</span>
                                 </td>
                             @endif
-                        </tr>
-                        <tr>
-                            <form action="{{ route('classes.student_records', $data)  }}" method="post">
-                                @csrf
-                                <span class="flex justify-center">
-                                    <button type="submit" class="bg-indigo-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
-                                    View Students Records <i class="fas fa-plus"></i>
-                                    </button>
-                                </span>
-                            </form>
+                            <td class="px-4 py-3 text-ms border">
+                                <form action="{{ route('classes.student_records', $data->id)  }}" method="post">
+                                    @csrf
+                                    <span class="flex justify-center">
+                                        <button type="submit" class="bg-indigo-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+                                        View Students Records <i class="fas fa-plus"></i>
+                                        </button>
+                                    </span>
+                                </form>
+                            </td>
                         </tr>
                     @endforeach
                     {{ $lists->links() }}

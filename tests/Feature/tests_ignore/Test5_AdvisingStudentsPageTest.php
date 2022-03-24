@@ -22,4 +22,16 @@ class Test5_AdvisingStudentsPageTest extends DuskTestCase
                     ->press('Add Class');
         });
     }
+
+    /** @test */
+    public function delete_test_class()
+    {
+        $this->browse(function ($browser) {
+            $browser->visit('/admin/classes')
+                    ->assertSee('test class')
+                    ->press('Delete Class')
+                    ->press('Delete')
+                    ->assertDontSee('test class');
+        });
+    }
 }

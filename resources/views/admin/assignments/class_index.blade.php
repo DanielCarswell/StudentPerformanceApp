@@ -4,15 +4,29 @@
   <div class="ml-12 mr-12">
     <p class="text-2xl font-extrabold flex justify-center mb-6">{{  $class->name  }} Assignments</p>
     <div class="px-16 py-2 flex justify-center">
-    @hasRole(['Admin', 'Moderator', 'Lecturer'])
-        <a href="{{ route('create_assignment', $class->id)  }}">
-            <span class="flex justify-center">
-                <button name="Add Assignment" type="submit"  style="background-color:#4dac26;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
-                    <i class="fas fa-plus"></i>&nbsp;&nbsp;Add Assignment
+        <div class="px-16 py-2 flex justify-center">
+            @hasRole(['Admin', 'Moderator', 'Lecturer'])
+                <a href="{{ route('create_assignment', $class->id)  }}">
+                    <span class="flex justify-center">
+                        <button name="Add Assignment" type="submit"  style="background-color:#4dac26;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+                            <i class="fas fa-plus"></i>&nbsp;&nbsp;Add Assignment
+                        </button>
+                    </span>
+                </a>
+            @endhasRole
+            <form action="{{  route('class.assignments', $class) }}" method="post">
+                @csrf
+                <button name="Go Back" type="submit" class="bg-purple-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+                    Go To Class Assignments
                 </button>
-            </span>
-        </a>
-        @endhasRole
+            </form>
+            <form action="{{  route('admin_classes') }}" method="get">
+                @csrf
+                <button name="Go Back" type="submit" class="bg-purple-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+                    Go Back
+                </button>
+            </form>
+        </div>
     </div>
     <div>
       <h2>(Please be careful that the total does not exceed 100% class worth)</h2>

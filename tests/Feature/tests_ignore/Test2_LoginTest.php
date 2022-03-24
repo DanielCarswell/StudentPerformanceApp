@@ -43,7 +43,7 @@ class Test2_LoginTest extends DuskTestCase
 
         $this->browse(function ($browser) {
             $browser->press('Logout')
-                    ->assertPathBeginsWith('/home');
+                    ->assertPathBeginsWith('/logout');
         });
     }
 

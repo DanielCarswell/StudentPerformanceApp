@@ -13,8 +13,8 @@ class Test9_GraphsPagesTest extends DuskTestCase
    {
        $this->browse(function ($browser) {
            $browser->visit('/login')
-                   ->type('email', 'admin@studentperformance.net')
-                   ->type('password', 'admin')
+                   ->type('email', 'lecturer@studentperformance.net')
+                   ->type('password', 'lecturer')
                    ->press('Login')
                    ->visit('/classes')
                    ->press('View As Graph')

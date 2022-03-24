@@ -13,8 +13,8 @@ class Test4_MyClassesPageTest extends DuskTestCase
     {
         $this->browse(function ($browser) {
             $browser->visit('/login')
-                    ->type('email', 'test@studentperformance.net')
-                    ->type('password', 'testAcc12345!')
+                    ->type('email', 'lecturer@studentperformance.net')
+                    ->type('password', 'lecturer')
                     ->press('Login')
                     ->visit('/classes')
                     ->assertSee('Create Class')
@@ -31,19 +31,22 @@ class Test4_MyClassesPageTest extends DuskTestCase
         $this->browse(function ($browser) {
             $browser->visit('/classes')
                 ->press('View Class Records')
-                ->assertPathIs('/classes/class_records/1')
-                ->visit('/classes')
+                ->assertPathBeginsWith('/classes/class_records/')
+                ->press('Go Back')
+                ->assertPathBeginsWith('/classes')
                 ->press('Assignments')
-                ->assertPathIs('/class/assignments/1')
-                ->visit('/classes')
+                ->assertPathBeginsWith('/class/assignments/')
+                ->press('Go Back')
+                ->assertPathBeginsWith('/classes')
                 ->press('Attendance')
-                ->assertPathIs('/admin/classes/attendance/1')
-                ->visit('/classes')
+                ->assertPathBeginsWith('/classes/attendance/')
+                ->press('Go Back')
+                ->assertPathBeginsWith('/classes')
                 ->press('Graph')
-                ->assertPathIs('/graphs/barchart/class_grades/1')
+                ->assertPathBeginsWith('/graphs/barchart/class_grades/')
                 ->visit('/classes')
                 ->press('Create Class')
-                ->assertPathIs('/create/class');
+                ->assertPathIs('/admin/class/create');
         });
     }
 }

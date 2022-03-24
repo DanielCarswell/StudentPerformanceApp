@@ -13,15 +13,15 @@ class Test8_AttendanceTest extends DuskTestCase
     {
         $this->browse(function ($browser) {
             $browser->visit('/login')
-                    ->type('email', 'admin@studentperformance.net')
-                    ->type('password', 'admin')
+                    ->type('email', 'lecturer@studentperformance.net')
+                    ->type('password', 'lecturer')
                     ->press('Login');
         });
 
         $this->browse(function ($browser) {
             $browser->visit('/classes')
                     ->press('Attendance')
-                    ->assertSee('Test Class - Attendance')
+                    ->assertSee(' - Attendance')
                     ->assertSee('Upload Attendance')
                     ->assertSee('Go Back')
                     ->assertSee('Enter Attendance:')

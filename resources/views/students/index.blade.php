@@ -75,13 +75,13 @@
                 </form>
                 @endhasRole
                 <form action="{{ route('graph.student_details', $student)  }}" method="post">
-                      @csrf
-                      <span class="flex justify-center">
-                          <button type="submit" class="bg-purple-400 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 text-black hover:text-black">
-                              View Performance Graph <i class="fas fa-star"></i>
-                          </button>
-                      </span>
-                  </form>
+                    @csrf
+                    <span class="flex justify-center">
+                        <button type="submit" class="bg-purple-400 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 text-black hover:text-black">
+                            View Performance Graph <i class="fas fa-star"></i>
+                        </button>
+                    </span>
+                </form>
               </td>
             </tr>
           @endforeach

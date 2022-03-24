@@ -15,7 +15,7 @@
       </form>
       <form action="{{ route('admin_classes')  }}" method="get">
         <span class="flex justify-center">
-            <button type="submit" style="background-color:#4dac26;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+            <button type="submit" class="bg-purple-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
                 Go Back
             </button>
         </span>
