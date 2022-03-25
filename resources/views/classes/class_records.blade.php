@@ -5,7 +5,6 @@
     <div class="ml-12 mr-12">
         <p class="text-2xl font-extrabold flex justify-center mb-6">Class Performance</p>
         <div class="px-16 py-2 flex justify-center">
-            
             <form action="{{  route('classes') }}" method="get">
                 @csrf
                 <button name="Go Back" type="submit" class="bg-purple-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">

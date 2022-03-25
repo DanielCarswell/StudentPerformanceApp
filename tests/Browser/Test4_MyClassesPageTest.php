@@ -46,7 +46,7 @@ class Test4_MyClassesPageTest extends DuskTestCase
                 ->assertPathBeginsWith('/graphs/barchart/class_grades/')
                 ->visit('/classes')
                 ->press('Create Class')
-                ->assertPathIs('/admin/class/create');
+                ->assertPathIs('/admin/classes/create');
         });
     }
 }

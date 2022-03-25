@@ -29,8 +29,14 @@
                         @enderror
                     </div>
                     <div class="flex justify-center items-center">
-                        <button type="submit" class="bg-purple-500 text-white px-4 py-3 rounded font-bold w-full">Edit Note</button>
+                        <button type="submit" style="background-color:#4dac26;" class="text-white px-4 py-3 rounded font-bold w-full">Edit Note</button>
                     </div>
+                </form>
+                <form action="{{  route('student.notes', $student) }}" method="get">
+                    @csrf
+                    <button name="Go Back" type="submit" class="bg-purple-500 text-white px-4 py-3 mt-2 rounded font-bold w-full">
+                        Go Back
+                    </button>
                 </form>
         </div>
     </div>

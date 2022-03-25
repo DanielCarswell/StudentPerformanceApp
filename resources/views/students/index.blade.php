@@ -65,7 +65,7 @@
                 </form>
                 @endhasRole
                 @hasRole(['Advisor'])
-                <form action="{{ route('student.notes', $student)  }}" method="post">
+                <form action="{{ route('student.notes', $student->id)  }}" method="post">
                     @csrf
                     <span class="flex justify-center">
                         <button type="submit" class="bg-yellow-600 text-white px-4 py-2 border rounded-md hover:bg-white hover:text-black">

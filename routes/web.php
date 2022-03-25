@@ -116,7 +116,7 @@ Route::delete('/admin/circumstances/links/destroy', [CircumstanceController::cla
 Route::post('/admin/circumstances/add_link', [CircumstanceController::class, 'add_link'])->name('circumstance.add_link')->middleware('adminadvisor');
 Route::get('/admin/circumstances/add', [CircumstanceController::class, 'add'])->name('circumstance.add')->middleware('adminadvisor');
 Route::post('/admin/circumstances/create', [CircumstanceController::class, 'create'])->name('circumstance.create')->middleware('adminadvisor');
-Route::post('/admin/circumstances/edit/{circumstance}', [CircumstanceController::class, 'edit'])->name('circumstance.edit')->middleware('adminadvisor');
+Route::any('/admin/circumstances/edit/{circumstance}', [CircumstanceController::class, 'edit'])->name('circumstance.edit')->middleware('adminadvisor');
 Route::post('/admin/circumstances/update', [CircumstanceController::class, 'update'])->name('circumstance.update')->middleware('adminadvisor');
 Route::post('/admin/circumstances/delete/{circumstance}', [CircumstanceController::class, 'delete'])->name('circumstance.delete')->middleware('adminadvisor');
 Route::delete('/admin/circumstances/destroy/{circumstance}', [CircumstanceController::class, 'destroy'])->name('circumstance.destroy')->middleware('adminadvisor');
@@ -128,7 +128,7 @@ Route::delete('/student/circumstance/remove', [StudentController::class, 'remove
 Route::any('/student/circumstances/{student}', [StudentController::class, 'student_circumstances'])->name('student.circumstances')->middleware('adminadvisor');
 Route::any('/student/note/add/{student}', [StudentController::class, 'add_note'])->name('student.note.add')->middleware('adminadvisor');
 Route::any('/student/note/update', [StudentController::class, 'update_note'])->name('student.note.update')->middleware('adminadvisor');
-Route::any('/student/note/edit', [StudentController::class, 'edit_note'])->name('student.note.edit')->middleware('adminadvisor');
+Route::any('/student/note/edit/{student_id}/{topic}/{note}', [StudentController::class, 'edit_note'])->name('student.note.edit')->middleware('adminadvisor');
 Route::any('/student/note/modify', [StudentController::class, 'modify_note'])->name('student.note.modify')->middleware('adminadvisor');
 Route::delete('/student/note/remove', [StudentController::class, 'remove_note'])->name('student.note.remove')->middleware('adminadvisor');
 Route::any('/student/notes/{student}', [StudentController::class, 'student_notes'])->name('student.notes')->middleware('adminadvisor');

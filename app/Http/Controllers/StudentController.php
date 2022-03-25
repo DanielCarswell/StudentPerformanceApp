@@ -82,6 +82,12 @@ class StudentController extends Controller
             'circumstance' => ['required', 'max:255']
         ]); 
 
+        //Check that circumstance has been selected and not default element.
+        if($request->circumstance == 'Select Circumstance')
+            return back()->withErrors([
+                'circumstance' => 'Please select a circumstance from dropdown.'
+            ]);
+
         //Gets circumstance from database.
         $circumstance = Circumstance::with(['circumstance_links'])->where('name', $request->circumstance)->first();
 
@@ -181,17 +187,20 @@ class StudentController extends Controller
     /**
     * Returns view to edit advisors student note.
     *
-    * @param \Illuminate\Http\Request request
+    * @param int student_id
+    * @param string topic
+    * @param string note
     * @return view     
     */
-    public function edit_note(Request $request) {
+    public function edit_note(int $student_id, string $topic, string $note) {
+        
         //Gets student model for view.
-        $student = User::find($request->student_id);
+        $student = User::find($student_id);
 
         return view('students.edit_advisor_note', [
-            'note' => $request->note,
+            'note' => $note,
             'student' => $student,
-            'topic' => $request->topic,
+            'topic' => $topic,
             'advisor' => auth()->user()
         ]);
     }

@@ -11,6 +11,12 @@
                 </button>
             </span>
         </a>
+        <form action="{{  route('students') }}" method="get">
+          @csrf
+          <button name="Go Back" type="submit" class="bg-purple-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+              Go Back
+          </button>
+        </form>
     </div>
     <table class="min-w-full table-auto rounded-lg">
       <thead class="justify-between">

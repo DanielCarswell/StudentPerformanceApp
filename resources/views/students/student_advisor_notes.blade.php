@@ -11,6 +11,12 @@
                 </button>
             </span>
         </a>
+        <form action="{{  route('students') }}" method="get">
+          @csrf
+          <button name="Go Back" type="submit" class="bg-purple-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+              Go Back
+          </button>
+        </form>
     </div>
     <table class="min-w-full table-auto rounded-lg">
       <thead class="justify-between">
@@ -37,7 +43,7 @@
                     <span class="text-center ml-2 font-semibold flex justify-center">{{  $note->note  }}</span>
                 </td>
                 <td class="px-16 py-2 flex justify-center">
-                    <form action="{{  route('student.note.edit')  }}" method="post">
+                    <form action="{{  route('student.note.edit', [$student->id, $note->topic, $note->note])  }}" method="post">
                         @csrf
                         <input name="student_id" value="{{ $student->id }}" type="hidden">
                         <input name="advisor_id" value="{{ $advisor->id }}" type="hidden">
