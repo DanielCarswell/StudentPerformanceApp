@@ -28,4 +28,11 @@ class Test11_UserAdminPageTest extends DuskTestCase
                     ->assertSee('Manage Advisors');
         });
     }
+
+    /** @test */
+    public function Upload_students_button_test() {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/admin/accounts');
+        });
+    }
 }
