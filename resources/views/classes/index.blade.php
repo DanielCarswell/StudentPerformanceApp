@@ -6,7 +6,7 @@
     @hasRole(['Admin', 'Moderator', 'Lecturer'])
     <a href="{{ route('create_class')  }}">
             <span class="flex justify-center">
-                <button type="submit" style="background-color:#4dac26;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+                <button type="submit" style="background-color:#57c4ad;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
                     <i class="fas fa-plus"></i>&nbsp;&nbsp;Create Class
                 </button>
             </span>
@@ -38,7 +38,7 @@
                 </td>
                 @if($class->average_grade >= 50)
                     <td class="ml-128 mr-128">
-                        <span style="background-color:#4dac26;" class="px-2 py-1 pt-2 pb-2 ml-3 mr-3 font-semibold leading-tight rounded-full flex justify-center">{{  $class->average_grade  }}%</span>
+                        <span style="background-color:#57c4ad;" class="px-2 py-1 pt-2 pb-2 ml-3 mr-3 font-semibold leading-tight rounded-full flex justify-center">{{  $class->average_grade  }}%</span>
                     </td>
                 @else
                     <td class="ml-128 mr-128">
@@ -47,7 +47,7 @@
                 @endif
                 @if($class->average_attendance >= 50)
                     <td class="ml-128 mr-128">
-                        <span style="background-color:#4dac26;" class="px-2 py-1 pt-2 pb-2 ml-3 mr-3 font-semibold leading-tight rounded-full flex justify-center">{{  $class->average_attendance  }}%</span>
+                        <span style="background-color:#57c4ad;" class="px-2 py-1 pt-2 pb-2 ml-3 mr-3 font-semibold leading-tight rounded-full flex justify-center">{{  $class->average_attendance  }}%</span>
                     </td>
                 @else
                     <td class="ml-128 mr-128">

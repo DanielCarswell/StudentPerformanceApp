@@ -27,7 +27,7 @@
                         @enderror
                     </div>
                     <div class="flex justify-center items-center">
-                        <button type="submit" style="background-color:#4dac26;" class="text-white px-4 py-3 rounded font-bold w-full">Add Note</button>
+                        <button type="submit" style="background-color:#57c4ad;" class="text-white px-4 py-3 rounded font-bold w-full">Add Note</button>
                     </div>
                 </form>
                 <form action="{{  route('student.notes', $student) }}" method="get">

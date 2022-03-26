@@ -29,7 +29,7 @@
               </td>
               @if($student->average_grade >= 50)
                   <td class="ml-128 mr-128">
-                      <span style="background-color:#4dac26;" class="px-2 py-1 pt-2 pb-2 ml-3 mr-3 font-semibold leading-tight rounded-full flex justify-center">{{  $student->average_grade  }}%</span>
+                      <span style="background-color:#57c4ad;" class="px-2 py-1 pt-2 pb-2 ml-3 mr-3 font-semibold leading-tight rounded-full flex justify-center">{{  $student->average_grade  }}%</span>
                   </td>
               @else
                   <td class="ml-128 mr-128">
@@ -38,7 +38,7 @@
               @endif
               @if($student->average_attendance >= 50)
                   <td class="ml-128 mr-128">
-                      <span style="background-color:#4dac26;" class="px-2 py-1 pt-2 pb-2 ml-3 mr-3 font-semibold leading-tight rounded-full flex justify-center">{{  $student->average_attendance  }}%</span>
+                      <span style="background-color:#57c4ad;" class="px-2 py-1 pt-2 pb-2 ml-3 mr-3 font-semibold leading-tight rounded-full flex justify-center">{{  $student->average_attendance  }}%</span>
                   </td>
               @else
                   <td class="ml-128 mr-128">

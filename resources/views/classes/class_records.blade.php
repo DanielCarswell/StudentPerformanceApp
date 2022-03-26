@@ -42,29 +42,29 @@
                             </td>
                             @if($data->grade >= 40)
                                 <td class="px-4 py-3 text-ms border">
-                                    <span class="px-2 py-1 font-semibold leading-tight bg-green-400 rounded-full">{{  number_format((float)$data->grade, 0, '.', '')  }}</span>
+                                    <span style="background-color:#57c4ad;" class="px-2 py-1 font-semibold leading-tight rounded-full">{{  number_format((float)$data->grade, 0, '.', '')  }}</span>
                                 </td>
                             @else
                                 <td class="px-4 py-3 text-ms border">
-                                    <span class="px-2 py-1 font-semibold leading-tight bg-red-400 rounded-full">{{  number_format((float)$data->grade, 0, '.', '')  }}</span>
+                                    <span class="px-2 py-1 font-semibold leading-tight bg-purple-400 rounded-full">{{  number_format((float)$data->grade, 0, '.', '')  }}</span>
                                 </td>
                             @endif
                             @if($data->attendance >= 40)
                                 <td class="px-4 py-3 text-ms border">
-                                    <span class="px-2 py-1 font-semibold leading-tight bg-green-400 rounded-full">{{  number_format((float)$data->attendance, 0, '.', '')  }}</span>
+                                    <span style="background-color:#57c4ad;" class="px-2 py-1 font-semibold leading-tight rounded-full">{{  number_format((float)$data->attendance, 0, '.', '')  }}</span>
                                 </td>
                             @else
                                 <td class="px-4 py-3 text-ms border">
-                                    <span class="px-2 py-1 font-semibold leading-tight bg-red-400 rounded-full">{{  number_format((float)$data->attendance, 0, '.', '')  }}</span>
+                                    <span class="px-2 py-1 font-semibold leading-tight bg-purple-400 rounded-full">{{  number_format((float)$data->attendance, 0, '.', '')  }}</span>
                                 </td>
                             @endif
                             @if($data->attendance < 30 && $data->grade < 30)
                                 <td class="px-4 py-3 text-ms border">
-                                    <span class="px-2 py-1 font-semibold leading-tight bg-red-400 rounded-full">3</span>
+                                    <span class="px-2 py-1 font-semibold leading-tight bg-purple-400 rounded-full">3</span>
                                 </td>
                             @elseif($data->attendance >= 60 && $data->grade >= 70)
                                 <td class="px-4 py-3 text-ms border">
-                                    <span class="px-2 py-1 font-semibold leading-tight bg-green-400 rounded-full">1</span>
+                                    <span style="background-color:#57c4ad;" class="px-2 py-1 font-semibold leading-tight rounded-full">1</span>
                                 </td>
                             @else
                                 <td class="px-4 py-3 text-ms border">

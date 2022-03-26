@@ -17,7 +17,7 @@
             </form>
             <a href="{{ route('admin_classes')  }}">
                 <span class="flex justify-center items-center">
-                    <button type="submit" style="background-color:#4dac26;" class="text-white mt-2 px-4 py-3 rounded font-bold w-full">
+                    <button type="submit" style="background-color:#57c4ad;" class="text-white mt-2 px-4 py-3 rounded font-bold w-full">
                         Cancel
                     </button>
                 </span>

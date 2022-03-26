@@ -8,7 +8,7 @@
       <form action="{{ route('upload_assignment_marks')  }}" method="get">
         <input name="class_id" value="{{$class->id}}" type="hidden">
         <input name="assignment_id" value="{{ $assignment->id }}" type="hidden">
-            <button name="Upload Assignment Marks" type="submit" style="background-color:#4dac26;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+            <button name="Upload Assignment Marks" type="submit" style="background-color:#57c4ad;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
                 <i class="fas fa-plus"></i>&nbsp;&nbsp;Upload Assignment Marks
             </button>
       </form>

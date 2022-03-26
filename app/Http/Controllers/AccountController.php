@@ -81,7 +81,7 @@ class AccountController extends Controller
         $email_acc = DB::table('users')->where('users.email', '=', $request->email)->first();
 
         //Confirm email is users or modified and does not belong to someone else.
-        if($email_acc) {
+        if($email_acc && $request->user_id != $email_acc->id) {
             if($request->email != $email_acc->email) {}
             else return back()->withErrors([
                 'email' => 'The email entered is already registered to another user.'
@@ -258,5 +258,9 @@ class AccountController extends Controller
             'student' => $student,
             'advisors' => $advisors
         ]);
+    }
+
+    public function student_accounts() {
+        return view('accounts.student_accounts');
     }
 }
