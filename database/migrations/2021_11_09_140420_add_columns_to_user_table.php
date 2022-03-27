@@ -14,9 +14,9 @@ class AddColumnsToUserTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('username');
             $table->dropColumn('name');
             $table->string('fullname');
+            //Nullable for autogenerating test account purposes, would be removed for actual use.
             $table->string('firstname')->nullable();
             $table->string('lastname')->nullable();
         });

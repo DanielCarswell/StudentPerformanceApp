@@ -27,12 +27,12 @@ class AccountController extends Controller
     public function index()
     {
         $accounts = DB::table('users')
-        ->select('users.id AS id', 'users.fullname', 'users.email', 'roles.name AS role_name')
+        ->select('users.id AS id', 'users.fullname', 'users.email')
         ->from('users')
         ->join('user_role', 'user_role.user_id', '=', 'users.id')
-        ->join('roles', 'roles.id', '=', 'user_role.role_id')
         ->where('users.id', '!=', 1)
-        ->groupBy('users.id', 'users.fullname', 'users.email', 'role_name')
+        ->groupBy('users.id', 'users.fullname', 'users.email')
+        ->orderBy('users.fullname')
         ->paginate(8);
 
         foreach($accounts as $account) {
@@ -94,7 +94,6 @@ class AccountController extends Controller
             ->where('users.id', '=', $request->user_id)
             ->update([
                 'email' => $request->email,
-                'username' => substr($request->firstname, 0) . ' ' . substr($request->lastname, 0) . rand(10000, 99999),
                 'firstname' => $request->firstname,
                 'lastname' => $request->lastname,
                 'fullname' => $request->firstname . ' ' . $request->lastname

@@ -19,7 +19,7 @@ class LecturerClassSeeder extends Seeder
 
         foreach($class_models_ids as $class_models_id)
             DB::table('lecturer_class')->insert([
-                'lecturer_id' => 2,
+                'lecturer_id' => 3,
                 'class_id' => $class_models_id
             ]); 
 

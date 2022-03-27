@@ -209,17 +209,33 @@ class CSVUploadController extends Controller
                         'email' => $data[0],
                         'firstname' => $data[1],
                         'lastname' => $data[2],
-                        'password' => $data[3],
                         'fullname' => $data[1] . ' ' . $data[2],
-                        'username' => substr($data[1], 0) . ' ' . substr($data[2], 0) . rand(10000, 99999),
-                        'remember_token' => Str::random(10),
-                        'created_at' => now(),
+                        'remember_token' => \Str::random(10),
+                        'password' => \Hash::make($data[3]),
                         'updated_at' => now(),
-                        'password' => Hash::make($request->password)
+                        'created_at' => now()
                     ]);
+
+                    $id = 0;
+                    $users = DB::table('users')->get();
+
+                    //Get id of added user by looping til final user in database
+                    //who will be the account just added.
+                    foreach($users as $user) {
+                        $id = $user->id;
+                    }
+
+                    //Add Student role to User.
+                    DB::table('user_role')
+                    ->insert([
+                        'role_id' => 6,
+                        'user_id' => $id
+                    ]);
+
                     //Commit the transaction.
                     DB::commit();
                 } catch (\Exception $e) {
+                    dd('rip');
                     //Rollback the transaction.
                     DB::rollBack();
                 }
@@ -245,6 +261,7 @@ class CSVUploadController extends Controller
             //Get file name and initialize location to save.
             $filename = $file->getClientOriginalName();
             $location = 'Uploads';
+
             //Move file to location and get filepath of that file in the location.
             $file->move($location, $filename);
             $filepath = public_path($location . "/" . $filename);
@@ -254,7 +271,7 @@ class CSVUploadController extends Controller
             $imported = array();
             $i = 0;
 
-            //Loop throug csv file up to 1000 rows seperated by comma as filedata if successful.
+            //Loop through csv file up to 1000 rows seperated by comma as filedata if successful.
             while (($filedata = fgetcsv($file, 1000, ",")) !== FALSE) {
                 $num = count($filedata);
                 //Skip first row as it involves titles not data.

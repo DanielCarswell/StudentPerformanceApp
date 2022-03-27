@@ -162,9 +162,9 @@ class Test11_UserAdminPageTest extends DuskTestCase
     {
         $this->browse(function ($browser) {
             $browser->visit('/admin/accounts')
-                    ->assertSee('Showing 1 to 8 of 44 results')
+                    ->assertSee('Showing 1 to 8 of 45 results')
                     ->press('Delete Account')
-                    ->assertSee('Showing 1 to 8 of 43 results');
+                    ->assertSee('Showing 1 to 8 of 44 results');
         });
     }
 }

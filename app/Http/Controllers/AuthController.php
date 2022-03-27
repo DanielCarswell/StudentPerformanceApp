@@ -89,7 +89,6 @@ class AuthController extends Controller
         if ($credentials) {
             DB::table('users')->insert([
                 'fullname' => $request->firstname . ' ' . $request->lastname,
-                'username' => substr($request->firstname, 0) . ' ' . substr($request->lastname, 0) . rand(10000, 99999),
                 'email' => $request->email,
                 'firstname' => $request->firstname,
                 'lastname' => $request->lastname,

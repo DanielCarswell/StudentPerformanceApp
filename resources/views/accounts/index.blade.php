@@ -33,7 +33,6 @@
                     </div>
                     <div>
                         <p class="font-semibold text-black">{{  $account->fullname  }}</p>
-                        <p class="text-xs text-gray-600">{{  $account->role_name  }}</p>
                     </div>
                     </div>
                 </td>

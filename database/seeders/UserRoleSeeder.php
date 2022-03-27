@@ -45,16 +45,6 @@ class UserRoleSeeder extends Seeder
             ]);  
         }
 
-        DB::table('user_role')->insert([
-            'user_id' => 44,
-            'role_id' => 3
-        ]);
-
-        DB::table('user_role')->insert([
-            'user_id' => 44,
-            'role_id' => 4
-        ]);
-
         //////////  TEST DATA END  /////////////////
     }
 }
