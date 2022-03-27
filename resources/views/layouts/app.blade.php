@@ -13,7 +13,7 @@
     <body class="bg-pink-100">
         <nav class=" bg-white w-full w-screen flex relative justify-between items-center mx-auto px-8 h-20  bg-gray-900 text-white">
         <div class="inline-flex">
-            <a class="inline-block py-2 px-3 hover:bg-blue-400 hover:text-black rounded-full" href="/">
+            <a class="inline-block py-2 px-3 hover:bg-blue-400 hover:text-black rounded-full" href="{{  route('/home')  }}">
                 <div class="flex items-center relative cursor-pointer whitespace-nowrap">Home</div>
             </a>
             @hasRole(['Admin', 'Moderator', 'Lecturer'])

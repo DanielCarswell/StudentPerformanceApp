@@ -25,16 +25,9 @@
                             </div>
                         @enderror
                     </div>
-                    <div class="grid grid-cols-2 gap-4 justify-items-stretch auto-rows-fr">
-                        <div class="flex justify-center items-center">
+                        <div class="flex justify-center">
                             <button type="submit" name="Login" class="bg-purple-500 text-white px-4 py-3 rounded font-bold w-full">Login</button>
                         </div>
-                </form>
-                <form action="{{ route('forgot_password') }}" method="post">
-                    <div class="flex justify-center items-center">
-                            <button type="submit" name="Forgot Password" class="bg-purple-500 text-white px-4 py-3 rounded font-bold w-full">Forgot Password</button>
-                        </div>
-                    </div>
                 </form>
         </div>
     </div>

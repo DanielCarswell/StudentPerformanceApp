@@ -125,18 +125,6 @@ class AuthController extends Controller
     }
 
     /**
-     * Forgot password functionality, to be added.
-     * 
-     * @param Illuminate\Http\Request request
-     * @return route.redirect
-     */
-    public function forgot(Request $request) 
-    {
-        //
-        return redirect()->route('homepage');
-    }
-
-    /**
      * Log user out of the Application.
      * 
      * @param Illuminate\Http\Request request
