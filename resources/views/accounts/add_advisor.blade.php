@@ -35,7 +35,7 @@
       <thead class="justify-between">
         <tr class="bg-gray-800">
           <th class="px-16 py-2">
-            <span class="text-gray-300">Lecturer Name</span>
+            <span class="text-gray-300">Advisor Name</span>
           </th>
           <th class="px-16 py-2">
             <span class="text-gray-300">Option Links</span>

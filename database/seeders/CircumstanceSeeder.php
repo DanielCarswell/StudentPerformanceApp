@@ -39,7 +39,7 @@ class CircumstanceSeeder extends Seeder
             'id_of_user_added_by' => 1
         ]);
 
-        for ($i = 10; $i <= 20; $i++) {
+        for ($i = 6; $i <= 44; $i++) {
             DB::table('student_circumstance')->insert([
                 'circumstance_id' => 1,
                 'student_id' => $i

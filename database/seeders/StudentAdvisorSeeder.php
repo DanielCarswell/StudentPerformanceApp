@@ -15,20 +15,14 @@ class StudentAdvisorSeeder extends Seeder
     public function run()
     {
         ////////// TEST DATA START /////////////////
-        $user_ids1 = range(11,20);
-        $user_ids2 = range(21,30);
+        $user_ids1 = range(6,44);
 
         foreach($user_ids1 as $user_id)
             DB::table('student_advisor')->insert([
                 'student_id' => $user_id,
-                'advisor_id' => 3
-            ]);
-        
-            foreach($user_ids2 as $user_id)
-            DB::table('student_advisor')->insert([
-                'student_id' => $user_id,
                 'advisor_id' => 4
             ]);
+        
 
         //////////  TEST DATA END  /////////////////
     }

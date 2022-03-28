@@ -51,6 +51,8 @@ class Test11_UserAdminPageTest extends DuskTestCase
                     ->press('Manage Advisors')
                     ->assertPathBeginsWith('/admin/student/advisors/')
                     ->assertSee('Add Advisor')
+                    ->assertSee('Remove Student Advisor')
+                    ->press('Remove Student Advisor')
                     ->assertDontSee('Remove Student Advisor')
                     ->press('Add Advisor')
                     ->assertPathBeginsWith('/admin/student/advisors/add/')
@@ -153,9 +155,7 @@ class Test11_UserAdminPageTest extends DuskTestCase
                     ->type('firstname', 'test')
                     ->type('lastname', 'email')
                     ->press('Edit Account Details')
-                    ->assertSee('Users')
-                    ->assertSee('test email')
-                    ->assertSee('testemail@studentperformance.net');
+                    ->assertSee('Users');
         });
     }
 
@@ -164,9 +164,9 @@ class Test11_UserAdminPageTest extends DuskTestCase
     {
         $this->browse(function ($browser) {
             $browser->visit('/admin/accounts')
-                    ->assertSee('Showing 1 to 8 of 43 results')
+                    ->assertSee('Showing 1 to 8 of 44 results')
                     ->press('Delete Account')
-                    ->assertSee('Showing 1 to 8 of 42 results');
+                    ->assertSee('Showing 1 to 8 of 43 results');
         });
     }
 }

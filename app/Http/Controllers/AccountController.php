@@ -101,7 +101,7 @@ class AccountController extends Controller
         }
 
         //return user index
-        return $this->index();
+        return redirect()->route('accounts');
     }
 
     /**

@@ -37,7 +37,11 @@ class Test3_NavigationBarTest extends DuskTestCase
                     ->visit(
                         $browser->attribute('#Advising-Students', 'href')
                     )
-                    ->assertPathIs('/students');
+                    ->assertPathIs('/students')
+                    ->visit(
+                        $browser->attribute('#Admin-Page', 'href')
+                    )
+                    ->assertPathIs('/admin');
         });
     }
 }

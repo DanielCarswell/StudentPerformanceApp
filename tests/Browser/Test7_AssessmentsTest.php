@@ -83,6 +83,28 @@ class Test7_AssessmentsTest extends DuskTestCase
                     ->press('Add Assignment')
                     ->assertPathBeginsWith('/admin/assignments/add_assignment/');
         });
+
+        $this->browse(function ($browser) {
+            $browser->visit('/admin/classes')
+                    ->press('View Assignments')
+                    ->press('Add Assignment')
+                    ->type('assignmentname', 'Test')
+                    ->type('classworth', '101')
+                    ->press('Add Assignment')
+                    ->assertSee('Classworth must be between 1 and 100, make class worth 100% for all classes if no classworth grading system.')
+                    ->assertPathBeginsWith('/admin/assignments/add_assignment/');
+        });
+
+        $this->browse(function ($browser) {
+            $browser->visit('/admin/classes')
+                    ->press('View Assignments')
+                    ->press('Add Assignment')
+                    ->type('assignmentname', 'Test')
+                    ->type('classworth', '0')
+                    ->press('Add Assignment')
+                    ->assertSee('Classworth must be between 1 and 100, make class worth 100% for all classes if no classworth grading system.')
+                    ->assertPathBeginsWith('/admin/assignments/add_assignment/');
+        });
     }
 
     /** @test */
@@ -216,6 +238,28 @@ class Test7_AssessmentsTest extends DuskTestCase
                     ->type('classworth', '')
                     ->press('Edit Assignment')
                     ->assertSee('The classworth field is required.')
+                    ->assertPathBeginsWith('/admin/assignments/edit/');
+        });
+
+        $this->browse(function ($browser) { 
+            $browser->visit('/admin/classes')
+                    ->press('View Assignments')
+                    ->press('Edit Assignment Details')
+                    ->type('assignmentname', 'TestA')
+                    ->type('classworth', '101')
+                    ->press('Edit Assignment')
+                    ->assertSee('Classworth must be between 1 and 100, make class worth 100% for all classes if no classworth grading system.')
+                    ->assertPathBeginsWith('/admin/assignments/edit/');
+        });
+
+        $this->browse(function ($browser) { 
+            $browser->visit('/admin/classes')
+                    ->press('View Assignments')
+                    ->press('Edit Assignment Details')
+                    ->type('assignmentname', 'TestA')
+                    ->type('classworth', '0')
+                    ->press('Edit Assignment')
+                    ->assertSee('Classworth must be between 1 and 100, make class worth 100% for all classes if no classworth grading system.')
                     ->assertPathBeginsWith('/admin/assignments/edit/');
         });
     }

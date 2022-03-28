@@ -177,6 +177,20 @@ class AssignmentController extends Controller
             ]);
         }
 
+        //Get students to update grades according to new classworth incase changed.
+        $student_ids = DB::table('users')
+        ->select('users.id')
+        ->from('users')
+        ->join('student_class', 'student_class.student_id', '=', 'users.id')
+        ->where('student_class.class_id', $request->class_id)
+        ->distinct()
+        ->get();
+
+        //Update student grades
+        foreach($student_ids as $id) {
+            $this->update_student_grades($id->id);
+        }
+
         return redirect()->route('class_assignments', $request->class_id);
     }
 

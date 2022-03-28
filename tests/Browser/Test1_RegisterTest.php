@@ -58,6 +58,7 @@ class Test1_RegisterTest extends DuskTestCase
                     ->type('password', 'danielCarswell1234!')
                     ->type('confirmpassword', 'danielCarswell1234!')
                     ->press('Register')
+                    ->assertSee('The firstname field is required.')
                     ->assertPathIs('/register');
         });
 
@@ -69,6 +70,7 @@ class Test1_RegisterTest extends DuskTestCase
                     ->type('password', 'danielCarswell1234!')
                     ->type('confirmpassword', 'danielCarswell1234!')
                     ->press('Register')
+                    ->assertSee('The lastname field is required.')
                     ->assertPathIs('/register');
         });
 
@@ -80,6 +82,7 @@ class Test1_RegisterTest extends DuskTestCase
                     ->type('password', 'danielCarswell1234!')
                     ->type('confirmpassword', 'danielCarswell1234!')
                     ->press('Register')
+                    ->assertSee('The email field is required.')
                     ->assertPathIs('/register');
         });
 
@@ -91,6 +94,7 @@ class Test1_RegisterTest extends DuskTestCase
                     ->type('password', '')
                     ->type('confirmpassword', 'danielCarswell1234!')
                     ->press('Register')
+                    ->assertSee('The password field is required.')
                     ->assertPathIs('/register');
         });
 
@@ -102,6 +106,7 @@ class Test1_RegisterTest extends DuskTestCase
                     ->type('password', 'danielCarswell1234!')
                     ->type('confirmpassword', '')
                     ->press('Register')
+                    ->assertSee('Password and Confirm Password do not match.')
                     ->assertPathIs('/register');
         });
     }
