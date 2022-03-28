@@ -4,7 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
+use App\Mail\LowGradeNotification;
+use App\Mail\GradeUpdateNotification;
+
+use App\Models\User;
 use App\Models\Classe;
 use App\Models\Assignment;
 
@@ -34,6 +39,12 @@ class AssignmentController extends Controller
         //If no isexam then initalize False.
         if(!$request->isexam)
             $request->isexam = FALSE;
+
+        //Check classworth is an appropriate value, return error otherwise.
+        if($request->classworth <= 0 || $request->classworth > 100)
+            return back()->withErrors([
+                'classworth' => 'Classworth must be between 1 and 100, make class worth 100% for all classes if no classworth grading system.'
+            ]);
 
         //Adding assignment to database if valid credentials.
         if ($credentials) {
@@ -148,6 +159,12 @@ class AssignmentController extends Controller
         //If no isexam then initalize False.
         if(!$request->isexam)
             $request->isexam = FALSE;
+
+        //Check classworth is an appropriate value, return error otherwise.
+        if($request->classworth <= 0 || $request->classworth > 100)
+            return back()->withErrors([
+                'classworth' => 'Classworth must be between 1 and 100, make class worth 100% for all classes if no classworth grading system.'
+            ]);
 
         //Adding assignment to database if valid credentials.
         if ($credentials) {
@@ -300,6 +317,11 @@ class AssignmentController extends Controller
                     ->update([
                         'grade' => (($class_grade / $total_class_worth) * 100)
                     ]);
+
+            if((($class_grade / $total_class_worth) * 100) < 40) {
+                $student = User::find($student_id);
+                #Mail::to($student->email)->send(new LowGradeNotification($student, $class->name, (($class_grade / $total_class_worth) * 100)));
+            }
         }
 
         return;

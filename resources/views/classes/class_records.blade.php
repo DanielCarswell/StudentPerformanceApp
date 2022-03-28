@@ -5,6 +5,12 @@
     <div class="ml-12 mr-12">
         <p class="text-2xl font-extrabold flex justify-center mb-6">Class Performance</p>
         <div class="px-16 py-2 flex justify-center">
+            <form action="{{  route('pdf.class_records', $class->id) }}" method="get">
+                @csrf
+                <button name="print" type="submit" style="background-color:#57c4ad;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
+                    Print PDF of Class Records
+                </button>
+            </form>
             <form action="{{  route('classes') }}" method="get">
                 @csrf
                 <button name="Go Back" type="submit" class="bg-purple-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
@@ -58,7 +64,7 @@
                                     <span class="px-2 py-1 font-semibold leading-tight bg-purple-400 rounded-full">{{  number_format((float)$data->attendance, 0, '.', '')  }}</span>
                                 </td>
                             @endif
-                            @if($data->attendance < 30 && $data->grade < 30)
+                            @if($data->attendance < 40 && $data->grade < 40)
                                 <td class="px-4 py-3 text-ms border">
                                     <span class="px-2 py-1 font-semibold leading-tight bg-purple-400 rounded-full">3</span>
                                 </td>

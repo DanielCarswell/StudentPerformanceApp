@@ -4,12 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpFoundation\Response;
-
-use App\Mail\LowGradeNotification;
-use App\Mail\GradeUpdateNotification;
-use App\Mail\Circumstance;
 
 use App\Models\Assignment;
 use App\Models\Classe;
@@ -268,6 +263,7 @@ class ClassController extends Controller
         ->join('assignments', 'assignments.id', 'student_assignment.assignment_id')
         ->where('student_assignment.class_id', $class->id)
         ->where('student_assignment.assignment_id', $assignment->id)
+        ->orderBy('users.fullname')
         ->paginate(10);
 
         //If student does not have an assignment grade yet, set percent 0.

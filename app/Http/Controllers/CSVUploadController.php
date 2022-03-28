@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\User;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Response;
 
 use App\Models\Assignment;
 use App\Models\Classe;
+use App\Models\User;
 
 class CSVUploadController extends Controller
 {
@@ -138,6 +137,9 @@ class CSVUploadController extends Controller
                     ]);
                     //Commit the transaction.
                     DB::commit();
+
+                    //Updates the students grades.
+                    $this->update_student_grades($data[0]);
                 } catch (\Exception $e) {
                     //Rollback the transaction.
                     DB::rollBack();
@@ -329,5 +331,61 @@ class CSVUploadController extends Controller
         } else {
             throw new \Exception('No file was uploaded', Response::HTTP_BAD_REQUEST);
         }
+    }
+
+    /**
+    * Upgrades students grade for the full class by calculating total grade by all assignments
+    * meaning if a student has done 1 assignment and got 50%, their grade will be 50% or an assignment
+    * with 50% and one with 100% 20% class worth on both then 75% class grade.
+    *
+    * @param int student_id
+    * @return to.method.call  
+    */
+    public function update_student_grades(int $student_id) {
+        //Gets all of the students classes.
+        $classes = \DB::table('classes')
+        ->select('classes.id', 'classes.name', 'student_class.grade', 'student_class.attendance')
+        ->from('classes')
+        ->join('student_class', 'student_class.class_id', '=', 'classes.id')
+        ->join('users', 'users.id', '=', 'student_class.student_id')
+        ->where('users.id', $student_id)
+        ->get();
+
+        //For all of the students classes.
+        foreach($classes as $class) {
+            //Gets all students assignments for the class.
+            $assignments = \DB::table('assignments')
+            ->select('assignments.id', 'student_assignment.percent', 'assignments.class_worth')
+            ->from('assignments')
+            ->join('student_assignment', 'student_assignment.assignment_id', '=', 'assignments.id')
+            ->join('users', 'users.id', '=', 'student_assignment.user_id')
+            ->join('classes', 'student_assignment.class_id', '=', 'classes.id')
+            ->where('users.id', $student_id)
+            ->where('classes.id', $class->id)
+            ->get();
+
+            //Initializing local varaibles.
+            $class_grade = 0.0;
+            $total_class_worth = 0.0;
+
+            //for all assignments, add class_worth and class_grade.
+            foreach($assignments as $assignment) {
+                if($assignment->percent == 0)
+                    continue;
+                $total_class_worth += $assignment->class_worth;
+                $class_grade += ($assignment->percent * ($assignment->class_worth/100));
+            }
+
+            //Update class grade by total class worth for current overall grade.
+            if($total_class_worth != 0)
+                \DB::table('student_class')
+                    ->where('class_id', $class->id)
+                    ->where('student_id', $student_id)
+                    ->update([
+                        'grade' => (($class_grade / $total_class_worth) * 100)
+                    ]);
+        }
+
+        return;
     }
 }

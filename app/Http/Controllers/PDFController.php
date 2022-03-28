@@ -28,20 +28,19 @@ class PDFController extends Controller
     */
     public function student_records(int $student_id) {
         //Gets all Student classes.
-        $lists = DB::table('users')
-            ->join('student_class', 'users.id', '=', 'student_class.student_id')
-            ->join('classes', 'classes.id', '=', 'student_class.class_id')
-            ->from('classes', 'users', 'student_class')
-            ->where('users.id', $student_id)
+        $lists = DB::table('classes')
+            ->select('users.fullname', 'classes.name', 'student_class.grade', 'student_class.attendance')
+            ->from('classes')
+            ->join('student_class', 'student_class.class_id', '=', 'classes.id')
+            ->join('users', 'users.id', '=', 'student_class.student_id')
+            ->join('user_role', 'user_role.user_id', '=', 'users.id')
+            ->join('roles', 'roles.id', '=', 'user_role.role_id')
+            ->where('users.id', '=', $student_id)
+            ->groupBy('users.fullname', 'classes.name', 'student_class.grade', 'student_class.attendance')
             ->get();
 
         //Gets student from database.
         $student = User::find($student_id);
-
-        //Adds fullname to list of class model to each for display.
-        foreach($lists as $list) {
-            $list->fullname = $student->fullname;
-        }
 
         //PDF view initialization.
         $pdf = PDF::loadView('classes.student_records_pdf', [

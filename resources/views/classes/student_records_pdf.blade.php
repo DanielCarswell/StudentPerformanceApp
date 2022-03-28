@@ -2,6 +2,7 @@
 <div>
 <section>
     <div>
+        <h1>{{$student->fullname}}</h1>
         <div>
         <table>
             <thead>

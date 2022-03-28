@@ -65,7 +65,7 @@ Route::any('/graphs/student_details/{student}', [ChartController::class, 'studen
 Route::any('/graphs/student_ratings/{student}', [ChartController::class, 'student_ratings'])->name('graph.student_ratings')->middleware('adminadvisor');
 Route::any('/graphs/select', [ChartController::class, 'select_graph'])->name('graph');
 
-Route::get('/classes', [ClassController::class, 'index'])->name('classes')->middleware('auth');
+Route::get('/classes', [ClassController::class, 'index'])->name('classes')->middleware('staff');
 Route::get('/admin/classes', [ClassController::class, 'admin_index'])->name('admin_classes')->middleware('adminlecturer');
 Route::get('/admin/classes/create', [ClassController::class, 'create'])->name('create_class')->middleware('adminlecturer'); 
 Route::post('/admin/create/class', [ClassController::class, 'create_class'])->name('class.create')->middleware('adminlecturer');

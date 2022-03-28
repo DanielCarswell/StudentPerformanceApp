@@ -13,8 +13,7 @@ class Test2_LoginTest extends DuskTestCase
     {
         $this->browse(function ($browser) {
             $browser->visit('/login')
-                    ->assertSee('Login')
-                    ->assertSee('Forgot Password');
+                    ->assertSee('Login');
         });
     }
 

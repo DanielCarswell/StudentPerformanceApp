@@ -15,10 +15,9 @@ class StudentClassSeeder extends Seeder
     public function run()
     {
         ////////// TEST DATA START /////////////////
-        $user_ids1 = range(5,13);
-        $user_ids2 = range(5,23);
-        $user_ids3 = range(14,33);
-        $user_ids4 = range(30,43);
+        $user_ids1 = range(6,33);
+        $user_ids2 = range(10,24);
+        $user_ids3 = range(15,44);
 
         $class_models_ids1 = range(1,2);
         $class_models_ids2 = range(3,4);
