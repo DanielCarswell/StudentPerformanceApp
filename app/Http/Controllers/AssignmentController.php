@@ -269,6 +269,11 @@ class AssignmentController extends Controller
             ->update([
                 'percent' => $request->percent
             ]);
+        //Otherwise returns error that percent must be between 0 and 100.
+        else
+            return back()->withErrors([
+                'percent' => 'Grade must be between 0 and 100 percent.'
+            ]);
 
         //Get assignment and class model by id for view.
         $assignment = Assignment::find($request->assignment_id);

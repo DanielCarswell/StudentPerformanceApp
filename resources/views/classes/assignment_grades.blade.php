@@ -20,6 +20,13 @@
       </form>
       @endhasRole
     </div>
+    <div class=" flex justify-center">
+      @error('percent')
+          <div class="text-red-500 mt-2 text-xl">
+              {{ $message }}
+          </div>
+      @enderror
+    </div>
     <table class="min-w-full table-auto rounded-lg">
       <thead class="justify-between">
         <tr class="bg-gray-800">

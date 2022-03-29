@@ -18,11 +18,13 @@
             </button>
         </form>
       @endhasRole
+    </div>
+    <div class=" flex justify-center">
       @error('attendance')
-            <div class="text-red-500 mt-2 text-sm">
-                {{ $message }}
-            </div>
-        @enderror
+          <div class="text-red-500 mt-2 text-xl">
+              {{ $message }}
+          </div>
+      @enderror
     </div>
     <table class="min-w-full table-auto rounded-lg">
       <thead class="justify-between">
