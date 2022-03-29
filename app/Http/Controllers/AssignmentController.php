@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 use App\Mail\LowGradeNotification;
+use App\Mail\LowGradeLecturerNotification;
 use App\Mail\GradeUpdateNotification;
 
 use App\Models\User;
@@ -337,9 +338,20 @@ class AssignmentController extends Controller
                         'grade' => (($class_grade / $total_class_worth) * 100)
                     ]);
 
+            //Send email to notify student and lecturer(s) if grade is too low.
             if((($class_grade / $total_class_worth) * 100) < 40) {
                 $student = User::find($student_id);
-                #Mail::to($student->email)->send(new LowGradeNotification($student, $class->name, (($class_grade / $total_class_worth) * 100)));
+                Mail::to($student->email)->send(new LowGradeNotification($student, $class->name, (($class_grade / $total_class_worth) * 100)));
+
+                $lecturers = DB::table('users')
+                ->join('lecturer_class', 'lecturer_class.lecturer_id', '=', 'users.id')
+                ->join('classes', 'classes.id', '=', 'lecturer_class.class_id')
+                ->where('classes.id', $class->id)
+                ->get();
+
+                foreach($lecturers as $lecturer){
+                    Mail::to($lecturer->email)->send(new LowGradeLecturerNotification($student, $class->name, (($class_grade / $total_class_worth) * 100)));
+                }
             }
         }
 

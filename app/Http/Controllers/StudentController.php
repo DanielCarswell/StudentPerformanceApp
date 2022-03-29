@@ -118,7 +118,7 @@ class StudentController extends Controller
             $student = User::find($request->student_id);
 
             //Send email to student with details on dealing with the circumstance.
-            #Mail::to($student->email)->send(new Circumstances($student, $circumstance->name, $circumstance->information, $circumstance->circumstance_links));
+            Mail::to($student->email)->send(new Circumstances($student, $circumstance->name, $circumstance->information, $circumstance->circumstance_links));
         }
             
         //Gets student model for view.
