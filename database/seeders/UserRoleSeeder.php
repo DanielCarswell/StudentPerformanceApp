@@ -23,22 +23,22 @@ class UserRoleSeeder extends Seeder
 
         DB::table('user_role')->insert([
             'user_id' => 2,
-            'role_id' => 3
+            'role_id' => 2
         ]);
 
         DB::table('user_role')->insert([
             'user_id' => 3,
-            'role_id' => 4
+            'role_id' => 3
         ]);
 
         DB::table('user_role')->insert([
             'user_id' => 4,
-            'role_id' => 4
+            'role_id' => 3
         ]);
 
         DB::table('user_role')->insert([
             'user_id' => 5,
-            'role_id' => 3
+            'role_id' => 2
         ]);
 
         $user_ids = range(6,44);
@@ -46,7 +46,7 @@ class UserRoleSeeder extends Seeder
         foreach($user_ids as $user_id) {
             DB::table('user_role')->insert([
                 'user_id' => $user_id,
-                'role_id' => 6
+                'role_id' => 4
             ]);  
         }
 

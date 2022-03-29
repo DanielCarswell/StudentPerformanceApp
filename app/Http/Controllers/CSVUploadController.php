@@ -230,7 +230,7 @@ class CSVUploadController extends Controller
                     //Add Student role to User.
                     DB::table('user_role')
                     ->insert([
-                        'role_id' => 6,
+                        'role_id' => 4,
                         'user_id' => $id
                     ]);
 

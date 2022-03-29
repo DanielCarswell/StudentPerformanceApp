@@ -41,7 +41,7 @@
                     <span class="text-center ml-2 font-semibold flex justify-center">{{  $advisor->fullname  }}</span>
                 </td>
                 <td class="px-16 py-2 flex justify-center">
-                @hasRole(['Admin', 'Moderator', 'Advisor'])
+                @hasRole(['Admin', 'Advisor'])
                     <form action="{{  route('student.delete_advisor', [$student->id, $advisor->id])  }}" method="post">
                         @csrf
                         @method('delete')

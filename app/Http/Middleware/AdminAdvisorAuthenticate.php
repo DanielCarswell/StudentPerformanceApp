@@ -18,7 +18,7 @@ class AdminAdvisorAuthenticate
         ->get();
 
         foreach($roles as $role) {
-            if($role->name === 'Admin' || $role->name === 'Moderator' || $role->name === 'Advisor')  {
+            if($role->name === 'Admin' || $role->name === 'Advisor')  {
                 return $next($request);
             }
         }

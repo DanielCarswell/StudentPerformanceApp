@@ -16,12 +16,12 @@
             <a class="inline-block py-2 px-3 hover:bg-blue-400 hover:text-black rounded-full" href="{{  route('/home')  }}">
                 <div class="flex items-center relative cursor-pointer whitespace-nowrap">Home</div>
             </a>
-            @hasRole(['Admin', 'Moderator', 'Lecturer'])
+            @hasRole(['Admin', 'Lecturer'])
                 <a id="My-Classes" class="inline-block py-2 px-3 hover:bg-blue-400 hover:text-black rounded-full" href="{{  route('classes')  }}">
                     <div class="flex items-center relative cursor-pointer whitespace-nowrap">My Classes</div>
                 </a>
             @endhasRole
-            @hasRole(['Admin', 'Moderator', 'Advisor'])
+            @hasRole(['Admin', 'Advisor'])
                 <a id="Advising-Students" class="inline-block py-2 px-3 hover:bg-blue-400 hover:text-black rounded-full" href="{{  route('students')  }}">
                     <div class="flex items-center relative cursor-pointer whitespace-nowrap">Advising Students</div>
                 </a>
@@ -55,13 +55,13 @@
                     <div x-show="dropdownOpen" @click="dropdownOpen = false" class="fixed inset-0 h-full w-full z-10"></div>
 
                     <div x-show="dropdownOpen" class="absolute right-0 mt-2 w-48 bg-white rounded-md overflow-hidden shadow-xl z-20">
-                    @hasRole(['Admin', 'Moderator', 'Lecturer', 'Advisor'])
+                    @hasRole(['Admin', 'Lecturer', 'Advisor'])
                         <a href="{{  route('admin')  }}" id="Admin-Page" class="block px-4 py-2 text-sm text-white border-b bg-gray-500 hover:bg-blue-400 hover:text-black">Admin Page</a>
                     @endhasRole
-                    @hasRole(['Admin', 'Moderator', 'Lecturer'])
+                    @hasRole(['Admin', 'Lecturer'])
                         <a href="{{  route('classes')  }}" class="block px-4 py-2 text-sm text-white border-b bg-gray-500 hover:bg-blue-400 hover:text-black">My Classes</a>
                     @endhasRole
-                    @hasRole(['Admin', 'Moderator', 'Advisor'])
+                    @hasRole(['Admin', 'Advisor'])
                         <a href="{{  route('students')  }}" class="block px-4 py-2 text-sm text-white border-b bg-gray-500 hover:bg-blue-400 hover:text-black">Advising Students</a>
                     @endhasRole
                     </div>

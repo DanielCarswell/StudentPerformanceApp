@@ -4,7 +4,7 @@
   <div class="ml-12 mr-12">
     <p class="text-2xl font-extrabold flex justify-center mb-6">{{  $class->name  }} Students</p>
     <div class="px-16 py-2 flex justify-center">
-    @hasRole(['Admin', 'Moderator', 'Lecturer'])
+    @hasRole(['Admin', 'Lecturer'])
       <form action="{{  route('class.students.add', $class)  }}" method="post" >
         @csrf
         <span class="flex justify-center">
@@ -55,7 +55,7 @@
                     <span class="text-center ml-2 font-semibold flex justify-center">{{  number_format((float)$student->class_mark, 0, '.', '')  }}%</span>
                 </td>
                 <td class="px-16 py-2 flex justify-center">
-                @hasRole(['Admin', 'Moderator', 'Lecturer'])
+                @hasRole(['Admin', 'Lecturer'])
                     <form action="{{  route('class.delete_student', [$class->id, $student->id])  }}" method="post">
                         @csrf
                         @method('delete')

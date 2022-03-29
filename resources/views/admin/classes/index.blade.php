@@ -4,7 +4,7 @@
   <div class="ml-12 mr-12">
     <p class="text-2xl font-extrabold flex justify-center mb-6">All Classes</p>
     <div class="px-16 py-2 flex justify-center">
-    @hasRole(['Admin', 'Moderator', 'Lecturer'])
+    @hasRole(['Admin', 'Lecturer'])
       <a href="{{ route('create_class')  }}">
           <span class="flex justify-center">
               <button type="submit" style="background-color:#57c4ad;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
@@ -77,7 +77,7 @@
                             </button>
                         </span>
                     </form>
-                    @hasRole(['Admin', 'Moderator', 'Lecturer'])
+                    @hasRole(['Admin', 'Lecturer'])
                     <form action="{{ route('class.edit', $class)  }}" method="post">
                         @csrf
                         <span class="flex justify-center">

@@ -107,7 +107,7 @@ class AuthController extends Controller
             //Assign user the 'Unverified' role.
             DB::table('user_role')->insert([
                 'user_id' => $user_id[0]->id,
-                'role_id' => 7
+                'role_id' => 5
             ]);  
             
             //Create login_credentials and attempt to Authenticate created User.

@@ -61,8 +61,8 @@ Route::delete('/admin/student/advisors/delete/{student_id}/{advisor_id}', [Accou
 
 Route::any('/graphs/barchart/class_grades/{class}', [ChartController::class, 'class_grades'])->name('graph.class_grades')->middleware('adminlecturer');
 Route::any('/graphs/pichart/ratings/{class}', [ChartController::class, 'class_ratings'])->name('graph.class_ratings')->middleware('adminlecturer');
-Route::any('/graphs/student_details/{student}', [ChartController::class, 'student_details'])->name('graph.student_details')->middleware('adminadvisor');
-Route::any('/graphs/student_ratings/{student}', [ChartController::class, 'student_ratings'])->name('graph.student_ratings')->middleware('adminadvisor');
+Route::any('/graphs/student_details/{student}', [ChartController::class, 'student_details'])->name('graph.student_details')->middleware('staff');
+Route::any('/graphs/student_ratings/{student}', [ChartController::class, 'student_ratings'])->name('graph.student_ratings')->middleware('staff');
 Route::any('/graphs/select', [ChartController::class, 'select_graph'])->name('graph');
 
 Route::get('/classes', [ClassController::class, 'index'])->name('classes')->middleware('staff');

@@ -18,7 +18,7 @@ class AdminLecturerAuthenticate
         ->get();
 
         foreach($roles as $role) {
-            if($role->name === 'Admin' || $role->name === 'Moderator' || $role->name === 'Lecturer') {
+            if($role->name === 'Admin' || $role->name === 'Lecturer') {
                 return $next($request);
             }
         }

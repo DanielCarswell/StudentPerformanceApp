@@ -54,7 +54,7 @@
                         </button>
                     </span>
                 </form>
-                @hasRole(['Admin', 'Moderator', 'Lecturer', 'Advisor', 'Staff'])
+                @hasRole(['Admin', 'Advisor'])
                 <form action="{{ route('student.circumstances', $student)  }}" method="post">
                     @csrf
                     <span class="flex justify-center">

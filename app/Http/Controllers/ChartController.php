@@ -64,6 +64,15 @@ class ChartController extends Controller
         ->where('student_class.student_id', '=', $student->id)
         ->get();
 
+        //Set grade and attendance 0 if null as no grades or attendance yet.
+        foreach($classes as $grade) {
+            if($grade->grade == null)
+                $grade->grade = 0;
+
+                if($grade->attendance == null)
+                $grade->attendance = 0;
+        }
+
         return view('graphs.combochart', [
             'classes' => $classes,
             'student' => $student
@@ -90,6 +99,15 @@ class ChartController extends Controller
         ->join('classes', 'classes.id', '=', 'student_class.class_id')
         ->where('users.id', '=', $student->id)
         ->get();
+
+        //Set grade and attendance 0 if null as no grades or attendance yet.
+        foreach($details as $grade) {
+            if($grade->grade == null)
+                $grade->grade = 0;
+
+                if($grade->attendance == null)
+                $grade->attendance = 0;
+        }
 
         //Increase rating count for rating 1, 2 or 3 appropriately.
         foreach($details as $data) {
@@ -124,11 +142,20 @@ class ChartController extends Controller
         //Get all grades and attendance for passed class students.
         $details = DB::table('users')
         ->select('student_class.grade', 'student_class.attendance')
-        ->from('classes', 'users')
+        ->from('users')
         ->join('student_class', 'student_class.student_id', '=', 'users.id')
         ->join('classes', 'classes.id', '=', 'student_class.class_id')
         ->where('classes.id', '=', $class->id)
         ->get();
+
+        //Set grade and attendance 0 if null as no grades or attendance yet.
+        foreach($details as $grade) {
+            if($grade->grade == null)
+                $grade->grade = 0;
+
+                if($grade->attendance == null)
+                $grade->attendance = 0;
+        }
 
         //Increase rating count for rating 1, 2 or 3 appropriately.
         foreach($details as $data) {
@@ -165,11 +192,17 @@ class ChartController extends Controller
             ->where('classes.id', $class->id)
             ->get();
 
+        //Set grade 0 if null as no grades yet.
+        foreach($grades_model as $grade) {
+            if($grade->grade == null)
+                $grade->grade = 0;
+        }
+
         //get class model for view.
         $class = DB::table('classes')
         ->where('id', $class->id)
         ->first();
-        
+
     	return view('graphs/barchart_grades', [
             'grades_model' => $grades_model, 
             'class' => $class
@@ -193,6 +226,12 @@ class ChartController extends Controller
             ->join('users', 'users.id', '=', 'student_class.student_id')
             ->where('classes.id', $class->id)
             ->get();
+
+        //Set attendance 0 if null as no attendance yet.
+        foreach($attendance_model as $attendance) {
+            if($attendance->attendance == null)
+                $attendance->attendance = 0;
+        }
 
         //Gets class model for view.
         $class = DB::table('classes')

@@ -46,7 +46,7 @@
                 </td>
                 <td class="px-4 py-3 text-ms border">
                     <div class="flex justify-center">
-                    @hasRole(['Admin', 'Moderator'])
+                    @hasRole(['Admin'])
                       @if($account->roles->contains('name', 'Student'))
                         <form action="{{ route('student.advisors', $account->id)  }}" method="post">
                           @csrf

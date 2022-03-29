@@ -5,13 +5,23 @@
     <div class="ml-12 mr-12">
         <p class="text-2xl font-extrabold flex justify-center mb-6">Student {{  $student->fullname  }} Performance</p>
         <div class="px-16 py-2 flex justify-center">
-            @hasRole(['Admin', 'Moderator', 'Advisor'])
+            @hasRole(['Admin', 'Advisor'])
                 <form action="{{  route('pdf.student_records', $student->id) }}" method="get">
                     @csrf
                     <button name="print" type="submit" style="background-color:#57c4ad;" class="text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
                         Print PDF of Student Records
                     </button>
                 </form>
+            @endhasRole
+                <form action="{{ route('graph.student_details', $student)  }}" method="post">
+                    @csrf
+                    <span class="flex justify-center">
+                        <button type="submit" class="bg-purple-400 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 text-black hover:text-black">
+                            View Performance Graph <i class="fas fa-star"></i>
+                        </button>
+                    </span>
+                </form>
+            @hasRole(['Admin', 'Advisor'])
                 <form action="{{  route('students') }}" method="get">
                     @csrf
                     <button name="Go Back" type="submit" class="bg-purple-500 text-white px-4 py-2 border rounded-md hover:bg-white hover:border-indigo-500 hover:text-black">
